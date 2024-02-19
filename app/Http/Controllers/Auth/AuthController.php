@@ -73,9 +73,14 @@ class AuthController extends Controller
 
     public function user()
     {
-        return 'ets ';
-    }
+        $user = Auth::user();
 
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        return $user;
+    }
 
     public function logout()
     {
