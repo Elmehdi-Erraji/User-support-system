@@ -29,7 +29,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
-    //for the front end to take care of the cookies as well
+    'supports_credentials' => false,
 
 ];
