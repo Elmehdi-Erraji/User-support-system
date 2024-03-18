@@ -30,58 +30,56 @@
                                     <div class="p-4 my-auto">
                                         <h4 class="fs-20">Reset Password</h4>
                                         <p class="text-muted mb-3">Enter your email address and password to access account.</p>
-
-                                        <!-- form -->
-                                        <form method="POST" action="{{ route('password.store') }}" class="mt-4">
+                                        <form method="POST" action="{{ route('password.update') }}" class="mt-4">
                                             @csrf
-                                            <!-- Password Reset Token -->
-                                            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-                                            <!-- Email Address -->
+                                            <input type="hidden" name="reset_token" value="{{ $token }}">
+                                            
                                             <div class="mb-3">
-                                                <x-input-label for="email" :value="__('Email')" />
-                                                <x-text-input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" :value="old('email', $request->email)" placeholder="Enter your email" required autofocus autocomplete="username" />
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <label for="email" class="form-label">{{ __('Email') }}</label>
+                                                <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email', $email)}}" placeholder="Enter your email" required autofocus />
+                                                @error('email')
+                                                <span class="error-message">{{ $message }}</span>
+                                                @enderror
                                             </div>
-
-                                            <!-- Password -->
+                                            
                                             <div class="mb-3">
-                                                <x-input-label for="password" :value="__('Password')" />
-                                                <x-text-input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter your password" required autocomplete="new-password" />
-                                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                                <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter your password" required autocomplete="new-password" />
+                                                @error('password')
+                                                <span class="error-message">{{ $message }}</span>
+                                                @enderror
                                             </div>
-
-                                            <!-- Confirm Password -->
+                                            
                                             <div class="mb-3">
-                                                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                                                <x-text-input id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" placeholder="Confirm your password" required autocomplete="new-password" />
-                                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                                <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+                                                <input id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" placeholder="Confirm your password" required autocomplete="new-password" />
+                                                @error('password_confirmation')
+                                                <span class="error-message">{{ $message }}</span>
+                                                @enderror
                                             </div>
-
+                                            
                                             <div class="text-start">
                                                 <button class="btn btn-soft-primary w-100" type="submit"><i class="ri-login-circle-fill me-1"></i> <span class="fw-bold">{{ __('Reset Password') }}</span> </button>
                                             </div>
                                         </form>
-                                        <!-- end form-->
+                                        
+                                        
                                     </div>
                                 </div>
-                            </div> <!-- end col -->
+                            </div> 
                         </div>
                     </div>
                 </div>
-                <!-- end row -->
+                
             </div>
             <div class="row">
                 <div class="col-12 text-center">
                     <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign up</b></a></p>
-                    <p class="text-dark-emphasis"> Go back <a href="{{ route('home') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Home</b></a></p>
-                </div> <!-- end col -->
+                    {{-- <p class="text-dark-emphasis"> Go back <a href="{{ route('home') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Home</b></a></p> --}}
+                </div> 
             </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
     </div>
-    <!-- end page -->
 
     <footer class="footer footer-alt fw-medium">
         <span class="text-dark">

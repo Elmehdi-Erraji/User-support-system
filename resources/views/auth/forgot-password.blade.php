@@ -33,41 +33,37 @@
                                     <h4 class="fs-20">Reset Password</h4>
                                     <p class="text-muted mb-3">Enter your email address and password to access account.</p>
 
-                                    <!-- form -->
 
-                                    <form method="POST" action="{{ route('password.email') }}">
+                                    <form method="POST" action="{{route('forgot-password')}}">
                                         @csrf
                                         <div class="mb-3">
-                                            <x-input-label for="email" :value="__('Email')" />
-                                            <x-text-input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" :value="old('email')" placeholder="Enter your email" required autofocus />
+                                            <label for="email" class="form-label">{{ __('Email') }}</label>
+                                            <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required autofocus />
                                             @error('email')
-                                            <span class="error-message">{{ $message }}</span> <!-- Error span for email -->
+                                            <span class="error-message">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="mb-0 text-start">
                                             <button class="btn btn-soft-primary w-100" type="submit"><i class="ri-login-circle-fill me-1"></i> <span class="fw-bold">{{ __('Email Password Reset Link') }}</span> </button>
                                         </div>
                                     </form>
-                                    <!-- end form-->
+                                    
+                                    
                                 </div>
                             </div>
-                        </div> <!-- end col -->
+                        </div> 
                     </div>
                 </div>
             </div>
-            <!-- end row -->
         </div>
         <div class="row">
             <div class="col-12 text-center">
                 <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign up</b></a></p>
-                <p class="text-dark-emphasis"> Go back  <a href="{{ route('home') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Home</b></a></p>
-            </div> <!-- end col -->
+                {{-- <p class="text-dark-emphasis"> Go back  <a href="{{ route('home') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Home</b></a></p> --}}
+            </div> 
         </div>
-        <!-- end row -->
     </div>
-    <!-- end container -->
 </div>
-<!-- end page -->
 
 <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
