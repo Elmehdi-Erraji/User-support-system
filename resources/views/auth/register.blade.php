@@ -20,34 +20,38 @@
                                     <h4 class="fs-20">Sign In</h4>
                                     <p class="text-muted mb-3">Enter your email address and password to access account.</p>
 
-                                    <!-- form -->
                                     <form method="POST" action="{{route('register')}}">
                                         @csrf
                                     
-                                        <!-- Full Name -->
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Username</label>
-                                            <input class="form-control @error('Username') is-invalid @enderror" type="text" name="Username" id="Username" placeholder="Enter your Username" value="{{ old('Username') }}" required autofocus autocomplete="Username">
-                                            @error('Username')
-                                            <span class="error-message">{{ $message }}</span> <!-- Error span for full name -->
+                                            <label for="name" class="form-label">Name</label>
+                                            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" placeholder="Enter your name" value="{{ old('name') }}" required autofocus autocomplete="name">
+                                            @error('name')
+                                            <span class="error-message">{{ $message }}</span> 
                                             @enderror
                                         </div>
                                     
-                                        <!-- Email Address -->
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email address</label>
                                             <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="email" placeholder="Enter your email" value="{{ old('email') }}" required autocomplete="email">
                                             @error('email')
-                                            <span class="error-message">{{ $message }}</span> <!-- Error span for email -->
+                                            <span class="error-message">{{ $message }}</span> 
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Phone Number</label>
+                                            <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone" id="phone" placeholder="Enter your phone number" value="{{ old('phone') }}" required autocomplete="phone">
+                                            @error('phone')
+                                                <span class="error-message">{{ $message }}</span> 
                                             @enderror
                                         </div>
                                     
-                                        <!-- Password -->
                                         <div class="mb-3">
                                             <label for="password" class="form-label">Password</label>
                                             <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Enter your password" required autocomplete="new-password">
                                             @error('password')
-                                            <span class="error-message">{{ $message }}</span> <!-- Error span for password -->
+                                            <span class="error-message">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     

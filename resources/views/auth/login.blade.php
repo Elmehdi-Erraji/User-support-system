@@ -72,6 +72,7 @@
         </div>
         <!-- end row -->
     </div>
+
     @if (Session::has('message'))
     <script>
         console.log("SweetAlert initialization script executed!");
@@ -81,7 +82,17 @@
             icon: 'info'
         });
     </script>
-    @endif                               
+    @endif  
+    @if (Session::has('success'))
+    <script>
+        console.log("SweetAlert initialization script executed!");
+        Swal.fire({
+            title: 'success',
+            text: "{{ Session::get('success') }}",
+            icon: 'success',
+        });
+    </script>
+    @endif                                 
 
    
 <footer class="footer footer-alt fw-medium">

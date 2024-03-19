@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +23,17 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request)
     {
         $user = User::create([
-            'Username' => $request->input('Username'),
+            'name' => $request->input('name'),
             'email' => $request->email,
+            'phone' => $request->input('phone'),
             'password' => Hash::make($request->password),
+            'status' => 1,
         ]);
-        return redirect()->route('login')->with('message', 'Successfully registered');
+        
+        $role = Role::find(3);
+
+        $user->roles()->sync([$role->id]);
+        return redirect()->route('login')->with('success', 'Successfully registered');
     }
 
     public function loginForm()
@@ -37,7 +44,7 @@ class AuthController extends Controller
     public function login(LoginRequest  $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('dashboard')->with('message', 'Successfully logged in');
+            return redirect()->route('dashboard')->with('success', 'Successfully logged in');
         } else {
             return redirect()->back()->with('message', 'Invalid Credentials');
         }
@@ -46,6 +53,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('login')->with('message', 'Successfully logged out');
+        return redirect()->route('login')->with('success', 'Successfully logged out');
     }
 }

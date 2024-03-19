@@ -50,9 +50,9 @@
                    <span class="account-user-avatar">
                     {{-- @if (Auth::user()->getFirstMedia('avatars'))
                          <img src="{{ Auth::user()->getFirstMedia('avatars')->getUrl() }}" class="rounded-circle" alt="Avatar" width="50">
-                     @else
+                     @else @endif --}}
                          <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-                     @endif --}}
+                    
                  </span>
                     <span class="d-lg-block d-none">
                         <h5 class="my-0 fw-normal"> <i
