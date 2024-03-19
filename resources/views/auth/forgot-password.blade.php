@@ -1,25 +1,10 @@
+@extends('layouts.auth')
+@section('content')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Password Reset</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-
-    <script src="{{ asset('assets/js/config.js') }}"></script>
-
-    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<body class="authentication-bg position-relative">
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
-    <div class="container">
+   
         <div class="row justify-content-center">
             <div class="col-xxl-8 col-lg-10">
                 <div class="card overflow-hidden">
@@ -63,8 +48,8 @@
                 {{-- <p class="text-dark-emphasis"> Go back  <a href="{{ route('home') }}" class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Home</b></a></p> --}}
             </div> 
         </div>
-    </div>
-</div>
+
+
 @if (Session::has('success'))
     <script>
         console.log("SweetAlert initialization script executed!");
@@ -74,22 +59,14 @@
             icon:'success'
         });
     </script>
-@endif      
+@endif 
+
+
 <footer class="footer footer-alt fw-medium">
-        <span class="text-dark">
-            <script>
-                document.write(new Date().getFullYear())
-            </script> © Mehdi
-        </span>
+    <span class="text-dark">
+        <script>
+            document.write(new Date().getFullYear())
+        </script> © Mehdi
+    </span>
 </footer>
-<!-- Vendor js -->
-
-<!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-
-</body>
-
-
-</html>
-
-
+@endsection

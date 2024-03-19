@@ -1,23 +1,10 @@
 
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.auth')
+@section('content')
 
-<head>
-    <meta charset="utf-8" />
-    <title>Log In </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-    <script src="{{ asset('assets/js/config.js') }}"></script>
-
-    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<body class="authentication-bg position-relative">
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xxl-8 col-lg-10">
@@ -94,11 +81,9 @@
             icon: 'info'
         });
     </script>
-@endif                               
-    <!-- end container -->
-</div>
-<!-- end page -->
+    @endif                               
 
+   
 <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
             <script>
@@ -106,13 +91,5 @@
             </script> © Mehdi
         </span>
 </footer>
-<!-- Vendor js -->
 
-<!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-
-</body>
-
-
-</html>
-
+ @endsection

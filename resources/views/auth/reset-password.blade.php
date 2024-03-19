@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Password Reset</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.auth')
+@section('content')
 
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="{{ asset('assets/js/config.js') }}"></script>
 
-    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-</head>
-
-<body class="authentication-bg position-relative">
-    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xxl-8 col-lg-10">
@@ -79,7 +67,6 @@
                 </div> 
             </div>
         </div>
-    </div>
 
     <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
@@ -88,11 +75,5 @@
             </script> © Mehdi
         </span>
     </footer>
-    <!-- Vendor js -->
 
-    <!-- App js -->
-    <script src="{{ asset('assets/js/app.min.js') }}"></script>
-
-</body>
-
-</html>
+    @endsection

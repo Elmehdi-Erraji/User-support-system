@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Register </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+@extends('layouts.auth')
+@section('content')
 
-    <!-- Theme Config Js -->
-    <script src="{{ asset('assets/js/config.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- App css -->
-    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- Icons css -->
-    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
-<body class="authentication-bg position-relative">
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xxl-8 col-lg-10">
@@ -107,9 +91,7 @@
         </div>
         <!-- end row -->
     </div>
-    <!-- end container -->
-</div>
-<!-- end page -->
+    
 
 <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
@@ -118,13 +100,5 @@
             </script> © Mehdi
         </span>
 </footer>
-<!-- Vendor js -->
 
-<!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-
-</body>
-
-
-</html>
-
+@endsection
