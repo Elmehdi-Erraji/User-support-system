@@ -45,7 +45,9 @@ Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']
 
 
 
-
+Route::get('dash', function (){
+    return view('dash');
+})->name('dash');
 
 
 
