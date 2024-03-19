@@ -15,6 +15,7 @@
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
 
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <body class="authentication-bg position-relative">
 <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
@@ -64,7 +65,16 @@
         </div>
     </div>
 </div>
-
+@if (Session::has('success'))
+    <script>
+        console.log("SweetAlert initialization script executed!");
+        Swal.fire({
+            title: 'success',
+            text: "{{ Session::get('message') }}",
+            icon:'success'
+        });
+    </script>
+@endif      
 <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
             <script>

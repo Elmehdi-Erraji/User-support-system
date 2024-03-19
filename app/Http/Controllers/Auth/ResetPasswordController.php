@@ -27,12 +27,9 @@ class ResetPasswordController extends Controller
             'password' => 'required|confirmed|min:8',
         ]);
     
-        // Retrieve the user based on the provided email
         $user = User::where('email', $request->email)->first();
     
-        // Check if the user exists and if the reset token matches the remember_token
         if ($user && ($user->remember_token == $request->reset_token)) {
-            // Proceed with password reset
             $user->update([
                 'password' => Hash::make($request->password),
                 'remember_token' => null, 
@@ -41,7 +38,6 @@ class ResetPasswordController extends Controller
             return redirect()->route('login')->with('message', 'Password has been reset successfully!');
         }
     
-        // Invalid token or email
         return back()->withErrors(['email' => 'Invalid token or email']);
     }
     
