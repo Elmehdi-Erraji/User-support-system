@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -20,36 +21,38 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+// Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-
 Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot-password');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])->name('showResetForm');
-
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+// Auth routes endss here
 
 
 
 
+Route::resource('users' , UsersController::class);
 
 
 
 
-
-Route::get('dash', function (){
+Route::get('dashboard', function (){
     return view('dash');
-})->name('dash');
+})->name('dashboard');
 
 
+// Route::get('users_index', function (){
+//     return view('dashboard.admin.users.index');
+// })->name('users_index');
+
+// Route::get('users_edit', function (){
+//     return view('dashboard.admin.users.edit');
+// })->name('users_edit');
 
 
 
