@@ -23,6 +23,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 // Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,19 +37,34 @@ Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 // Auth routes endss here
 
+//departments routes start here
+Route::resource('department' , DepartmentsController::class);
+Route::put('department/{id}/restore', [DepartmentsController::class , 'restore'])->name('department.restore');
+Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'forceDelete'])->name('department.forceDelete');
+//departments routes ends here
 
+//categories routes start here
+Route::resource('categories' , CategoriesController::class);
+//categories routes ends here
 
 
 Route::resource('users' , UsersController::class);
-Route::resource('categories' , CategoriesController::class);
-// Route::resource('faqs' , FaqsController::class);
+Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('users.restore');
+Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
 
 
 
-Route::resource('department' , DepartmentsController::class);
 
-Route::put('department/{id}/restore', [DepartmentsController::class , 'restore'])->name('department.restore');
-Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'forceDelete'])->name('department.forceDelete');
+
+
+
+
+
+
+
+
+
+
 
 
 

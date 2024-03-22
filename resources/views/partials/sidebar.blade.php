@@ -41,10 +41,10 @@
                 <div class="collapse" id="sidebarUsers">
                     <ul class="side-nav-third-level">
                         <li>
-                            <a href="#">Add A User</a>
+                            <a href="{{route('users.index')}}">Users List</a>
                         </li>
                         <li>
-                            <a href="#">Users List</a>
+                            <a href="{{route('users.create')}}">Add A User</a>
                         </li>
                     </ul>
                 </div>
@@ -59,10 +59,10 @@
         <div class="collapse" id="sidebarDepartments">
             <ul class="side-nav-third-level">
                 <li>
-                    <a href="#">Add Department</a>
+                    <a href="{{route('department.index')}}">Department List</a>
                 </li>
                 <li>
-                    <a href="#">Department List</a>
+                    <a href="{{route('department.create')}}">Add Department</a>
                 </li>
             </ul>
         </div>
@@ -95,10 +95,10 @@
         <div class="collapse" id="sidebarCategories">
             <ul class="side-nav-third-level">
                 <li>
-                    <a href="#">Add Category</a>
+                    <a href="{{route('categories.index')}}">Category List</a>
                 </li>
                 <li>
-                    <a href="#">Category List</a>
+                    <a href="{{route('categories.create')}}">Add Category</a>
                 </li>
             </ul>
         </div>
@@ -106,7 +106,7 @@
     <!-- Tickets -->
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarTickets" aria-expanded="false" aria-controls="sidebarTickets" class="side-nav-link">
-            <i class="ri-ticket-line"></i> <!-- Choose an appropriate icon -->
+            <i class="ri-ticket-line"></i> 
             <span> Tickets </span>
             <span class="menu-arrow"></span>
         </a>

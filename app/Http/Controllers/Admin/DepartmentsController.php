@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 class DepartmentsController extends Controller
 {
     public function index()
-{
-    $departments = Department::withTrashed()->get();
-    return view('dashboard.admin.department.index', compact('departments'));
-}
+    {
+        $departments = Department::withTrashed()->get();
+        return view('dashboard.admin.department.index', compact('departments'));
+    }
 
     public function create()
     {

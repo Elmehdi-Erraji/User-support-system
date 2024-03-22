@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('status');
             $table->text('ban_reason')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();
+            $table->softDeletes();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->rememberToken()->nullable();
             $table->timestamps();
