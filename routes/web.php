@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -37,6 +39,9 @@ Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']
 
 
 Route::resource('users' , UsersController::class);
+Route::resource('categories' , CategoriesController::class);
+// Route::resource('faqs' , FaqsController::class);
+Route::resource('department' , DepartmentsController::class);
 
 
 

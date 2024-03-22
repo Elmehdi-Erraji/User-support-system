@@ -29,7 +29,9 @@
                         <div class="p-3">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button type="button" class="btn btn-primary" style="width: 40%" data-bs-toggle="modal" data-bs-target="#add-category-modal">Add A Category</button>
+                                    {{-- <button type="button" class="btn btn-primary" style="width: 40%" data-bs-toggle="modal" data-bs-target="#add-department-modal">Add A Department</button> --}}
+                                    
+                                    <a href="{{route('department.create')}}"><button type="button" class="btn btn-primary" style="width: 40%" >Add A Department</button></a>
 
                                 </div>
                             </div>
@@ -45,19 +47,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{-- @foreach($categories as $category)
+                                @foreach($departments as $department)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $department->id }}</td>
+                                        <td>{{ $department->name }}</td>
                                         <td>
-                                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
+                                            <form action="{{route('department.destroy' , $department->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
                                             </form>
+                                            <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary">Update</a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -76,30 +79,56 @@
                 </div>
             </div>
         </div>
-        <div id="add-category-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        {{-- the create moda start --}}
+        <div id="add-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form id="add-category-form" action="" method="POST" class="ps-3 pe-3">
+                        <form id="add-category-form" action="{{ route('department.store') }}" method="POST" class="ps-3 pe-3">
                             @csrf
                             <div class="mb-3">
-                                <label for="category-name" class="form-label">Category Name</label>
-                                <input class="form-control" type="text"  id="category-name" name="name" placeholder="Enter category name">
+                                <label for="category-name" class="form-label">Department Name</label>
+                                <input class="form-control" type="text" id="category-name" name="name" placeholder="Enter department name">
                                 @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3 text-center">
-                                <button class="btn rounded-pill btn-primary" type="submit" id="add-category-btn">Add Category</button>
+                                <button class="btn rounded-pill btn-primary" type="submit" id="add-category-btn">Add Department</button>
                             </div>
                         </form>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>
+            </div>
         </div>
+        {{-- the create moda end --}}
+
+        <div id="update-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form id="update-category-form" method="POST" class="ps-3 pe-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="department-name" class="form-label">Department Name</label>
+                                <input class="form-control" type="text" id="department-name" name="name" placeholder="Enter updated department name" value="{{ old('name') }}" data-name="{{ $department->name }}">
+                                @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3 text-center">
+                                <button class="btn rounded-pill btn-primary" type="submit" id="update-category-btn">Update Department</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
     </div>
-
-
+   
 
 @endsection
 
