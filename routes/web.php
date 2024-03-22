@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentsController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -47,13 +48,14 @@ Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'f
 Route::resource('categories' , CategoriesController::class);
 //categories routes ends here
 
-
+//users routes start here
 Route::resource('users' , UsersController::class);
 Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('users.restore');
 Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
+//users routes ends here
 
 
-
+Route::resource('Faq', FaqController::class);
 
 
 

@@ -24,6 +24,7 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
+      
         $user = User::create($request->all());
         $user->addMediaFromRequest('avatar')->usingName($user->name)->toMediaCollection('avatars','avatars');
         $user->roles()->attach($request->role);

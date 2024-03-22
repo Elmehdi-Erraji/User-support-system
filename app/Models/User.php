@@ -27,6 +27,7 @@ class User extends Authenticatable implements HasMedia
         'password',
         'status',
         'ban_reason',
+        'department_id',
     ];
 
     /**

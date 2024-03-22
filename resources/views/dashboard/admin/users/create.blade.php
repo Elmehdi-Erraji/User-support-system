@@ -79,13 +79,13 @@
                                     </div>
                                     
                                     <div class="mb-3" id="departmentInput" style="display: none;">
-                                        <label for="department" class="form-label">Department</label>
-                                        <select class="form-select @error('department') is-invalid @enderror" id="department" name="department">
+                                        <label for="department_id" class="form-label">Department</label>
+                                        <select class="form-select @error('department_id') is-invalid @enderror" id="department_id" name="department_id">
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('department')
+                                        @error('department_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
