@@ -17,10 +17,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Welcome!</li>
+                            <li class="breadcrumb-item active">Categories!</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Create a user here </h4>
+                    <h4 class="page-title">Create a category here </h4>
                 </div>
             </div>
         </div>
@@ -31,24 +31,36 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="header-title">Add a new user</h4>
+                        <h4 class="header-title">Add a new category</h4>
 
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{route('department.store')}}" method="POST" >
+                                <form action="{{route('categories.store')}}" method="POST" >
                                     @csrf
                                 
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Department Name</label>
-                                        <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Department Name" value="{{ old('name') }}">
+                                        <label for="name" class="form-label">Category Name</label>
+                                        <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Category Name" value="{{ old('name') }}">
                                         @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+
+                                        <div class="mb-3" id="departmentInput" >
+                                            <label for="department" class="form-label">Department</label>
+                                            <select class="form-select @error('department') is-invalid @enderror" id="department" name="department_id">
+                                                @foreach ($departments as $department)
+                                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('department')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <button type="submit" id="submitButton" class="btn btn-primary" name="addUser">Submit</button>
-                                    <a href="{{ route('department.index') }}" class="btn btn-dark">Back</a>
+                                    <button type="submit" id="submitButton" class="btn btn-primary" >Submit</button>
+                                    <a href="{{ route('categories.index') }}" class="btn btn-dark">Back</a>
                                 </form>
                                 
 

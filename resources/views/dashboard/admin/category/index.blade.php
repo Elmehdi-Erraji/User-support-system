@@ -13,7 +13,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Welcome!</li>
+                            <li class="breadcrumb-item active">Categories!</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Welcome!</h4>
@@ -29,8 +29,7 @@
                         <div class="p-3">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button type="button" class="btn btn-primary" style="width: 40%" data-bs-toggle="modal" data-bs-target="#add-category-modal">Add A Category</button>
-
+                                    <a href="{{route('categories.create')}}"><button type="button" class="btn btn-primary" style="width: 40%" >Add A Category</button></a>
                                 </div>
                             </div>
                         </div>
@@ -41,23 +40,26 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Department</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{-- @foreach($categories as $category)
+                                @foreach($categories as $category)
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
+                                        <td>{{ $category->department->name }}</td>
                                         <td>
-                                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
                                             </form>
+                                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Update</a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -76,27 +78,7 @@
                 </div>
             </div>
         </div>
-        <div id="add-category-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form id="add-category-form" action="" method="POST" class="ps-3 pe-3">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="category-name" class="form-label">Category Name</label>
-                                <input class="form-control" type="text"  id="category-name" name="name" placeholder="Enter category name">
-                                @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 text-center">
-                                <button class="btn rounded-pill btn-primary" type="submit" id="add-category-btn">Add Category</button>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
+      
     </div>
 
 

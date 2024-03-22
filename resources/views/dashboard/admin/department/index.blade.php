@@ -28,11 +28,8 @@
                     <div class="card-body p-0">
                         <div class="p-3">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    {{-- <button type="button" class="btn btn-primary" style="width: 40%" data-bs-toggle="modal" data-bs-target="#add-department-modal">Add A Department</button> --}}
-                                    
+                                <div class="col-lg-6">                                 
                                     <a href="{{route('department.create')}}"><button type="button" class="btn btn-primary" style="width: 40%" >Add A Department</button></a>
-
                                 </div>
                             </div>
                         </div>
