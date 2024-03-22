@@ -47,20 +47,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($departments as $department)
+                                    @if(isset($departments) && $departments->isNotEmpty())
+                                    @foreach($departments as $department)
                                     <tr>
                                         <td>{{ $department->id }}</td>
                                         <td>{{ $department->name }}</td>
                                         <td>
-                                            <form action="{{route('department.destroy' , $department->id)}}" method="POST" class="d-inline">
+                                            @if($department->trashed())
+                                            <form action="{{ route('department.restore', $department->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                                            </form>
+                                            <form action="{{ route('department.forceDelete', $department->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Permanently Delete</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('department.destroy', $department->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
                                             </form>
                                             <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary">Update</a>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="3">No departments found.</td>
+                                </tr>
+                            @endif
                                 </tbody>
                             </table>
                         </div>
@@ -79,54 +98,7 @@
                 </div>
             </div>
         </div>
-        {{-- the create moda start --}}
-        <div id="add-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form id="add-category-form" action="{{ route('department.store') }}" method="POST" class="ps-3 pe-3">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="category-name" class="form-label">Department Name</label>
-                                <input class="form-control" type="text" id="category-name" name="name" placeholder="Enter department name">
-                                @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 text-center">
-                                <button class="btn rounded-pill btn-primary" type="submit" id="add-category-btn">Add Department</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- the create moda end --}}
-
-        <div id="update-department-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <form id="update-category-form" method="POST" class="ps-3 pe-3">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <label for="department-name" class="form-label">Department Name</label>
-                                <input class="form-control" type="text" id="department-name" name="name" placeholder="Enter updated department name" value="{{ old('name') }}" data-name="{{ $department->name }}">
-                                @error('name')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 text-center">
-                                <button class="btn rounded-pill btn-primary" type="submit" id="update-category-btn">Update Department</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-       
-
+      
     </div>
    
 

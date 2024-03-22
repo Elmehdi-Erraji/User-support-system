@@ -17,10 +17,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Welcome!</li>
+                            <li class="breadcrumb-item active">Departments!</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Create a user here </h4>
+                    <h4 class="page-title">Departments</h4>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="header-title">Add a new user</h4>
+                        <h4 class="header-title">Department Update</h4>
 
                     </div>
                     <div class="card-body">

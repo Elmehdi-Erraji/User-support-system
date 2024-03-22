@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 class DepartmentsController extends Controller
 {
     public function index()
-    {
-        $departments = Department::all();
-        return view('dashboard.admin.department.index',compact('departments'));
-    }
+{
+    $departments = Department::withTrashed()->get();
+    return view('dashboard.admin.department.index', compact('departments'));
+}
 
     public function create()
     {
@@ -39,12 +39,34 @@ class DepartmentsController extends Controller
         return redirect()->route('department.index')->with('success','Department updated successfully');
     }
 
+    public function restore($id)
+    {
+        $department = Department::withTrashed()->findOrFail($id);
+        
+        if ($department->trashed()) {
+            $department->restore();
+            return redirect()->route('department.index')->with('success', 'Department restored successfully');
+        } else {
+            return redirect()->route('department.index')->with('error', 'Department is not soft deleted');
+        }
+    }
+
     public function destroy($id)
     {
         $department = Department::findOrFail($id);
         $department->delete();
         return redirect()->route('department.index')->with('success','Department deleted successfully');
     }
-       
+    public function forceDelete($id)
+    {
+        $department = Department::withTrashed()->findOrFail($id);
+        
+        if ($department->trashed()) {
+            $department->forceDelete();
+            return redirect()->route('department.index')->with('success', 'Department permanently deleted');
+        } else {
+            return redirect()->route('department.index')->with('error', 'Department is not soft deleted');
+        }
+    }
     
 }

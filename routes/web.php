@@ -41,8 +41,13 @@ Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']
 Route::resource('users' , UsersController::class);
 Route::resource('categories' , CategoriesController::class);
 // Route::resource('faqs' , FaqsController::class);
+
+
+
 Route::resource('department' , DepartmentsController::class);
 
+Route::put('department/{id}/restore', [DepartmentsController::class , 'restore'])->name('department.restore');
+Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'forceDelete'])->name('department.forceDelete');
 
 
 
