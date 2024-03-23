@@ -46,6 +46,7 @@
                                     <th>Phone</th>
                                     <th>Status</th>
                                     <th>Role</th>
+                                    <th>Department</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -78,6 +79,11 @@
                                         <td>
                                             @if ($user->roles()->exists())
                                                 {{ $user->roles()->first()->name }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->department_id)
+                                                {{ $user->department->name }}
                                             @endif
                                         </td>
                                         <td>

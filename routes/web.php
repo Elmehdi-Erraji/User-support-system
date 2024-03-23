@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\TickesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -56,6 +57,9 @@ Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete
 
 
 Route::resource('Faq', FaqController::class);
+
+Route::resource('ticket', TickesController::class);
+
 
 
 

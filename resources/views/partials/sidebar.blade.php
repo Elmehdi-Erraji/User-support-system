@@ -49,10 +49,27 @@
                     </ul>
                 </div>
             </li>
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarClients" aria-expanded="false" aria-controls="sidebarClients" class="side-nav-link">
+                    <i class="ri-user-line"></i>
+                    <span> Clients </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarClients">
+                    <ul class="side-nav-third-level">
+                        <li>
+                            <a href="#">Clients List</a>
+                        </li>
+                        <li>
+                            <a href="#">Add A Client</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         <!-- Departments -->
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarDepartments" aria-expanded="false" aria-controls="sidebarDepartments" class="side-nav-link">
-            <i class="ri-building-line"></i> <!-- Choose an appropriate icon -->
+            <i class="ri-building-line"></i> 
             <span> Departments </span>
             <span class="menu-arrow"></span>
         </a>
@@ -70,25 +87,25 @@
 
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
-            <i class="ri-question-line"></i> <!-- Choose an appropriate icon -->
+            <i class="ri-question-line"></i> 
             <span> FAQs </span>
             <span class="menu-arrow"></span>
         </a>
         <div class="collapse" id="sidebarFAQs">
             <ul class="side-nav-third-level">
                 <li>
-                    <a href="#">Add FAQ</a>
+                    <a href="{{route('Faq.index')}}">FAQ List</a>
                 </li>
                 <li>
-                    <a href="#">FAQ List</a>
+                    <a href="{{route('Faq.create')}}">Add FAQ</a>
                 </li>
             </ul>
         </div>
     </li>
-    <!-- Categories -->
+    
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarCategories" aria-expanded="false" aria-controls="sidebarCategories" class="side-nav-link">
-            <i class="ri-menu-2-line"></i> <!-- Choose an appropriate icon -->
+            <i class="ri-menu-2-line"></i> 
             <span> Categories </span>
             <span class="menu-arrow"></span>
         </a>
@@ -103,7 +120,6 @@
             </ul>
         </div>
     </li>
-    <!-- Tickets -->
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarTickets" aria-expanded="false" aria-controls="sidebarTickets" class="side-nav-link">
             <i class="ri-ticket-line"></i> 
@@ -113,17 +129,17 @@
         <div class="collapse" id="sidebarTickets">
             <ul class="side-nav-third-level">
                 <li>
-                    <a href="#">Open a Ticket</a>
+                    <a href="{{route('ticket.index')}}">Ticket List</a>
                 </li>
                 <li>
-                    <a href="#">Ticket List</a>
+                    <a href="{{route('ticket.index')}}">Add Ticket</a>
                 </li>
             </ul>
         </div>
     </li>
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarNewsletters" aria-expanded="false" aria-controls="sidebarNewsletters" class="side-nav-link">
-            <i class="ri-mail-send-line"></i> <!-- Choose an appropriate icon -->
+            <i class="ri-mail-send-line"></i> 
             <span> Newsletters </span>
             <span class="menu-arrow"></span>
         </a>

@@ -84,9 +84,6 @@
                                     <button type="submit" id="updateButton" class="btn btn-primary">Update</button>
                                     <a href="{{ route('Faq.index') }}" class="btn btn-dark">Back</a>
                                 </form>
-                                
-
-
                             </div>
                         </div>
 

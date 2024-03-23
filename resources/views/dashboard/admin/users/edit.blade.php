@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="mb-3" id="departmentInput" style="display: none;">
                                         <label for="department" class="form-label">Department</label>
-                                        <select class="form-select @error('department') is-invalid @enderror" id="department" name="department">
+                                        <select class="form-select @error('department') is-invalid @enderror" id="department" name="department_id">
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
                                             @endforeach
@@ -88,7 +88,6 @@
                                         var userStatusSelect = document.getElementById('user_status');
                                         var banReasonField = document.getElementById('banReasonField');
                                 
-                                        // Function to show or hide the reason field based on user status
                                         function toggleReasonField() {
                                             if (userStatusSelect.value === '3') {
                                                 banReasonField.style.display = 'block';
@@ -97,21 +96,15 @@
                                             }
                                         }
                                 
-                                        // Initial call to toggleReasonField to set initial state
                                         toggleReasonField();
                                 
-                                        // Event listener for change in user status select
                                         userStatusSelect.addEventListener('change', function () {
                                             toggleReasonField();
                                         });
                                 
-                                        // Event listener for form submission
                                         form.addEventListener('submit', function (event) {
-                                            // Check if the user is banned and reason field is empty
                                             if (userStatusSelect.value === '3' && !document.getElementById('ban_reason').value.trim()) {
-                                                // Prevent form submission
                                                 event.preventDefault();
-                                                // Display an error message to the user
                                                 alert('Please provide a reason for banning the user.');
                                             }
                                         });
