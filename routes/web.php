@@ -59,6 +59,8 @@ Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete
 Route::resource('Faq', FaqController::class);
 
 Route::resource('ticket', TickesController::class);
+Route::put('/tickets/{id}/restore', [TickesController::class , 'restore'])->name('tickets.restore');
+Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDelete'])->name('tickets.force-delete');
 
 
 
