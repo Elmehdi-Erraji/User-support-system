@@ -48,11 +48,11 @@
                 <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
                    <span class="account-user-avatar">
-                    {{-- @if (Auth::user()->getFirstMedia('avatars'))
+                    @if (Auth::user()->getFirstMedia('avatars'))
                          <img src="{{ Auth::user()->getFirstMedia('avatars')->getUrl() }}" class="rounded-circle" alt="Avatar" width="50">
-                     @else @endif --}}
+                     @else 
                          <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-                    
+                    @endif
                  </span>
                     <span class="d-lg-block d-none">
                         <h5 class="my-0 fw-normal"> <i
@@ -66,7 +66,7 @@
                     </div>
 
                     <!-- item-->
-                    <a href="" class="dropdown-item">
+                    <a href="{{route('profile.index')}}" class="dropdown-item">
                         <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
                         <span>My Account</span>
                     </a>

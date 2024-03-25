@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
 
 // Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
@@ -55,15 +54,18 @@ Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('u
 Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
 //users routes ends here
 
-
+//Faq's routes start here
 Route::resource('Faq', FaqController::class);
+//Faq's routes ends here
 
+//tickets routes start here
 Route::resource('ticket', TickesController::class);
 Route::put('/tickets/{id}/restore', [TickesController::class , 'restore'])->name('tickets.restore');
 Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDelete'])->name('tickets.force-delete');
+//tickets routes ends here
 
 
-
+Route::resource('profile', ProfileController::class);
 
 
 
