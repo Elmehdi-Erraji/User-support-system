@@ -14,8 +14,31 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(3)->create()->each(function($user){
-            $user->roles()->attach(Role::inRandomOrder()->limit(rand(1,2))->pluck('id'));
-        });
-    }
+             $admin = User::factory()->create([
+                'email' => 'admin@mail.com',
+                'password' => bcrypt('admin@mail.com'), // Password is the same as email
+                'phone' => $this->generatePhoneNumber(),
+            ]);
+            $admin->roles()->attach(Role::where('name', 'admin')->first()->id);
+    
+            $supportAgent = User::factory()->create([
+                'email' => 'support@mail.com',
+                'password' => bcrypt('support@mail.com'), // Password is the same as email
+                'phone' => $this->generatePhoneNumber(),
+            ]);
+            $supportAgent->roles()->attach(Role::where('name', 'support_agent')->first()->id);
+    
+            $client = User::factory()->create([
+                'email' => 'client@mail.com',
+                'password' => bcrypt('client@mail.com'), // Password is the same as email
+                'phone' => $this->generatePhoneNumber(),
+            ]);
+            $client->roles()->attach(Role::where('name', 'client')->first()->id);
+        }
+    
+        private function generatePhoneNumber()
+        {
+            return '0' . mt_rand(100000000, 999999999); // Generates a 10-digit random number starting with 0
+        }
+    
 }

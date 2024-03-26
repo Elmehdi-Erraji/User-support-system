@@ -52,7 +52,7 @@
                                         <label for="department" class="form-label">Department</label>
                                         <select class="form-select @error('department_id') is-invalid @enderror" id="department" name="department_id">
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                                                <option value="{{ $department->id }}" {{ $category->department_id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('department_id')

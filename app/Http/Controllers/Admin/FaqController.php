@@ -18,7 +18,7 @@ class FaqController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->get();
         return view('dashboard.admin.faq.create',compact('categories'));
     }
 

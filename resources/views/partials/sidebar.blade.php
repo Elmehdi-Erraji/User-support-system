@@ -22,7 +22,7 @@
     <!-- Sidebar -left -->
     <div class="h-100" id="leftside-menu-container" >
 
-       
+        @if(auth()->user()->roles()->first()->name == 'admin')
         <ul class="side-nav">
             <li class="side-nav-title">Main</li>
             <li class="side-nav-item">
@@ -67,96 +67,78 @@
                 </div>
             </li>
         <!-- Departments -->
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarDepartments" aria-expanded="false" aria-controls="sidebarDepartments" class="side-nav-link">
-            <i class="ri-building-line"></i> 
-            <span> Departments </span>
-            <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarDepartments">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="{{route('department.index')}}">Department List</a>
-                </li>
-                <li>
-                    <a href="{{route('department.create')}}">Add Department</a>
-                </li>
-            </ul>
-        </div>
-    </li>
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarDepartments" aria-expanded="false" aria-controls="sidebarDepartments" class="side-nav-link">
+                <i class="ri-building-line"></i> 
+                <span> Departments </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarDepartments">
+                <ul class="side-nav-third-level">
+                    <li>
+                        <a href="{{route('department.index')}}">Department List</a>
+                    </li>
+                    <li>
+                        <a href="{{route('department.create')}}">Add Department</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
-            <i class="ri-question-line"></i> 
-            <span> FAQs </span>
-            <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarFAQs">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="{{route('Faq.index')}}">FAQ List</a>
-                </li>
-                <li>
-                    <a href="{{route('Faq.create')}}">Add FAQ</a>
-                </li>
-            </ul>
-        </div>
-    </li>
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
+                <i class="ri-question-line"></i> 
+                <span> FAQs </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarFAQs">
+                <ul class="side-nav-third-level">
+                    <li>
+                        <a href="{{route('Faq.index')}}">FAQ List</a>
+                    </li>
+                    <li>
+                        <a href="{{route('Faq.create')}}">Add FAQ</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarCategories" aria-expanded="false" aria-controls="sidebarCategories" class="side-nav-link">
-            <i class="ri-menu-2-line"></i> 
-            <span> Categories </span>
-            <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarCategories">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="{{route('categories.index')}}">Category List</a>
-                </li>
-                <li>
-                    <a href="{{route('categories.create')}}">Add Category</a>
-                </li>
-            </ul>
-        </div>
-    </li>
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarTickets" aria-expanded="false" aria-controls="sidebarTickets" class="side-nav-link">
-            <i class="ri-ticket-line"></i> 
-            <span> Tickets </span>
-            <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarTickets">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="{{route('ticket.index')}}">Ticket List</a>
-                </li>
-                <li>
-                    <a href="{{route('ticket.index')}}">Add Ticket</a>
-                </li>
-            </ul>
-        </div>
-    </li>
-    <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarNewsletters" aria-expanded="false" aria-controls="sidebarNewsletters" class="side-nav-link">
-            <i class="ri-mail-send-line"></i> 
-            <span> Newsletters </span>
-            <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarNewsletters">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="#">Create Newsletter</a>
-                </li>
-                <li>
-                    <a href="#">Newsletter List</a>
-                </li>
-            </ul>
-        </div>
-    </li>
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarCategories" aria-expanded="false" aria-controls="sidebarCategories" class="side-nav-link">
+                <i class="ri-menu-2-line"></i> 
+                <span> Categories </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarCategories">
+                <ul class="side-nav-third-level">
+                    <li>
+                        <a href="{{route('categories.index')}}">Category List</a>
+                    </li>
+                    <li>
+                        <a href="{{route('categories.create')}}">Add Category</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#sidebarTickets" aria-expanded="false" aria-controls="sidebarTickets" class="side-nav-link">
+                <i class="ri-ticket-line"></i> 
+                <span> Tickets </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="sidebarTickets">
+                <ul class="side-nav-third-level">
+                    <li>
+                        <a href="{{route('ticket.index')}}">Ticket List</a>
+                    </li>
+                    <li>
+                        <a href="{{route('ticket.index')}}">Add Ticket</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    @endif
             
-       
-
          {{-- @if(auth()->user()->roles()->first()->name == 'orgonizer')
         <ul class="side-nav">
             <li class="side-nav-title">Main</li>

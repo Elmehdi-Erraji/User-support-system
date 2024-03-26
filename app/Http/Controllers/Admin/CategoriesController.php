@@ -12,14 +12,14 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('department_id')->get();
        
         return view('dashboard.admin.category.index',compact('categories'));
     }
 
     public function create()
     { 
-        $departments = Department::all();
+        $departments = Department::orderBy('name')->get();
         return view('dashboard.admin.category.create',compact('departments'));
     }
 
