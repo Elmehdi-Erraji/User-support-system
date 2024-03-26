@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">Welcome!</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Welcome!</h4>
+                    <h4 class="page-title">Departmetns!</h4>
                 </div>
             </div>
         </div>

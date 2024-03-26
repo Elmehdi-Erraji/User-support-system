@@ -50,32 +50,36 @@
                                 </thead>
                                 <tbody id="tableBody">
                                     @foreach ($faqs as $faq)
-                                        <tr>
-                                            <td>{{ $faq->id }}</td>
-                                            <td>{{ strlen($faq->question) > 25 ? substr($faq->question, 0, 25) . '...' : $faq->question }}</td>
-                                            <td>{{ strlen($faq->answer) > 25 ? substr($faq->answer, 0, 25) . '...' : $faq->answer }}</td>
+                                    <tr>
+                                        <td>{{ $faq->id }}</td>
+                                        <td>{{ strlen($faq->question) > 25 ? substr($faq->question, 0, 25) . '...' : $faq->question }}</td>
+                                        <td>{{ strlen($faq->answer) > 25 ? substr($faq->answer, 0, 25) . '...' : $faq->answer }}</td>
+                                        @if($faq->category_id == null)
+                                            <td>No Category</td>
+                                        @else
                                             <td>{{ $faq->category->name }}</td>
-                                            <td>{{ $faq->user->name }}</td>
-                                            <td>
-                                                @if ($faq->status === 1)
-                                                    <span class="badge bg-info-subtle text-info">Pending</span>
-                                                @elseif ($faq->status === 2)
-                                                    <span class="badge bg-warning-subtle text-warning">Published</span>
-                                                @elseif ($faq->status === 3)
-                                                    <span class="badge bg-pink-subtle text-pink">Inactive</span>
-                                                @else
-                                                    <span class="badge bg-warning">Unknown Status</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <form action="{{ route('Faq.destroy', $faq->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
-                                                </form>
-                                                <a href="{{ route('Faq.edit', $faq->id) }}" class="btn btn-sm btn-primary">Update</a>
-                                            </td>
-                                        </tr>
+                                        @endif
+                                        <td>{{ $faq->user->name }}</td>
+                                        <td>
+                                            @if ($faq->status === 1)
+                                                <span class="badge bg-info-subtle text-info">Pending</span>
+                                            @elseif ($faq->status === 2)
+                                                <span class="badge bg-warning-subtle text-warning">Published</span>
+                                            @elseif ($faq->status === 3)
+                                                <span class="badge bg-pink-subtle text-pink">Inactive</span>
+                                            @else
+                                                <span class="badge bg-warning">Unknown Status</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('Faq.destroy', $faq->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                            </form>
+                                            <a href="{{ route('Faq.edit', $faq->id) }}" class="btn btn-sm btn-primary">Update</a>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>

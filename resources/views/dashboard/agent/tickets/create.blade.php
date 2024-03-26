@@ -37,9 +37,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{ route('ticket.store') }}" method="POST" id="addTicketForm" enctype="multipart/form-data">
+                                <form action="{{ route('agent_ticket.store') }}" method="POST" id="addTicketForm" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    <input type="hidden" name="user_id" value="1">
                                     <div class="mb-3">
                                         <label for="title" class="form-label">Title</label>
                                         <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Ticket Title" value="{{ old('title') }}">

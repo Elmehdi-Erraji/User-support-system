@@ -11,6 +11,9 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+use App\Http\Controllers\Client\TicketsController as ClientTicketsController;
+use App\Http\Controllers\Agent\TicketsController as AgentTicketsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,7 +72,25 @@ Route::resource('profile', ProfileController::class);
 
 
 
+Route::resource('client_ticket', ClientTicketsController::class);
+Route::resource('agent_ticket', AgentTicketsController::class);
 
+
+
+
+
+// Route::middleware(['admin'])->group(function () {
+  
+// });
+// Route::middleware(['agent'])->group(function () {
+  
+// });
+// Route::middleware(['client'])->group(function () {
+  
+// });
+// Route::middleware(['auth'])->group(function () {
+  
+// });
 
 
 
@@ -92,7 +113,9 @@ Route::get('dashboard', function (){
 // })->name('users_edit');
 
 
-
+Route::get('client_faq', function (){
+    return view('faq');
+})->name('client_faq');
 
 Route::get('home', function (){
     return view('home');

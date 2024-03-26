@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{ route('ticket.store') }}" method="POST" id="addTicketForm" enctype="multipart/form-data">
+                                <form action="{{ route('client_ticket.store') }}" method="POST" id="addTicketForm" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                     <div class="mb-3">

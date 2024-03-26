@@ -49,7 +49,12 @@
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->department->name }}</td>
+                                        @if ($category->department_id == Null){
+                                            <td>No Department name</td>
+                                        }@else {
+                                            <td>{{ $category->department->name }}</td>
+                                        }
+                                        @endif
                                         <td>
                                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
                                                 @csrf

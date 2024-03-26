@@ -17,7 +17,7 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Departments!</li>
+                            <li class="breadcrumb-item active">Departmetns!</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Create a Department </h4>

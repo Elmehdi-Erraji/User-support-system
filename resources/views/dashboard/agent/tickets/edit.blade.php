@@ -37,12 +37,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{ route('ticket.store') }}" method="POST" id="addTicketForm" enctype="multipart/form-data">
+                                <form action="{{ route('ticket.update', $ticket->id) }}" method="POST" id="updateTicketForm" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    @method('PUT') <!-- Use PUT method for updating -->
+                                
                                     <div class="mb-3">
                                         <label for="title" class="form-label">Title</label>
-                                        <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Ticket Title" value="{{ old('title') }}">
+                                        <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Ticket Title" value="{{ $ticket->title }}">
                                         @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -50,7 +51,7 @@
                                 
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Description</label>
-                                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="4" placeholder="Ticket Description">{{ old('description') }}</textarea>
+                                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="4" placeholder="Ticket Description">{{ $ticket->description }}</textarea>
                                         @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -61,22 +62,22 @@
                                             <div class="mb-3">
                                                 <label for="priority" class="form-label">Priority</label>
                                                 <select id="priority" class="form-select @error('priority') is-invalid @enderror" name="priority">
-                                                    <option value="low">Low</option>
-                                                    <option value="medium">Medium</option>
-                                                    <option value="high">High</option>
+                                                    <option value="low" {{ $ticket->priority == 'low' ? 'selected' : '' }}>Low</option>
+                                                    <option value="medium" {{ $ticket->priority == 'medium' ? 'selected' : '' }}>Medium</option>
+                                                    <option value="high" {{ $ticket->priority == 'high' ? 'selected' : '' }}>High</option>
                                                 </select>
                                                 @error('priority')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                    
+                                
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="category_id" class="form-label">Category</label>
                                                 <select id="category_id" class="form-select @error('category_id') is-invalid @enderror" name="category_id">
                                                     @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('category_id')
@@ -85,18 +86,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    
+                                
+                                    {{-- Attachment field --}}
                                     {{-- <div class="mb-3">
                                         <label for="attachment" class="form-label">Attachment</label>
                                         <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="attachment" name="attachment[]" multiple>
                                         @error('attachment')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                    </div>
-                                 --}}
-                                    <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                                    </div> --}}
+                                
+                                    <button type="submit" id="submitButton" class="btn btn-primary">Update</button>
                                 </form>
+                                
                                 
                                 
 
