@@ -113,6 +113,10 @@ Route::get('dashboard', function (){
 // })->name('users_edit');
 
 
+Route::get('ticket_show_for_client', function (){
+    return view('show');
+})->name('ticket_show_for_client');
+
 Route::get('client_faq', function (){
     return view('faq');
 })->name('client_faq');

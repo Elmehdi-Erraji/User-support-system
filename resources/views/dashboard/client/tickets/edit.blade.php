@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{ route('ticket.update', $ticket->id) }}" method="POST" id="updateTicketForm" enctype="multipart/form-data">
+                                <form action="{{ route('client_ticket.update', $ticket->id) }}" method="POST" id="updateTicketForm" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT') <!-- Use PUT method for updating -->
                                 
@@ -96,13 +96,13 @@
                                         @enderror
                                     </div> --}}
                                 
-                                    <button type="submit" id="submitButton" class="btn btn-primary">Update</button>
+                                   
+                                    <div class="mb-3">
+                                        <button type="submit" id="submitButton" class="btn btn-primary">Update</button>
+                                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Go Back</a>
+                                    </div>
                                 </form>
                                 
-                                
-                                
-
-
                             </div>
                         </div>
 
@@ -111,18 +111,6 @@
             </div>
         </div>
     </div>
-    <script>
-        const roleSelect = document.getElementById('role');
-        const departmentInput = document.getElementById('departmentInput');
-    
-        roleSelect.addEventListener('change', function() {
-            if (this.value === '2') {
-                departmentInput.style.display = 'block';
-            } else {
-                departmentInput.style.display = 'none';
-            }
-        });
-    </script>
-
+   
 @endsection
 

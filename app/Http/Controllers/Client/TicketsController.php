@@ -13,8 +13,16 @@ class TicketsController extends Controller
     public function index()
     {
         $user = Auth::user();
+        // $tickets = Ticket::where('user_id', $user->id)->withTrashed()->get();
         $tickets = Ticket::where('user_id', $user->id)->get();
         return view('dashboard.client.tickets.index', compact('tickets'));
+    }
+
+    public function show($id)
+    {
+        $ticket = Ticket::find($id);
+        $user = Auth::user();
+        return view('dashboard.client.tickets.show', compact('ticket','user'));
     }
 
     public function create()
@@ -25,43 +33,40 @@ class TicketsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $ticket = Ticket::create($request->all());
         return redirect()->route('client_ticket.index')->with('success', 'Ticket created successfully');
     }
 
-    public function edit(Ticket $ticket)
+    public function edit($id)
     {
-        $this->authorize('update', $ticket);
+        $ticket = Ticket::find($id);
         $categories = Category::all();
-        return view('dashboard.client.tickets.edit', compact('ticket', 'categories'));
+        return view('dashboard.client.tickets.edit',compact('ticket','categories'));
     }
 
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, $id)
     {
-        $this->authorize('update', $ticket);
+        $ticket = Ticket::find($id);
         $ticket->update($request->all());
-        return redirect()->route('client_ticket.index')->with('success', 'Ticket updated successfully');
+        return redirect()->route('client_ticket.index')->with('success','ticket updated successfully');
     }
 
-    public function destroy(Ticket $ticket)
+    public function destroy($id)
     {
-        $this->authorize('delete', $ticket);
+        $ticket = Ticket::findOrFail($id);
         $ticket->delete();
-        return redirect()->route('ticket.index')->with('success', 'Ticket deleted successfully');
+        return redirect()->route('client_ticket.index')->with('success','ticket deleted successfully');
     }
 
-    public function restore(Ticket $ticket)
+    public function restore($id)
     {
-        $this->authorize('restore', $ticket);
-        $ticket->restore();
-        return redirect()->route('ticket.index')->with('success', 'Ticket restored successfully.');
+        Ticket::withTrashed()->where('id', $id)->restore();
+        return redirect()->route('client_ticket.index')->with('success', 'Ticket restored successfully.');
     }
 
-    public function forceDelete(Ticket $ticket)
+    public function forceDelete($id)
     {
-        $this->authorize('forceDelete', $ticket);
-        $ticket->forceDelete();
-        return redirect()->route('ticket.index')->with('success', 'Ticket permanently deleted.');
+        Ticket::withTrashed()->where('id', $id)->forceDelete();
+        return redirect()->route('client_ticket.index')->with('success', 'Ticket permanently deleted.');
     }
 }
