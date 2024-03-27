@@ -163,7 +163,7 @@
             </div>
         </li>
 
-        <li class="side-nav-item">
+        {{-- <li class="side-nav-item">
             <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
                 <i class="ri-question-line"></i> 
                 <span> FAQs </span>
@@ -179,7 +179,7 @@
                     </li>      
                 </ul>          
             </div>
-        </li>
+        </li> --}}
     </ul>
 @endif
 

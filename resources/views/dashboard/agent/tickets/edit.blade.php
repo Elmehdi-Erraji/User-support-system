@@ -37,27 +37,27 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="{{ route('ticket.update', $ticket->id) }}" method="POST" id="updateTicketForm" enctype="multipart/form-data">
+                                <form action="{{ route('agent_ticket.update', $ticket->id) }}" method="POST" id="updateTicketForm" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT') <!-- Use PUT method for updating -->
-                                
-                                    <div class="mb-3">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" id="title" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Ticket Title" value="{{ $ticket->title }}">
-                                        @error('title')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="4" placeholder="Ticket Description">{{ $ticket->description }}</textarea>
-                                        @error('description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                
+                                    
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="status" class="form-label">Status</label>
+                                                <select id="statu" class="form-select @error('status') is-invalid @enderror" name="status">
+                                                    <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>Open</option>
+                                                    <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                                    <option value="on_hold" {{ $ticket->status == 'on_hold' ? 'selected' : '' }}>On Hold</option>
+                                                    <option value="resolved" {{ $ticket->status == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                                                    <option value="closed" {{ $ticket->status == 'closed' ? 'selected' : '' }}>Closed</option>
+                                                    <option value="wrong_category" {{ $ticket->status == 'wrong_category' ? 'selected' : '' }}>Wrong Category</option>
+                                                </select>
+                                                @error('status')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="priority" class="form-label">Priority</label>
@@ -72,32 +72,20 @@
                                             </div>
                                         </div>
                                 
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="category_id" class="form-label">Category</label>
-                                                <select id="category_id" class="form-select @error('category_id') is-invalid @enderror" name="category_id">
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('category_id')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+                                      
+                                        <div class="mb-3" id="motifContainer" style="display: none;">
+                                            <label for="motif" class="form-label">Explanation</label>
+                                            <textarea id="motif" class="form-control @error('motif') is-invalid @enderror" name="motif" rows="4" placeholder="Ticket Description">{{ old('motif') }}</textarea>
+                                            @error('motif')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
+                                        
+
                                     </div>
-                                
-                                    {{-- Attachment field --}}
-                                    {{-- <div class="mb-3">
-                                        <label for="attachment" class="form-label">Attachment</label>
-                                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="attachment" name="attachment[]" multiple>
-                                        @error('attachment')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
-                                
                                     <button type="submit" id="submitButton" class="btn btn-primary">Update</button>
                                 </form>
+                                
                                 
                                 
                                 
@@ -112,11 +100,11 @@
         </div>
     </div>
     <script>
-        const roleSelect = document.getElementById('role');
-        const departmentInput = document.getElementById('departmentInput');
+         const roleSelect = document.getElementById('statu');
+        const departmentInput = document.getElementById('motifContainer');
     
         roleSelect.addEventListener('change', function() {
-            if (this.value === '2') {
+            if (this.value === 'wrong_category') {
                 departmentInput.style.display = 'block';
             } else {
                 departmentInput.style.display = 'none';

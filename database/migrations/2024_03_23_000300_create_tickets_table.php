@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->enum('priority', ['low', 'medium', 'high']); 
-            $table->enum('status', ['open', 'in_progress', 'on_hold', 'resolved', 'closed']); 
+            // $table->enum('status', ['open', 'in_progress', 'on_hold', 'resolved', 'closed','wrong_category']); 
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('department_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

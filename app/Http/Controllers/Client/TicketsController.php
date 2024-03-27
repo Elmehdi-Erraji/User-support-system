@@ -72,6 +72,9 @@ class TicketsController extends Controller
     public function update(Request $request, $id)
     {
         $ticket = Ticket::find($id);
+        if ($ticket->status === 'wrong_category' && $request->has('category_id')) {
+            $ticket->status = 'open';
+        }
         $ticket->update($request->all());
         return redirect()->route('client_ticket.index')->with('success','ticket updated successfully');
     }

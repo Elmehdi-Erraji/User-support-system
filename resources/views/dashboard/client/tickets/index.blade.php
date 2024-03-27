@@ -54,6 +54,9 @@
                                 </thead>
                                 <tbody id="tableBody">
                                     @foreach ($tickets as $ticket)
+                                    {{-- @if ($ticket->status === 'wrong_category') 
+                                    <tr></tr>
+                                    @else --}}
                                     <tr>
                                         <td>{{ $ticket->id }}</td>
                                         <td>{{ $ticket->title }}</td>
@@ -82,6 +85,8 @@
                                             <span class="badge bg-success text-white">{{ ucfirst($ticket->status) }}</span>
                                             @elseif ($ticket->status === 'closed')
                                             <span class="badge bg-secondary text-white">{{ ucfirst($ticket->status) }}</span>
+                                            @elseif ($ticket->status === 'wrong_category')
+                                            <span class="badge bg-secondary text-red">{{ ucfirst($ticket->status) }}</span>
                                             @else
                                             <span class="badge bg-secondary text-white">Unknown Status</span>
                                             @endif
@@ -111,7 +116,8 @@
                                                 </form>
                                             @else
                                                 <a href="{{ route('client_ticket.edit', $ticket->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#scrollable-modal-{{ $ticket->id }}" data-ticket-id="{{ $ticket->id }}">View Details</button>                                                <form action="{{ route('client_ticket.destroy', $ticket->id) }}" method="POST" class="d-inline">
+                                                <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#scrollable-modal-{{ $ticket->id }}" data-ticket-id="{{ $ticket->id }}">View Details</button>  
+                                                <form action="{{ route('client_ticket.destroy', $ticket->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
@@ -120,6 +126,7 @@
                                         </td>
                                         
                                     </tr>
+
                                     <div class="modal fade" id="scrollable-modal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                             <div class="modal-content">
@@ -147,6 +154,9 @@
                                                                     @case('closed')
                                                                         <span class="badge bg-secondary text-white">{{ ucfirst($ticket->status) }}</span>
                                                                         @break
+                                                                        @case('wrong_category')
+                                                                        <span class="badge bg-secondary text-red">{{ ucfirst($ticket->status) }}</span>
+                                                                        @break
                                                                     @default
                                                                         <span class="badge bg-secondary text-white">Unknown Status</span>
                                                                 @endswitch
@@ -170,11 +180,28 @@
                                                             </p>
                                                         </div>
                                                     </div>
+
+
                                                     <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p><strong>Description:</strong> {{ $ticket->description }}</p>
-                                                        </div>
+
+                                                        @if($ticket->status == 'wrong_category')
+                                                      
+                                                            <div class="col-md-12">
+                                                                <p><strong>Why is this labels as Wrong categor:</strong> {{ $ticket->motif }}</p>
+                                                               
+                                                            </div>
+                                                      
+                                                        @else
+                                                       
+                                                            <div class="col-md-12">
+                                                                <p><strong>Description:</strong> {{ $ticket->description }}</p>
+                                                            </div>
+                                                       
+                                                        @endif
+                                                        
                                                     </div>
+
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="{{ route('client_ticket.edit', $ticket->id) }}" class="btn btn-info">Edit</a>
@@ -183,7 +210,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     @endforeach
                                 </tbody>
                             </table>

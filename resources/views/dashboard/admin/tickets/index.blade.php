@@ -89,7 +89,7 @@
                                         <td>{{ $ticket->category->name }}</td>
                                         {{-- <td>{{ $ticket->department->name }}</td> --}}
                                         <td>{{ $ticket->user->name }}</td>
-                                        <td>{{ $ticket->agent ? $ticket->agent->name : 'Unassigned' }}</td>
+                                        <td>{{ $ticket->support_agent_id ? $ticket->supportAgent->name : 'Unassigned' }}</td>
                                         <td>{{ $ticket->created_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>
                                         @if ($ticket->updated_at != $ticket->created_at)
                                         <td>{{ $ticket->updated_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>
@@ -111,7 +111,7 @@
                                                 </form>
                                             @else
                                                 <a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                <a href="" class="btn btn-sm btn-success">View Details</a>
+                                                <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#scrollable-modal-{{ $ticket->id }}" data-ticket-id="{{ $ticket->id }}">View Details</button> 
                                                 <form action="{{ route('ticket.destroy', $ticket->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -121,6 +121,69 @@
                                         </td>
                                         
                                     </tr>
+                                    <div class="modal fade" id="scrollable-modal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h5 class="modal-title" id="scrollableModalTitle">Ticket Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p><strong>Title:</strong> {{ $ticket->title }}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><strong>Status:</strong>
+                                                                @switch($ticket->status)
+                                                                    @case('open')
+                                                                        <span class="badge bg-info text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                        @break
+                                                                    @case('in_progress')
+                                                                        <span class="badge bg-warning text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                        @break
+                                                                    @case('resolved')
+                                                                        <span class="badge bg-success text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                        @break
+                                                                    @case('closed')
+                                                                        <span class="badge bg-secondary text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                        @break
+                                                                    @default
+                                                                        <span class="badge bg-secondary text-white">Unknown Status</span>
+                                                                @endswitch
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><strong>Priority:</strong>
+                                                                @switch($ticket->priority)
+                                                                    @case('low')
+                                                                        <span class="badge bg-success">{{ ucfirst($ticket->priority) }}</span>
+                                                                        @break
+                                                                    @case('medium')
+                                                                        <span class="badge bg-warning">{{ ucfirst($ticket->priority) }}</span>
+                                                                        @break
+                                                                    @case('high')
+                                                                        <span class="badge bg-danger">{{ ucfirst($ticket->priority) }}</span>
+                                                                        @break
+                                                                    @default
+                                                                        <span class="badge bg-secondary">Unknown Priority</span>
+                                                                @endswitch
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <p><strong>Description:</strong> {{ $ticket->description }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="{{ route('client_ticket.edit', $ticket->id) }}" class="btn btn-info">Edit</a>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endforeach
                                 </tbody>
                             </table>
