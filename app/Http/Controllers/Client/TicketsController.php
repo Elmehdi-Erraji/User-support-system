@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,30 @@ class TicketsController extends Controller
     public function store(Request $request)
     {
         $ticket = Ticket::create($request->all());
+    
+        $category = Category::find($request->category_id);
+        $department = $category->department;
+    
+        $agents = $department->agents;
+    
+        if ($agents->count() > 0) {
+            $agent = $agents->random();
+            $ticket->support_agent_id = $agent->id;
+        } else {
+            $availableAgents = User::whereHas('roles', function ($query) {
+                $query->where('name', 'support_agent');
+            })->get();
+    
+            if ($availableAgents->count() > 0) {
+                $agent = $availableAgents->random();
+                $ticket->support_agent_id = $agent->id;
+            } else {
+                return redirect()->route('client_ticket.index')->with('error', 'No available agents to assign the ticket');
+            }
+        }
+    
+        $ticket->save();
+    
         return redirect()->route('client_ticket.index')->with('success', 'Ticket created successfully');
     }
 

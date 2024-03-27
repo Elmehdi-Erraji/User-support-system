@@ -45,7 +45,7 @@
                                         <th>Status</th>
                                         <th>Category</th>
                                         {{-- <th>Department</th> --}}
-                                        <th>User</th>
+                                        {{-- <th>User</th> --}}
                                         <th>Agent</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
@@ -88,8 +88,8 @@
                                         </td>
                                         <td>{{ $ticket->category->name }}</td>
                                         {{-- <td>{{ $ticket->department->name }}</td> --}}
-                                        <td>{{ $ticket->user->name }}</td>
-                                        <td>{{ $ticket->agent ? $ticket->agent->name : 'Unassigned' }}</td>
+                                        {{-- <td>{{ $ticket->user->name }}</td> --}}
+                                        <td>{{ $ticket->support_agent_id ? $ticket->supportAgent->name : 'Unassigned' }}</td>
                                         <td>{{ $ticket->created_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>
                                         @if ($ticket->updated_at != $ticket->created_at)
                                         <td>{{ $ticket->updated_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>

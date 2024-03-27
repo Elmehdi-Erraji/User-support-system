@@ -38,4 +38,8 @@ class Ticket extends Model
      {
          return $this->belongsTo(Department::class);
      }
+     public function supportAgent()
+    {
+        return $this->belongsTo(User::class, 'support_agent_id');
+    }
 }
