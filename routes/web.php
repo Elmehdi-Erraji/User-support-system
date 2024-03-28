@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\TickesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Agent\AgentDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -73,8 +74,13 @@ Route::resource('profile', ProfileController::class);
 
 
 Route::resource('client_ticket', ClientTicketsController::class);
-Route::resource('agent_ticket', AgentTicketsController::class);
 
+
+
+
+
+Route::get('agent_dashboard', [AgentDashboardController::class,'index']);
+Route::resource('agent_ticket', AgentTicketsController::class);
 
 
 

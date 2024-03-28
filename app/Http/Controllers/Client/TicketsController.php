@@ -14,9 +14,10 @@ class TicketsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // $tickets = Ticket::where('user_id', $user->id)->withTrashed()->get();
         $tickets = Ticket::where('user_id', $user->id)->get();
-        return view('dashboard.client.tickets.index', compact('tickets'));
+        $openTickets = Ticket::where('user_id', $user->id)->where('status', 'open')->count();
+        $resolvedTickets = Ticket::where('user_id', $user->id)->where('status', 'resolved')->count();
+        return view('dashboard.client.tickets.index', compact('tickets','openTickets','resolvedTickets'));
     }
 
     public function show($id)
@@ -74,6 +75,7 @@ class TicketsController extends Controller
         $ticket = Ticket::find($id);
         if ($ticket->status === 'wrong_category' && $request->has('category_id')) {
             $ticket->status = 'open';
+            $ticket->motif = Null;
         }
         $ticket->update($request->all());
         return redirect()->route('client_ticket.index')->with('success','ticket updated successfully');

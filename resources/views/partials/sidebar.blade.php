@@ -187,11 +187,20 @@
 <ul class="side-nav">
     <li class="side-nav-title">Main</li>
     <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
-            <i class="ri-dashboard-3-line"></i>
-            <span> Dashboard </span>
+        <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
+            <i class="ri-question-line"></i> 
+            <span> FAQs </span>
+            <span class="menu-arrow"></span>
         </a>
+        <div class="collapse" id="sidebarFAQs">
+            <ul class="side-nav-third-level">
+                <li>
+                    <a href="{{ route('Faq.index') }}">FAQ List</a>
+                </li>
+            </ul>
+        </div>
     </li>
+
     <li class="side-nav-item">
         <a data-bs-toggle="collapse" href="#sidebarTickets" aria-expanded="false" aria-controls="sidebarTickets" class="side-nav-link">
             <i class="ri-ticket-line"></i> 
@@ -210,24 +219,21 @@
         </div>
     </li>
 
+    <!-- New Section -->
     <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
-            <i class="ri-question-line"></i> 
-            <span> FAQs </span>
-            <span class="menu-arrow"></span>
+        <a href="{{route('profile.index')}}" class="side-nav-link">
+            <i class="ri-user-line"></i> 
+            <span> Profile </span>
         </a>
-        <div class="collapse" id="sidebarFAQs">
-            <ul class="side-nav-third-level">
-                <li>
-                    <a href="{{ route('Faq.index') }}">FAQ List</a>
-                </li>
-                <li>
-                    <a href="{{ route('Faq.create') }}">FAQ List</a>
-                </li>
-            </ul>
-        </div>
+    </li>
+    <li class="side-nav-item">
+        <a href="#" class="side-nav-link">
+            <i class="ri-mail-line"></i>
+            <span> Messages </span>
+        </a>
     </li>
 </ul>
+
 @endif
 
     </div>

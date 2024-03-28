@@ -19,7 +19,30 @@
             </div>
         </div>
     </div>
-    <!-- end page title -->
+    <div class="row">
+        <div class="col-xxl-3 col-sm-6">
+            <div class="card widget-flat text-bg-success">
+                <div class="card-body">
+                    <div class="float-end">
+                        <i class="ri-ticket-line widget-icon"></i>
+                    </div>
+                    <h6 class="text-uppercase mt-0" title="Open Tickets">Open Tickets</h6>
+                    <h2 class="my-2">{{$openTickets}}</h2> 
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-3 col-sm-6">
+            <div class="card widget-flat text-bg-warning">
+                <div class="card-body">
+                    <div class="float-end">
+                        <i class="ri-ticket-fill widget-icon"></i>
+                    </div>
+                    <h6 class="text-uppercase mt-0" title="Tickets Resolved">Tickets Resolved</h6>
+                    <h2 class="my-2">{{$resolvedTickets}}</h2> 
+                </div>
+            </div>
+        </div>
+    </div> 
     <div class="row">
         <div class="col-12">
             <!-- Todo-->

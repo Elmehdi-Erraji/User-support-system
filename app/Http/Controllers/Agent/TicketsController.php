@@ -14,7 +14,11 @@ class TicketsController extends Controller
     {
         $userId = auth()->id();
         $tickets = Ticket::where('support_agent_id', $userId)->withTrashed()->get();
-        return view('dashboard.agent.tickets.index',compact('tickets'));
+        $ticketsAssigned = Ticket::where('support_agent_id', $userId)->count();
+        $ticketsResolved = Ticket::where('support_agent_id', $userId)
+                             ->where('status', 'resolved')
+                             ->count();
+        return view('dashboard.agent.tickets.index',compact('tickets','ticketsAssigned','ticketsResolved'));
     }
 
     public function create()
