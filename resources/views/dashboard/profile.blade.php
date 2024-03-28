@@ -30,7 +30,7 @@
                                 </button>
                                 <button type="button" class="btn btn-soft-danger" id="delete-account-button" data-bs-toggle="modal" data-bs-target="#login-modal">
                                     <i class="ri-delete-bin-line align-text-bottom me-1 fs-16 lh-1"></i>
-                                    Delete Account
+                                    Delete Profile
                                 </button>
                             </div>
                         </div>
@@ -47,7 +47,6 @@
                 <div class="modal-content">
                     <div class="modal-body">
 
-
                         <form id="delete-account-form" action="{{ route('profile.destroy',Auth::user()->id) }}" method="POST" class="ps-3 pe-3">
                             @csrf
                             @method('DELETE')
@@ -60,8 +59,8 @@
                             </div>
                         </form>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -72,7 +71,7 @@
                             <ul class="nav nav-underline nav-justified gap-0">
                                 <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#aboutme" type="button" role="tab" aria-controls="home" aria-selected="true" href="#aboutme">Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#edit-profile" type="button" role="tab" aria-controls="home" aria-selected="true" href="#edit-profile">Personal Info</a></li>
-                                <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" data-bs-target="#my_requests" type="button" role="tab" aria-controls="home" aria-selected="true" href="#my_requests">My Reservations</a></li>
+                                <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" data-bs-target="#my_requests" type="button" role="tab" aria-controls="home" aria-selected="true" href="#my_requests">Password ...</a></li>
                             </ul>
 
                             <div class="tab-content m-0 p-4">
@@ -126,65 +125,50 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div id="my_requests" class="tab-pane">
+                                <div id="my_requests" class="tab-pane">
                                     <div class="row m-t-10">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Event</th>
-                                                        <th>Local</th>
-                                                        <th>Date</th>
-                                                        <th>status</th>
-                                                        <th>Number Of tickets</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                    </thead>
-                                                     <tbody>
-                                                         @foreach($reservations as $index => $reservation)
-                                                        <tr>
-                                                            <td>{{ $reservation->id }}</td>
-                                                            <td>{{ $reservation->title }}</td> 
-                                                            <td>{{ $reservation->location }}</td> 
-                                                            <td>{{ \Carbon\Carbon::parse($reservation->date)->format('D, M j, Y') }}</td> 
-                                                            <td>
-                                                                @if ($reservation->pivot->status === '0')
-                                                                    <span class="badge bg-info-subtle text-info">Pending</span>
-                                                                @elseif ($reservation->pivot->status === '1')
-                                                                    <span class="badge bg-warning-subtle text-warning">Approved</span>
-                                                                @elseif ($reservation->pivot->status === '2')
-                                                                    <span class="badge bg-pink-subtle text-pink ">Refused</span>
-                                                                @else
-                                                                    <span class="badge bg-warning">Unknown Status</span>
-                                                                @endif
-                                                            </td>
-                                                            <td>{{$reservation->pivot->num_tickets}}</td> 
-                                                            <td>
-                                                                <a href="{{ route('eventDetails', $reservation->id) }}" class="btn btn-sm btn-info">View Details</a>
-                                                            
-                                                                @if ($reservation->pivot->status == 1)
-                                                                <a href="{{ route('getTicket', ['reservationId' => $reservation->id]) }}" class="btn btn-sm btn-warning">Get My Ticket</a>
+                                        <!-- Password Change Form (Left Side) -->
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">Change Password</h4>
+                                                    <form action="{{ route('profile.password.update') }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="mb-3">
+                                                            <label for="current_password" class="form-label">Current Password</label>
+                                                            <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="new_password" class="form-label">New Password</label>
+                                                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="confirm_password" class="form-label">Confirm New Password</label>
+                                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                                            @endif 
-                                                            <form action="{{route('cancelReservation', $reservation->id)}}" method="POST" style="display: inline;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
-                                                            </form>                                                           
-                                                            </td>
-                                                           
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody> 
-                                                </table>
-
+                                        <div class="col-md-6">
+                                            <div class="card" style="background-color: orange;">
+                                                <div class="card-body" style="color: white;">
+                                                    <h4 class="card-title">Password Requirements</h4>
+                                                    <ul>
+                                                        <li>Password must be at least 8 characters long</li>
+                                                        <li>Password must contain at least one uppercase letter</li>
+                                                        <li>Password must contain at least one lowercase letter</li>
+                                                        <li>Password must contain at least one number</li>
+                                                        <li>Password must contain at least one special character</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
-
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,12 +177,17 @@
         </div>
         <!-- end page title -->
     </div>
-    @if (Session::has('success'))
-        <script>
-            console.log("SweetAlert initialization script executed!");
-            Swal.fire("Success", "{{ Session::get('success') }}", 'success');
-        </script>
-    @endif
+   @if (Session::has('success'))
+    <script>
+        console.log("SweetAlert initialization script executed!");
+        Swal.fire("Success", "{{ Session::get('success') }}", 'success');
+    </script>
+@elseif (Session::has('error'))
+    <script>
+        console.log("SweetAlert initialization script executed!");
+        Swal.fire("Error", "{{ Session::get('error') }}", 'error');
+    </script>
+@endif
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("edit-profile-button").addEventListener("click", function() {

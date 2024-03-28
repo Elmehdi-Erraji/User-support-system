@@ -70,6 +70,7 @@ Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDel
 
 
 Route::resource('profile', ProfileController::class);
+Route::put('profile/password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
 
 
