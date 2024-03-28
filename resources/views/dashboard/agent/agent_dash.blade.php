@@ -23,6 +23,7 @@
                 </div>
             </div>
         </div>
+
         <!-- end page title -->
         <div class="row">
             <div class="col-xxl-3 col-sm-6">

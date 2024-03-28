@@ -7,6 +7,7 @@ use App\Http\Requests\User\UserStore;
 use App\Http\Requests\User\UserUpdate;
 use App\Models\Department;
 use App\Models\Role;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,9 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->get();
+        $users = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'client');
+        })->withTrashed()->get();
         return view('dashboard.admin.users.index',compact('users'));
     }
     public function create()
@@ -35,6 +38,25 @@ class UsersController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
+
+    public function show($id) 
+    {
+        $user = User::findOrFail($id);
+        $tickets = $user->tickets;
+        return view('dashboard.admin.users.show',compact('user','tickets'));
+    }
+
+    public function agentShow($id) 
+    {
+        $user = User::findOrFail($id);
+
+        $assignedTickets = Ticket::where('support_agent_id', $id)->get();
+
+        return view('dashboard.admin.users.agentShow',compact('user','assignedTickets'));
+    }
+
+
+
     public function edit($id)
     {
         $user = User::find($id);
@@ -47,20 +69,23 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $user->roles()->sync($request->role);
+        
+        if ($request->filled('department_id')) {
+            $user->department_id = $request->department_id;
+        } 
+
         $user->status = $request->status;
-    
         if ($request->status == 3 && $request->filled('ban_reason')) {
             $user->ban_reason = $request->input('ban_reason');
         }
-        if ($request->department_id !== Null ) {
-            $user->department_id = $request->input('department_id');
+    
+        if ($request->role != 2) {
+            $user->department_id = null; 
         }
-        if($request->role_id !== 2) {
-            $user->department_id = Null;
-        }
+    
         $user->save();
         return redirect()->route('users.index')->with('success', 'User has been updated successfully');
-    }
+    }    
 
     public function restore($id)
     {
@@ -83,5 +108,14 @@ class UsersController extends Controller
         $user->forceDelete();
 
         return redirect()->route('users.index')->with('success', 'User permanently deleted successfully');
+    }
+
+
+    public function clientsList()
+    {
+        $clients = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'client');
+        })->get();
+        return view('dashboard.admin.users.clients', compact('clients'));
     }
 }

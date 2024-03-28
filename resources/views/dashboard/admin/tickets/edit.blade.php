@@ -97,6 +97,7 @@
                                     </div> --}}
                                 
                                     <button type="submit" id="submitButton" class="btn btn-primary">Update</button>
+                                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Go Back</a>
                                 </form>
                                 
                                 

@@ -26,7 +26,7 @@
         <ul class="side-nav">
             <li class="side-nav-title">Main</li>
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{{route('dashboard')}}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
                     <span> Dashboard </span>
                 </a>
@@ -57,11 +57,9 @@
                 <div class="collapse" id="sidebarClients">
                     <ul class="side-nav-third-level">
                         <li>
-                            <a href="#">Clients List</a>
+                            <a href="{{route('clinets_list')}}">Clients List</a>
                         </li>
-                        <li>
-                            <a href="#">Add A Client</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </li>

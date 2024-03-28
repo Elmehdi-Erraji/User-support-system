@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\TickesController;
@@ -30,6 +31,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('dashboard', function (){
+//     return view('dashboard.admin.dashboard');
+// })->name('dashboard');
+
+
+Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+
+
 // Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -56,6 +66,8 @@ Route::resource('categories' , CategoriesController::class);
 Route::resource('users' , UsersController::class);
 Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('users.restore');
 Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
+Route::get('clinets_list', [UsersController::class, 'clientsList'])->name('clinets_list');
+Route::get('agent_show/{id}', [UsersController::class, 'agentShow'])->name('agent_show');
 //users routes ends here
 
 //Faq's routes start here
@@ -106,9 +118,7 @@ Route::resource('agent_ticket', AgentTicketsController::class);
 
 
 
-Route::get('dashboard', function (){
-    return view('dash');
-})->name('dashboard');
+
 
 
 // Route::get('users_index', function (){

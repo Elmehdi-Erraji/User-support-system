@@ -102,7 +102,7 @@
                                                 </form>
                                             @else
                                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-success">View Details</a>
+                                            <a href="{{ route('agent_show', $user->id) }}" class="btn btn-sm btn-success">View Details</a>
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

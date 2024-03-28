@@ -137,15 +137,39 @@
                                                         @method('PUT')
                                                         <div class="mb-3">
                                                             <label for="current_password" class="form-label">Current Password</label>
-                                                            <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                                            <div class="input-group">
+                                                                <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required>
+                                                                <div class="input-group-text" data-password="false">
+                                                                    <span class="password-eye"></span>
+                                                                </div>
+                                                                @error('current_password')
+                                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="new_password" class="form-label">New Password</label>
-                                                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                                                            <div class="input-group">
+                                                                <input type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password" name="new_password" required>
+                                                                <div class="input-group-text" data-password="false">
+                                                                    <span class="password-eye"></span>
+                                                                </div>
+                                                                @error('new_password')
+                                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="confirm_password" class="form-label">Confirm New Password</label>
-                                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                                            <div class="input-group">
+                                                                <input type="password" class="form-control @error('confirm_password') is-invalid @enderror" id="confirm_password" name="confirm_password" required>
+                                                                <div class="input-group-text" data-password="false">
+                                                                    <span class="password-eye"></span>
+                                                                </div>
+                                                                @error('confirm_password')
+                                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Change Password</button>
                                                     </form>

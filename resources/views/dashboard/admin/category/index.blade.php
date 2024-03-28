@@ -45,15 +45,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $category)
+                                    @foreach($categories as $category)
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        @if ($category->department_id == Null){
+                                        @if ($category->department_id == null)
                                             <td>No Department name</td>
-                                        }@else {
+                                        @else
                                             <td>{{ $category->department->name }}</td>
-                                        }
                                         @endif
                                         <td>
                                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
@@ -83,10 +82,12 @@
                 </div>
             </div>
         </div>
+
+        
       
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @endsection
 

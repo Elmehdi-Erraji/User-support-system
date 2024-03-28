@@ -20,7 +20,10 @@
                             @else
                                 <div class="profile-user-img"><i class="ri-account-circle-line fs-18 align-middle me-1"></i></div>
                             @endif
-                           
+                            <div class="">
+                                <h4 class="mt-4 fs-17 ellipsis">{{ $user->name }}</h4>
+                                <p class="text-muted mb-0"><small>{{ $user->email }}</small></p>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="d-flex justify-content-end align-items-center gap-2">
@@ -38,7 +41,7 @@
                     <div class="card-body p-0">
                         <div class="profile-content">
                             <ul class="nav nav-underline nav-justified gap-0">
-                                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#aboutme" type="button" role="tab" aria-controls="home" aria-selected="true" href="#aboutme">Tickets</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#aboutme" type="button" role="tab" aria-controls="home" aria-selected="true" href="#aboutme">Assigned Tickets</a></li>
                             </ul>
 
                             <div id="yearly-sales-collapse" class="collapse show">
@@ -51,18 +54,17 @@
                                                 <th>Priority</th>
                                                 <th>Status</th>
                                                 <th>Category</th>
-                                                <th>Agent</th>
                                                 <th>Created At</th>
                                                 <th>Updated At</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tableBody">
-                                            @foreach ($tickets as $ticket)
+                                           
+                                            @foreach ($assignedTickets as $ticket)
                                             <tr>
                                                 <td>{{ $ticket->id }}</td>
                                                 <td>{{ $ticket->title }}</td>
-                                                {{-- <td>{{ $ticket->description }}</td> --}}
                                                 <td>
                                                     @switch($ticket->priority)
                                                         @case('low')
@@ -92,7 +94,6 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $ticket->category->name }}</td>
-                                                <td>{{ $ticket->support_agent_id ? $ticket->supportAgent->name : 'Unassigned' }}</td>
                                                 <td>{{ $ticket->created_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>
                                                 @if ($ticket->updated_at != $ticket->created_at)
                                                 <td>{{ $ticket->updated_at->isoFormat('Do MMMM YYYY, h:mm:ssa') }}</td>
