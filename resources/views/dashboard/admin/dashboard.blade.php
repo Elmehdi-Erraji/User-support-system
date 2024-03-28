@@ -213,11 +213,9 @@
     });
 </script>
 <script>
-    // Ticket data
     var categories = {!! $categoriesJson !!};
     var ticketCounts = {!! $ticketCountsJson !!};
 
-    // Chart configuration
     var ctx = document.getElementById('ticketsByCategoryChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'doughnut',
