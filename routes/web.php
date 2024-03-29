@@ -3,13 +3,14 @@
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentsController;
-use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\TickesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Agent\AgentDashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,7 +72,7 @@ Route::get('agent_show/{id}', [UsersController::class, 'agentShow'])->name('agen
 //users routes ends here
 
 //Faq's routes start here
-Route::resource('Faq', FaqController::class);
+Route::resource('Faq', AdminFaqController::class);
 //Faq's routes ends here
 
 //tickets routes start here
@@ -117,26 +118,25 @@ Route::resource('agent_ticket', AgentTicketsController::class);
 
 
 
+Route::get('FaqHome', [FaqController::class,'index'])->name('FaqHome');
+
+
+
+// Route::get('FaqHome', function (){
+//     return view('dashboard.faqAll');
+// })->name('FaqHome');
 
 
 
 
-// Route::get('users_index', function (){
-//     return view('dashboard.admin.users.index');
-// })->name('users_index');
-
-// Route::get('users_edit', function (){
-//     return view('dashboard.admin.users.edit');
-// })->name('users_edit');
 
 
-Route::get('ticket_show_for_client', function (){
-    return view('show');
-})->name('ticket_show_for_client');
 
-Route::get('client_faq', function (){
-    return view('faq');
-})->name('client_faq');
+
+
+
+
+
 
 Route::get('home', function (){
     return view('home');

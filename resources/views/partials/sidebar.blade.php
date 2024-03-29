@@ -131,6 +131,12 @@
                     </ul>
                 </div>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('FaqHome') }}" class="side-nav-link">
+                    <i class="ri-questionnaire-fill"></i>
+                    <span> All FAQs </span>
+                </a>
+            </li>
         </ul>
     @endif
             

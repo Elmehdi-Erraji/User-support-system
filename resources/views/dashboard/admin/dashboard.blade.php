@@ -76,7 +76,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-4">Tickets by status</h4>
+                    <h4 class="header-title mb-4">Tickets created by day</h4>
     
                     <div dir="ltr">
                         <div class="mt-3 chartjs-chart" style="height: 320px;">
