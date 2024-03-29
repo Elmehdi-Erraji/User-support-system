@@ -29,14 +29,38 @@
                     <div class="mb-4 text-center">
                         <h3 class="">Frequently Asked Questions</h3>
                         <p class="text-muted mt-3">
-                            Do you have a question about your subscription, a recent order, products, shipping or you want to suggest a new magazine? Here you can find some helpful answers to frequently asked questions (FAQ).
+                            Do you have questions regarding technical issues, sales inquiries, or billing concerns? Here, you'll find helpful answers to common questions about our products and services."
                         </p>
-
-                        <button type="button" class="btn btn-success mt-2"><i class="ri-mail-line me-1"></i> Email us your question</button>
-                        <button type="button" class="btn btn-info mt-2 ms-1"><i class="ri-twitter-line me-1"></i> Send us a tweet</button>
+            
+                        <!-- Search form with categories filter -->
+                        <form action="#" method="GET" class="mt-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for FAQs" name="search_query">
+                                <div class="input-group-append" style="width:20%">
+                                    <select class="form-select" name="category">
+                                        <option value="">All Categories</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                        
+                        
+                        
+                        <!-- Buttons for contacting support -->
+                        <a href="{{ route('ticket.create') }}" class="btn btn-success mt-2 me-1">
+                            <i class="ri-mail-line me-1"></i> Create a ticket
+                        </a>                        
+                        <a href="https://twitter.com" target="_blank" class="btn btn-info mt-2">
+                            <i class="ri-twitter-line me-1"></i> Leave a review on Twitter
+                        </a>
                     </div>
                 </div>
             </div>
+            
             <div class="card">
                 <div class="card-body">
 
@@ -69,6 +93,9 @@
                                             </div>
                                         </div>
                                 @endforeach
+                                <div class="pagination">
+                                    {{ $faqs->links() }}
+                                </div>
                                                               
                             </div> 
                         </div>

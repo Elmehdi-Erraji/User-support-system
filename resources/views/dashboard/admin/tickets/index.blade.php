@@ -187,6 +187,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <!-- Pagination Links -->
+                            <div class="pagination mt-3">
+                                {{ $tickets->links() }}
+                            </div>
                             
                             @if (Session::has('success'))
                                 <script>

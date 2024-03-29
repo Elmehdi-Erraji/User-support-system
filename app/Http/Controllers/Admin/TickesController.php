@@ -11,7 +11,7 @@ class TickesController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::withTrashed()->get();
+        $tickets = Ticket::withTrashed()->paginate(8);
         return view('dashboard.admin.tickets.index',compact('tickets'));
     }
 

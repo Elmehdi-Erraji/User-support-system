@@ -23,4 +23,9 @@ class Category extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function faqs()
+    {
+        return $this->hasMany(Faq::class);
+    }
 }

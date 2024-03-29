@@ -11,7 +11,7 @@ class DepartmentsController extends Controller
 {
     public function index()
     {
-        $departments = Department::withTrashed()->get();
+        $departments = Department::withTrashed()->paginate(8);
         return view('dashboard.admin.department.index', compact('departments'));
     }
 

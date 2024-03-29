@@ -37,49 +37,58 @@
                         <div class="table-responsive mt-3">
                             <table class="table table-nowrap table-hover mb-0">
                                 <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Actions</th>
-                                </tr>
+                                    <tr>
+                                        
+                                        <th>Department</th>
+                                        <th>Agents</th>
+                                        <th>Categories</th>
+                                        <th>Actions</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @if(isset($departments) && $departments->isNotEmpty())
-                                    @foreach($departments as $department)
-                                    <tr>
-                                        <td>{{ $department->id }}</td>
-                                        <td>{{ $department->name }}</td>
-                                        <td>
-                                            @if($department->trashed())
-                                            <form action="{{ route('department.restore', $department->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-sm btn-success">Restore</button>
-                                            </form>
-                                            <form action="{{ route('department.forceDelete', $department->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Permanently Delete</button>
-                                            </form>
-                                        @else
-                                            <form action="{{ route('department.destroy', $department->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
-                                            </form>
-                                            <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary">Update</a>
-                                        @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td colspan="3">No departments found.</td>
-                                </tr>
-                            @endif
+                                        @foreach($departments as $department)
+                                            <tr>
+                                                <td>{{ $department->name }}</td>
+                                                <th>{{ $department->agents->count() }}</th>
+                                                <th>{{ $department->categories->count() }}</th>
+                                                <td>
+                                                    @if($department->trashed())
+                                                        <form action="{{ route('department.restore', $department->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                                                        </form>
+                                                        <form action="{{ route('department.forceDelete', $department->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger">Permanently Delete</button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('department.destroy', $department->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                                        </form>
+                                                        <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary">Update</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="3">No departments found.</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
+                        
+                            <!-- Pagination Links -->
+                            <div class="pagination mt-3">
+                                {{ $departments->links() }}
+                            </div>
                         </div>
+                        
 
 
 

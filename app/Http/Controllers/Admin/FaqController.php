@@ -12,7 +12,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::all();
+        $faqs = Faq::paginate(9);
         return view('dashboard.admin.faq.index',compact('faqs'));
     }
 

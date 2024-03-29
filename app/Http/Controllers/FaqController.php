@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Faq;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,8 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::all();
-        return view('dashboard.faqAll',compact('faqs'));
+        $faqs = Faq::where('status','active')->paginate(9);
+        $categories = Category::all();
+        return view('dashboard.faqAll',compact('faqs','categories'));
     }
 }

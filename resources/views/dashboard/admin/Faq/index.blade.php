@@ -83,6 +83,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <!-- Pagination Links -->
+                            <div class="pagination mt-3">
+                                {{ $faqs->links() }}
+                            </div>
                             @if (Session::has('success'))
                                 <script>
                                     console.log("SweetAlert initialization script executed!");

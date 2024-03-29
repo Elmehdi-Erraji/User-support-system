@@ -38,22 +38,21 @@
                             <table class="table table-nowrap table-hover mb-0">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Category</th>
                                     <th>Department</th>
+                                    <th>Tickets</th>
+                                    <th>Faq's</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($categories as $category)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        @if ($category->department_id == null)
-                                            <td>No Department name</td>
-                                        @else
-                                            <td>{{ $category->department->name }}</td>
-                                        @endif
+                                        
+                                        <td>{{ $category->department->name }}</td>
+                                        <td>{{$category->tickets->count()}}</td>
+                                        <td>{{$category->faqs->count()}}</td>
                                         <td>
                                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline">
                                                 @csrf
@@ -66,6 +65,10 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <!-- Pagination Links -->
+                            <div class="pagination mt-3">
+                                {{ $categories->links() }}
+                            </div>
                         </div>
 
 
