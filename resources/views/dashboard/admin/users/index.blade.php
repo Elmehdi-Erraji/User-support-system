@@ -78,6 +78,11 @@
                                 </form>
                                 
                             </div>
+<br>
+<br>
+                            <div class="col-lg-6">
+                                <a href="{{ route('users.create') }}" class="btn btn-primary" id="addButton" style="width: 30%">Add A User</a>
+                            </div>
                         </div>
                 </div>
             </div>
@@ -247,8 +252,7 @@
                             </td>
                             <td>${user.role}</td>
                             <td>
-                                ${user.department ? `<td>${user.department}</td>` : 'No department'}
-
+                                ${user.department ? `${user.department.name}` : 'No department'}
                             </td>
 
                             <td>
