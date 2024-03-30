@@ -168,39 +168,38 @@ class UsersController extends Controller
     }
 
     public function clientSearch(Request $request)
-{
-    $searchQuery = $request->input('search_query');
-    $status = $request->input('status');
+    {
+        $searchQuery = $request->input('search_query');
+        $status = $request->input('status');
 
-    $query = User::query();
+        $query = User::query();
 
-    // Filter users by role "client"
-    $query->whereHas('roles', function ($q) {
-        $q->where('name', 'client'); // Assuming 'name' is the column that stores the role name
-    });
-
-    if (!empty($searchQuery)) {
-        $query->where(function ($q) use ($searchQuery) {
-            $q->where('name', 'like', '%' . $searchQuery . '%')
-                ->orWhere('email', 'like', '%' . $searchQuery . '%');
+        $query->whereHas('roles', function ($q) {
+            $q->where('name', 'client'); 
         });
+
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('email', 'like', '%' . $searchQuery . '%');
+            });
+        }
+    
+        if (!empty($status) && $status !== 'null') {
+            $query->where('status', $status);
+        }
+
+        $users = $query->get();
+
+        $transformedUsers = $users->map(function ($user) {
+            $avatarUrl = $user->getFirstMediaUrl('avatars') ?: null;
+            $user['avatar_url'] = $avatarUrl;
+            $user['ticketCount'] = $user->tickets->count();
+            return $user;
+        });
+
+        return response()->json($transformedUsers);
     }
-   
-    if (!empty($status) && $status !== 'null') {
-        $query->where('status', $status);
-    }
-
-    $users = $query->get();
-
-    $transformedUsers = $users->map(function ($user) {
-        $avatarUrl = $user->getFirstMediaUrl('avatars') ?: null;
-        $user['avatar_url'] = $avatarUrl;
-        $user['ticketCount'] = $user->tickets->count();
-        return $user;
-    });
-
-    return response()->json($transformedUsers);
-}
 
 }
 

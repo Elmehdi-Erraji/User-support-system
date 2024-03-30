@@ -88,8 +88,7 @@
             </div>
 
                     
-              
-                    <div id="yearly-sales-collapse" class="collapse show">
+            <div id="yearly-sales-collapse" class="collapse show">
                         <div class="table-responsive">
                             <table class="table table-nowrap table-hover mb-0">
                                 <thead>
@@ -178,7 +177,8 @@
 
 
                         </div>
-                    </div>
+                    </div>  
+                    
 
                 </div>
             </div>

@@ -13,8 +13,8 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::orderBy('department_id')->paginate(8);
-       
-        return view('dashboard.admin.category.index',compact('categories'));
+        $departments = Department::all();
+        return view('dashboard.admin.category.index',compact('categories','departments'));
     }
 
     public function create()
@@ -55,4 +55,39 @@ class CategoriesController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success','Category deleted successfully');
     } 
+
+    public function Search(Request $request)
+    {
+        $searchQuery = $request->input('search_query');
+        $departmentId = $request->input('department');
+
+        $query = Category::query();
+
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+       
+        if (!empty($departmentId) && $departmentId !== 'null') {
+            $query->where('department_id', $departmentId);
+        }
+
+        $categories = $query->get();
+
+        $transformedCategories = $categories->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'name' => $category->name,
+                'department' => $category->department->name,
+                'ticketsCount' => $category->tickets->count(),
+                'faqsCount' => $category->faqs->count()
+            ];
+        });
+        return response()->json($transformedCategories);
+    }
+
+    
+    
 }

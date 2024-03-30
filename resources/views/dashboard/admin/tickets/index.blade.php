@@ -25,11 +25,61 @@
             <!-- Todo-->
             <div class="card">
                 <div class="card-body p-0">
-                    <div class="p-3">
-                        <div class="row">
-                            <div class="col-lg-6">
-                            </div>
-
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="p-3">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <div class="app-search">
+                                        <form id="searchForm">
+                                            @csrf 
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control-sm me-2" placeholder="Search for users" name="search_query" id="searchQuery">
+                                                <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                                    <i class="ri-filter-line"></i> 
+                                                </button>
+                                                <button type="submit" class="btn btn-primary ms-2" id="searchButton">Search</button>
+                                            </div>
+                                            
+                                            <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg modal-right">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-primary text-light">
+                                                            <h5 class="modal-title" id="filterModalLabel">Filters</h5>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                           
+                                                            <div class="mb-3">
+                                                                <label for="statusFilter" class="form-label">Status:</label>
+                                                                <select id="statusFilter" class="form-select" name="status">
+                                                                    <option value="null">Any</option>
+                                                                    {{-- @foreach($statuses as  $key => $status)
+                                                                        <option value="{{  $key+1  }}">{{ ucfirst($status) }}</option>
+                                                                    @endforeach --}}
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="departmentFilter" class="form-label">Department:</label>
+                                                                <select id="departmentFilter" class="form-select" name="department">
+                                                                    <option value="null">Any</option>
+                                                                    {{-- @foreach ($departments as $department)
+                                                                    <option value="{{$department->id}}">{{$department->name}}</option>
+                                                                    @endforeach --}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                                            <button type="button" class="btn btn-secondary" id="resetFilters">Reset</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
                         </div>
                     </div>
 
