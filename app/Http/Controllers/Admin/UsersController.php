@@ -123,48 +123,47 @@ class UsersController extends Controller
         return view('dashboard.admin.users.clients', compact('clients'));
     }
 
-
+    
 
 
     public function search(Request $request)
     {
         $searchQuery = $request->input('search_query');
-        $roleId = $request->input('role');
         $status = $request->input('status');
         $departmentId = $request->input('department');
-    
+
         $query = User::query();
-    
+
         if (!empty($searchQuery)) {
             $query->where(function ($q) use ($searchQuery) {
                 $q->where('name', 'like', '%' . $searchQuery . '%')
                     ->orWhere('email', 'like', '%' . $searchQuery . '%');
             });
         }
-    
-        if (!empty($roleId)) {
-            $query->whereHas('roles', function ($q) use ($roleId) {
-                $q->where('id', $roleId);
-            });
-        }
-    
+
+       
         if (!empty($status) && $status !== 'null') {
             $query->where('status', $status);
         }
-    
-        if (!empty($departmentId)) {
+
+        if (!empty($departmentId) && $departmentId !== 'null') {
             $query->where('department_id', $departmentId);
         }
-    
-        $users = $query->with('roles', 'department')->get();
-        $roles = Role::all();
-        $departments = Department::all();
-        $statuses = ['Pending', 'Active', 'Banned'];
-        
-        return view('dashboard.admin.users.index', compact('users', 'roles', 'departments', 'statuses'));
+
+        $users = $query->get();
+
+        $transformedUsers = $users->map(function ($user) {
+            $avatarUrl = $user->getFirstMediaUrl('avatars') ?: null;
+            $user['avatar_url'] = $avatarUrl;
+            $user['role'] = $user->roles()->first()->name;
+            if($user['department'] !== null){
+            $user['department'] = $user->department->name;
+        }
+            return $user;
+        });
+
+        return response()->json($transformedUsers);
     }
-    
-    
-    
-    
 }
+
+
