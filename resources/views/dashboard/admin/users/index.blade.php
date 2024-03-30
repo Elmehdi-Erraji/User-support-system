@@ -78,8 +78,8 @@
                                 </form>
                                 
                             </div>
-<br>
-<br>
+                            <br>
+                            <br>
                             <div class="col-lg-6">
                                 <a href="{{ route('users.create') }}" class="btn btn-primary" id="addButton" style="width: 30%">Add A User</a>
                             </div>
@@ -179,6 +179,7 @@
 
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
