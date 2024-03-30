@@ -26,14 +26,72 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="p-3">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="{{ route('users.create') }}" class="btn btn-primary" id="addButton" style="width: 30%">Add A User</a>
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <div class="app-search">
+                                <form action="{{ route('users.search') }}" method="POST" class="mt-3">
+                                    @csrf 
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm me-2" placeholder="Search for users" name="search_query">
+                                        <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                            <i class="ri-filter-line"></i> 
+                                        </button>
+                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                    </div>
+                                    
+                                    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg modal-right">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-light">
+                                                    <h5 class="modal-title" id="filterModalLabel">Filters</h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="roleFilter" class="form-label">Role:</label>
+                                                        <select id="roleFilter" class="form-select" name="role">
+                                                            <option value="">Any</option>
+                                                            @foreach ($roles as $role)
+                                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="statusFilter" class="form-label">Status:</label>
+                                                        <select id="statusFilter" class="form-select" name="status">
+                                                            <option value="null">Any</option>
+                                                            @foreach($statuses as  $key => $status)
+                                                                <option value="{{  $key+1  }}">{{ ucfirst($status) }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="departmentFilter" class="form-label">Department:</label>
+                                                        <select id="departmentFilter" class="form-select" name="department">
+                                                            <option value="null">Any</option>
+                                                            @foreach ($departments as $department)
+                                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                                    <button type="button" class="btn btn-secondary" id="resetFilters">Reset</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                                
                             </div>
-
                         </div>
-                    </div>
+                </div>
+            </div>
 
+                    
+              
                     <div id="yearly-sales-collapse" class="collapse show">
                         <div class="table-responsive">
                             <table class="table table-nowrap table-hover mb-0">
@@ -130,6 +188,12 @@
     </div>
 
 </div>
-
+<script>
+    document.getElementById('resetFilters').addEventListener('click', function() {
+        document.getElementById('roleFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('departmentFilter').value = '';
+    });
+</script>
 @endsection
 

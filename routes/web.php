@@ -114,7 +114,7 @@ Route::resource('agent_ticket', AgentTicketsController::class);
 
 
 
-
+Route::post('/users/search', [UsersController::class, 'search'])->name('users.search');
 
 
 

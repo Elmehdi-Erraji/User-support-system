@@ -19,7 +19,11 @@ class UsersController extends Controller
         $users = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'client');
         })->withTrashed()->get();
-        return view('dashboard.admin.users.index',compact('users'));
+
+        $roles = Role::all();
+        $departments = Department::all();
+        $statuses = ['Pending', 'Active','Banned'];
+        return view('dashboard.admin.users.index',compact('users','departments','roles','statuses'));
     }
     public function create()
     {
@@ -118,4 +122,49 @@ class UsersController extends Controller
         })->get();
         return view('dashboard.admin.users.clients', compact('clients'));
     }
+
+
+
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('search_query');
+        $roleId = $request->input('role');
+        $status = $request->input('status');
+        $departmentId = $request->input('department');
+    
+        $query = User::query();
+    
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('email', 'like', '%' . $searchQuery . '%');
+            });
+        }
+    
+        if (!empty($roleId)) {
+            $query->whereHas('roles', function ($q) use ($roleId) {
+                $q->where('id', $roleId);
+            });
+        }
+    
+        if (!empty($status) && $status !== 'null') {
+            $query->where('status', $status);
+        }
+    
+        if (!empty($departmentId)) {
+            $query->where('department_id', $departmentId);
+        }
+    
+        $users = $query->with('roles', 'department')->get();
+        $roles = Role::all();
+        $departments = Department::all();
+        $statuses = ['Pending', 'Active', 'Banned'];
+        
+        return view('dashboard.admin.users.index', compact('users', 'roles', 'departments', 'statuses'));
+    }
+    
+    
+    
+    
 }
