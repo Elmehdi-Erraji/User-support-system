@@ -68,5 +68,33 @@ class DepartmentsController extends Controller
             return redirect()->route('department.index')->with('error', 'Department is not soft deleted');
         }
     }
+
+
+
+
+    public function Search(Request $request)
+    {
+        $searchQuery = $request->input('search_query');
+
+        $query = Department::query();
+
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        $departments = $query->get();
+
+        $transformedDepartments = $departments->map(function ($department) {
+            return [
+                'id' => $department->id,
+                'name' => $department->name,
+                'agentsCount' => $department->agents->count(),
+                'categoriesCount' => $department->categories->count()
+            ];
+        });
+        return response()->json($transformedDepartments);
+    }
     
 }

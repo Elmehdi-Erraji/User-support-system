@@ -31,7 +31,7 @@
                                 <form id="searchForm">
                                     @csrf 
                                     <div class="input-group">
-                                        <input type="text" class="form-control form-control-sm me-2" placeholder="Search for users" name="search_query" id="searchQuery">
+                                        <input type="text" class="form-control form-control-sm me-2" placeholder="Search for clients" name="search_query" id="searchQuery">
                                         <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
                                             <i class="ri-filter-line"></i> 
                                         </button>
@@ -184,7 +184,7 @@
               const searchValue = searchQuery.value.trim();
               const statusValue = statusFilter.value;
   
-              fetch('{{ route('clinets.search') }}', {
+              fetch('{{ route('clients.search') }}', {
                   method: 'POST',
                   body: JSON.stringify({ 
                       search_query: searchValue,
@@ -200,14 +200,11 @@
                   tableBody.innerHTML = '';
   
                   if (data.length === 0) {
-                      // Create a row to display "No user found" message
                       const row = document.createElement('tr');
                       row.innerHTML = `<td colspan="9" class="text-center">No user found</td>`;
                       tableBody.appendChild(row);
                   } else {
-                      // Populate table with user data
                       data.forEach(user => {
-                          // Create table row and populate it with user data
                           const row = document.createElement('tr');
                           row.innerHTML = `
                               <td>${user.id}</td>

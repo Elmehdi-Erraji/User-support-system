@@ -228,14 +228,11 @@
                 tableBody.innerHTML = '';
 
                 if (data.length === 0) {
-                    // Create a row to display "No user found" message
                     const row = document.createElement('tr');
                     row.innerHTML = `<td colspan="9" class="text-center">No user found</td>`;
                     tableBody.appendChild(row);
                 } else {
-                    // Populate table with user data
                     data.forEach(user => {
-                        // Create table row and populate it with user data
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${user.id}</td>

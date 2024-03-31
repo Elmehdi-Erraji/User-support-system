@@ -35,7 +35,7 @@
                                             <form id="searchForm">
                                                 @csrf 
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control form-control-sm me-2" placeholder="Search for users" name="search_query" id="searchQuery">
+                                                    <input type="text" class="form-control form-control-sm me-2" placeholder="Search for categories" name="search_query" id="searchQuery">
                                                     <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
                                                         <i class="ri-filter-line"></i> 
                                                     </button>
@@ -170,14 +170,11 @@
                     tableBody.innerHTML = '';
     
                     if (data.length === 0) {
-                        // Create a row to display "No category found" message
                         const row = document.createElement('tr');
                         row.innerHTML = `<td colspan="5" class="text-center">No category found</td>`;
                         tableBody.appendChild(row);
                     } else {
-                        // Populate table with category data
                         data.forEach(category => {
-                            // Create table row and populate it with category data
                             const row = document.createElement('tr');
                             row.innerHTML = `
                                 <td>${category.name}</td>

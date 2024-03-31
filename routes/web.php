@@ -116,7 +116,11 @@ Route::resource('agent_ticket', AgentTicketsController::class);
 
 
 Route::post('/users/search', [UsersController::class, 'search'])->name('users.search');
+Route::post('clinets_search', [UsersController::class, 'clientSearch'])->name('clients.search');
 Route::post('categories_search', [CategoriesController::class, 'search'])->name('categories.search');
+
+Route::post('department_search' , [DepartmentsController::class,'search'])->name('departments.search');
+
 
 
 
