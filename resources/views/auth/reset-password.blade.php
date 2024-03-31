@@ -11,7 +11,7 @@
                     <div class="card overflow-hidden">
                         <div class="row g-0">
                             <div class="col-lg-6 d-none d-lg-block p-2">
-                                <img src="{{ asset('assets/images/event.jpg') }}" alt="" class="img-fluid rounded h-100">
+                                <img src="{{ asset('assets/images/support.jpg') }}" alt="" class="img-fluid rounded h-100">
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex flex-column h-100">

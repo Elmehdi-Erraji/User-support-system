@@ -50,10 +50,58 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="p-3">
-                        <div class="row">
-                            <div class="col-lg-6">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <div class="app-search">
+                                    <form id="searchForm">
+                                        @csrf 
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm me-2" placeholder="Search for users" name="search_query" id="searchQuery">
+                                            <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                                <i class="ri-filter-line"></i> 
+                                            </button>
+                                            <button type="submit" class="btn btn-primary ms-2" id="searchButton">Search</button>
+                                        </div>
+                                        
+                                        <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg modal-right">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-primary text-light">
+                                                        <h5 class="modal-title" id="filterModalLabel">Filters</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="priorityFilter" class="form-label">Priorities:</label>
+                                                            <select id="priorityFilter" class="form-select" name="priority">
+                                                                <option value="null">Any</option>
+                                                                @foreach($priorities as $priority)
+                                                                    <option value="{{ $priority }}">{{ $priority }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="statusFilter" class="form-label">Status:</label>
+                                                            <select id="statusFilter" class="form-select" name="status">
+                                                                <option value="null">Any</option>
+                                                                @foreach($statuses as   $status)
+                                                                    <option value="{{  $status  }}">{{ $status }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                                        <button type="button" class="btn btn-secondary" id="resetFilters">Reset</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -231,6 +279,145 @@
     </div>
 
 </div>
+<script>
+    document.getElementById('resetFilters').addEventListener('click', function() {
+    document.getElementById('priorityFilter').value = 'null';
+    document.getElementById('statusFilter').value = 'null';
+    });
+</script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('searchForm');
+        const searchQuery = document.getElementById('searchQuery');
+        const tableBody = document.getElementById('tableBody');
+        const priorityFilter = document.getElementById('priorityFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const filterModalForm = document.getElementById('filterModalForm');
+
+        function fetchSearchResults() {
+            const searchValue = searchQuery.value.trim();
+            const priorityValue = priorityFilter.value;
+            const statusValue = statusFilter.value;
+
+            fetch('{{ route('agent.search') }}', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    search_query: searchValue,
+                    priority: priorityValue,
+                    status: statusValue,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+  tableBody.innerHTML = '';
+
+  if (data.length === 0) {
+      const row = document.createElement('tr');   
+      row.innerHTML = `<td colspan="10" class="text-center">No Tickets found</td>`;
+      tableBody.appendChild(row);
+  } else {
+      data.forEach(ticket => {
+          const createdDate = new Intl.DateTimeFormat('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: '2-digit',
+              hour: 'numeric', 
+              minute: 'numeric', 
+          
+              hour12: true 
+          }).format(new Date(ticket.created_at));
+
+          const updatedDate = ticket.updated_at !== ticket.created_at ? 
+              new Intl.DateTimeFormat('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: '2-digit',
+                  hour: 'numeric', 
+                  minute: 'numeric', 
+              
+                  hour12: true 
+              }).format(new Date(ticket.updated_at)) : 'Not updated yet';
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+              <td>${ticket.id}</td>
+              <td>${ticket.title}</td>
+              <td>
+                  ${ticket.priority === 'low' ? '<span class="badge bg-success">Low</span>' :
+                  ticket.priority === 'medium' ? '<span class="badge bg-warning">Medium</span>' :
+                  ticket.priority === 'high' ? '<span class="badge bg-danger">High</span>' :
+                  '<span class="badge bg-secondary">Unknown</span>'}
+              </td>
+              <td>
+                  ${ticket.status === 'open' ? '<span class="badge bg-info text-white">open</span>' :
+                  ticket.status === 'in_progress' ? ' <span class="badge bg-warning text-white">in_progress</span>' :
+                  ticket.status === 'resolved' ? '<span class="badge bg-success text-white">resolved</span>' :
+                  ticket.status === 'closed' ? '<span class="badge bg-secondary text-white">closed</span>' :
+                  ticket.status === 'wrong_category' ? '<span class="badge bg-secondary text-red">wrong_category</span>' :
+                  '<span class="badge bg-secondary text-white">Unknown Status</span>'}
+              </td>
+              <td>${ticket.category.name}</td>
+              <td>${ticket.user.name}</td>
+              <td>${ticket.support_agent.name}</td>
+              <td>${createdDate}</td>
+              <td>${updatedDate}</td>
+              <td>
+                  ${ticket.deleted_at ? `
+                      <form action="/tickets/${ticket.id}/restore" method="POST" class="d-inline">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="_method" value="PUT">
+                          <button type="submit" class="btn btn-sm btn-warning">Restore</button>
+                      </form>
+                      <form action="/tickets/${ticket.id}/force-delete" method="POST" class="d-inline">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="btn btn-sm btn-danger delete-btn">Force Delete</button>
+                      </form>
+                  ` : `
+                      <a href="/ticket/${ticket.id}/edit" class="btn btn-sm btn-primary">Edit</a>
+                      <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#scrollable-modal-${ticket.id}" data-ticket-id="${ticket.id}">View Details</button> 
+                      <form action="/ticket/${ticket.id}" method="POST" class="d-inline">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                      </form>
+                  `}
+              </td>
+          `;
+          tableBody.appendChild(row);
+      });
+  }
+})
+
+
+
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            fetchSearchResults();
+        });
+
+        document.getElementById('searchButton').addEventListener('click', function() {
+            fetchSearchResults();
+        });
+
+        filterModal.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (event.target !== document.getElementById('resetFilters')) {
+                fetchSearchResults();
+                $('#filterModal').modal('hide'); 
+            }
+        });
+    });
+</script>
 @endsection
 

@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
  Route::middleware(['agent'])->group(function () {
     Route::get('agent_dashboard', [AgentDashboardController::class,'index'])->name('agent_dashboard');
     Route::resource('agent_ticket', AgentTicketsController::class);
+    Route::post('agent_ticket_search', [AgentTicketsController::class,'search'])->name('agent.search');
  });
 
 

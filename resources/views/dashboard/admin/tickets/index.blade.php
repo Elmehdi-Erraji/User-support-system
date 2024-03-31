@@ -88,8 +88,8 @@
                                         </form>
                                     </div>
                                 </div>
+                            </div>
                         </div>
-                    </div>
 
                     <div id="yearly-sales-collapse" class="collapse show">
                         <div class="table-responsive">

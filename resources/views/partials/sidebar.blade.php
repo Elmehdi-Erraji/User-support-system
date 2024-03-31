@@ -144,7 +144,7 @@
     <ul class="side-nav">
         <li class="side-nav-title">Main</li>
         <li class="side-nav-item">
-            <a href="#" class="side-nav-link">
+            <a href="{{route('agent_ticket.index')}}" class="side-nav-link">
                 <i class="ri-dashboard-3-line"></i>
                 <span> Dashboard </span>
             </a>
@@ -166,24 +166,12 @@
                 </ul>
             </div>
         </li>
-
-        {{-- <li class="side-nav-item">
-            <a data-bs-toggle="collapse" href="#sidebarFAQs" aria-expanded="false" aria-controls="sidebarFAQs" class="side-nav-link">
-                <i class="ri-question-line"></i> 
-                <span> FAQs </span>
-                <span class="menu-arrow"></span>
+        <li class="side-nav-item">
+            <a href="{{ route('FaqHome') }}" class="side-nav-link">
+                <i class="ri-questionnaire-fill"></i>
+                <span> All FAQs </span>
             </a>
-            <div class="collapse" id="sidebarFAQs">
-                <ul class="side-nav-third-level">
-                    <li>
-                        <a href="{{ route('Faq.index') }}">FAQ List</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('ticket.create') }}">Add Ticket</a>
-                    </li>      
-                </ul>          
-            </div>
-        </li> --}}
+        </li>
     </ul>
 @endif
 

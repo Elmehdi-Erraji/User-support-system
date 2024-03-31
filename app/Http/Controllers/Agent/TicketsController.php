@@ -18,7 +18,10 @@ class TicketsController extends Controller
         $ticketsResolved = Ticket::where('support_agent_id', $userId)
                              ->where('status', 'resolved')
                              ->count();
-        return view('dashboard.agent.tickets.index',compact('tickets','ticketsAssigned','ticketsResolved'));
+
+        $statuses =  ['open', 'in_progress', 'on_hold', 'resolved', 'closed','wrong_category'];
+        $priorities = ['low', 'medium', 'high'];                 
+        return view('dashboard.agent.tickets.index',compact('tickets','ticketsAssigned','ticketsResolved','statuses','priorities'));
     }
 
     public function create()
@@ -78,5 +81,56 @@ class TicketsController extends Controller
     {
         Ticket::withTrashed()->where('id', $id)->forceDelete();
         return redirect()->route('agent_ticket.index')->with('success', 'Ticket permanently deleted.');
+    }
+
+
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('search_query');
+        $priority = $request->input('priority');
+        $status = $request->input('status');
+
+        $agentId = auth()->id();
+        
+        $query = Ticket::query();
+
+        $query->where('support_agent_id', $agentId);
+        
+        if (!empty($searchQuery)) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('title', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        if (!empty($priority) && $priority !== 'null') {
+            $query->where('priority', $priority);
+        }
+
+        if (!empty($status) && $status !== 'null') {
+            $query->where('status', $status);
+        }
+
+
+        $tickets = $query->get();
+
+        $transformedTickets = $tickets->map(function ($ticket) {
+            $ticket['id'] = $ticket->id;
+            $ticket['title'] = $ticket->title;
+            $ticket['priority'] = $ticket->priority;
+            $ticket['status'] = $ticket->status;
+            $ticket['category'] = $ticket->category->name;
+            $ticket['user'] = $ticket->user;
+            $ticket['support_agent'] = $ticket->supportAgent;
+            $ticket['created_at'] = $ticket->created_at->isoFormat('Do MMMM YYYY, h:mm:ssa') ;
+            $ticket['updated_at'] = $ticket->updated_at->isoFormat('Do MMMM YYYY, h:mm:ssa') ;
+            $ticket['updated_at'] = $ticket->updated_at->isoFormat('Do MMMM YYYY, h:mm:ssa') ;
+
+            if( $ticket['deleted_at'] !== null){
+                $ticket['updated_at'] = $ticket->deleted_at;
+            }
+            return $ticket;
+        });
+
+        return response()->json($transformedTickets);
     }
 }

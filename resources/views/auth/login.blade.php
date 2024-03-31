@@ -11,7 +11,7 @@
                 <div class="card overflow-hidden">
                     <div class="row g-0">
                         <div class="col-lg-6 d-none d-lg-block p-2">
-                            <img src="{{ asset('assets/images/event.jpg') }}" alt="" class="img-fluid rounded h-100">
+                            <img src="{{ asset('assets/images/support.jpg') }}" alt="" class="img-fluid rounded h-100">
                         </div>
                         <div class="col-lg-6">
                             <div class="d-flex flex-column h-100">
@@ -32,8 +32,7 @@
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            {{-- <a href="{{ route('password.request') }}" class="text-muted float-end"><small>Forgot your password?</small></a> --}}
-                                            <a href="" class="text-muted float-end"><small>Forgot your password?</small></a>
+                                            <a href="{{ route('forgot-password') }}" class="text-muted float-end"><small>Forgot your password?</small></a>
                                             <label for="password" class="form-label">Password</label>
                                             <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" placeholder="Enter your password">
                                             @error('password')
