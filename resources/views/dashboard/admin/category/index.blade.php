@@ -183,10 +183,10 @@
                                 <td>${category.faqsCount}</td>
                                 <td>
                                     <a href="{{ url('categories') }}/${category.id}/edit" class="btn btn-sm btn-primary">Edit</a>
-                                    <form action="{{ url('categories') }}/${category.id}/force-delete" method="POST" class="d-inline">
+                                    <form action="{{ url('categories') }}/${category.id}/destroy" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger delete-btn">Permanently Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
                                     </form>
                                 </td>
                             `;

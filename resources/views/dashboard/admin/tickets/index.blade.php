@@ -49,23 +49,31 @@
                                                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                           
+                                                            <div class="mb-3">
+                                                                <label for="priorityFilter" class="form-label">Priorities:</label>
+                                                                <select id="priorityFilter" class="form-select" name="priority">
+                                                                    <option value="null">Any</option>
+                                                                    @foreach($priorities as  $key => $priority)
+                                                                        <option value="{{  $key }}">{{ ucfirst($priority) }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
                                                             <div class="mb-3">
                                                                 <label for="statusFilter" class="form-label">Status:</label>
                                                                 <select id="statusFilter" class="form-select" name="status">
                                                                     <option value="null">Any</option>
-                                                                    {{-- @foreach($statuses as  $key => $status)
+                                                                    @foreach($statuses as  $key => $status)
                                                                         <option value="{{  $key+1  }}">{{ ucfirst($status) }}</option>
-                                                                    @endforeach --}}
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="departmentFilter" class="form-label">Department:</label>
-                                                                <select id="departmentFilter" class="form-select" name="department">
+                                                                <label for="agentsFilter" class="form-label">Agents:</label>
+                                                                <select id="agentsFilter" class="form-select" name="agents">
                                                                     <option value="null">Any</option>
-                                                                    {{-- @foreach ($departments as $department)
-                                                                    <option value="{{$department->id}}">{{$department->name}}</option>
-                                                                    @endforeach --}}
+                                                                    @foreach ($agents as $agent)
+                                                                    <option value="{{$agent->id}}">{{$agent->name}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>

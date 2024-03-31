@@ -55,7 +55,7 @@
                                                                 <select id="statusFilter" class="form-select" name="status">
                                                                     <option value="null">Any</option>
                                                                     @foreach($statuses as  $key => $status)
-                                                                        <option value="{{  $key+1  }}">{{ $key+1 }}</option>
+                                                                        <option value="{{  $key+1  }}">{{ ucfirst($status)  }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -109,9 +109,9 @@
                                         <td>{{ strlen($faq->question) > 25 ? substr($faq->question, 0, 25) . '...' : $faq->question }}</td>
                                         <td>{{ strlen($faq->answer) > 25 ? substr($faq->answer, 0, 25) . '...' : $faq->answer }}</td>
                                         @if($faq->category_id == null)
-                                            <td>No Category</td>
+                                        <td>No Category</td>
                                         @else
-                                            <td>{{ $faq->category->name }}</td>
+                                            <td>{{ optional($faq->category)->name}}</td>
                                         @endif
                                         <td>{{ $faq->user->name }}</td>
                                         <td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TickesController extends Controller
@@ -12,7 +13,14 @@ class TickesController extends Controller
     public function index()
     {
         $tickets = Ticket::withTrashed()->paginate(8);
-        return view('dashboard.admin.tickets.index',compact('tickets'));
+        $statuses =  ['open', 'in_progress', 'on_hold', 'resolved', 'closed','wrong_category'];
+        $priorities = ['low', 'medium', 'high'];
+
+        $agents = User::whereHas('roles', function ($query) {
+            $query->where('name', 'support_agent');
+        })->get();
+
+        return view('dashboard.admin.tickets.index',compact('tickets','statuses','priorities','agents'));
     }
 
     public function create()
