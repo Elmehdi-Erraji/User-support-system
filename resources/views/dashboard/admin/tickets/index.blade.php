@@ -69,7 +69,7 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="agentsFilter" class="form-label">Agents:</label>
-                                                                <select id="agentsFilter" class="form-select" name="agents">
+                                                                <select id="agentsFilter" class="form-select" name="agent">
                                                                     <option value="null">Any</option>
                                                                     @foreach ($agents as $agent)
                                                                     <option value="{{$agent->id}}">{{$agent->name}}</option>
@@ -98,11 +98,9 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Title</th>
-                                        {{-- <th>Description</th> --}}
                                         <th>Priority</th>
                                         <th>Status</th>
                                         <th>Category</th>
-                                        {{-- <th>Department</th> --}}
                                         <th>User</th>
                                         <th>Agent</th>
                                         <th>Created At</th>
@@ -267,5 +265,152 @@
 
 </div>
 
+    <script>
+        document.getElementById('resetFilters').addEventListener('click', function() {
+        document.getElementById('priorityFilter').value = 'null';
+        document.getElementById('statusFilter').value = 'null';
+        document.getElementById('agentsFilter').value = 'null';
+        });
+  </script>
+  
+  
+  
+  
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const searchForm = document.getElementById('searchForm');
+          const searchQuery = document.getElementById('searchQuery');
+          const tableBody = document.getElementById('tableBody');
+          const priorityFilter = document.getElementById('priorityFilter');
+          const statusFilter = document.getElementById('statusFilter');
+          const agentsFilter = document.getElementById('agentsFilter');
+          const filterModalForm = document.getElementById('filterModalForm');
+  
+          function fetchSearchResults() {
+              const searchValue = searchQuery.value.trim();
+              const priorityValue = priorityFilter.value;
+              const statusValue = statusFilter.value;
+              const agentValue = agentsFilter.value;
+  
+              fetch('{{ route('ticket.search') }}', {
+                  method: 'POST',
+                  body: JSON.stringify({ 
+                      search_query: searchValue,
+                      priority: priorityValue,
+                      status: statusValue,
+                      agent: agentValue
+                  }),
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                  }
+              })
+              .then(response => response.json())
+              .then(data => {
+    tableBody.innerHTML = '';
+
+    if (data.length === 0) {
+        const row = document.createElement('tr');   
+        row.innerHTML = `<td colspan="10" class="text-center">No Tickets found</td>`;
+        tableBody.appendChild(row);
+    } else {
+        data.forEach(ticket => {
+            const createdDate = new Intl.DateTimeFormat('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: '2-digit',
+                hour: 'numeric', 
+                minute: 'numeric', 
+            
+                hour12: true 
+            }).format(new Date(ticket.created_at));
+
+            const updatedDate = ticket.updated_at !== ticket.created_at ? 
+                new Intl.DateTimeFormat('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: '2-digit',
+                    hour: 'numeric', 
+                    minute: 'numeric', 
+                
+                    hour12: true 
+                }).format(new Date(ticket.updated_at)) : 'Not updated yet';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${ticket.id}</td>
+                <td>${ticket.title}</td>
+                <td>
+                    ${ticket.priority === 'low' ? '<span class="badge bg-success">Low</span>' :
+                    ticket.priority === 'medium' ? '<span class="badge bg-warning">Medium</span>' :
+                    ticket.priority === 'high' ? '<span class="badge bg-danger">High</span>' :
+                    '<span class="badge bg-secondary">Unknown</span>'}
+                </td>
+                <td>
+                    ${ticket.status === 'open' ? '<span class="badge bg-info-subtle text-info">open</span>' :
+                    ticket.status === 'in_progress' ? '<span class="badge bg-warning-subtle text-warning">in_progress</span>' :
+                    ticket.status === 'resolved' ? '<span class="badge bg-pink-subtle text-pink">resolved</span>' :
+                    ticket.status === 'closed' ? '<span class="badge bg-pink-subtle text-pink">closed</span>' :
+                    ticket.status === 'wrong_category' ? '<span class="badge bg-secondary text-red">wrong_category</span>' :
+                    '<span class="badge bg-warning">Unknown Status</span>'}
+                </td>
+                <td>${ticket.category.name}</td>
+                <td>${ticket.user.name}</td>
+                <td>${ticket.support_agent.name}</td>
+                <td>${createdDate}</td>
+                <td>${updatedDate}</td>
+                <td>
+                    ${ticket.deleted_at ? `
+                        <form action="/tickets/${ticket.id}/restore" method="POST" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-sm btn-warning">Restore</button>
+                        </form>
+                        <form action="/tickets/${ticket.id}/force-delete" method="POST" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger delete-btn">Force Delete</button>
+                        </form>
+                    ` : `
+                        <a href="/ticket/${ticket.id}/edit" class="btn btn-sm btn-primary">Edit</a>
+                        <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#scrollable-modal-${ticket.id}" data-ticket-id="${ticket.id}">View Details</button> 
+                        <form action="/ticket/${ticket.id}" method="POST" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                        </form>
+                    `}
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+})
+
+
+
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          }
+  
+          searchForm.addEventListener('submit', function(event) {
+              event.preventDefault(); 
+              fetchSearchResults();
+          });
+  
+          document.getElementById('searchButton').addEventListener('click', function() {
+              fetchSearchResults();
+          });
+  
+          filterModal.addEventListener('submit', function(event) {
+              event.preventDefault();
+              if (event.target !== document.getElementById('resetFilters')) {
+                  fetchSearchResults();
+                  $('#filterModal').modal('hide'); 
+              }
+          });
+      });
+  </script>
 @endsection
 

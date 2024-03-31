@@ -118,12 +118,10 @@ Route::post('/users/search', [UsersController::class, 'search'])->name('users.se
 Route::post('clinets_search', [UsersController::class, 'clientSearch'])->name('clients.search');
 Route::post('categories_search', [CategoriesController::class, 'search'])->name('categories.search');
 Route::post('department_search' , [DepartmentsController::class,'search'])->name('departments.search');
-
-
-
 Route::post('Faq_search', [AdminFaqController::class,'search'])->name('faq.search');
 
 
+Route::post('ticket_search', [TickesController::class,'search'])->name('ticket.search');
 
 
 
