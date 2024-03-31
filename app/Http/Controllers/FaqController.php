@@ -10,7 +10,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::where('status','active')->paginate(9);
+        $faqs = Faq::where('status','1')->paginate(9);
         $categories = Category::all();
         return view('dashboard.faqAll',compact('faqs','categories'));
     }

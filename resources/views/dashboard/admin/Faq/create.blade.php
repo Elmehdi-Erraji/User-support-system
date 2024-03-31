@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <form action="{{ route('Faq.store') }}" method="POST" id="addFaqForm" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="1">
+                                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                                     <div class="mb-3">
                                         <label for="question" class="form-label">Question</label>
                                         <input type="text" id="question" class="form-control @error('question') is-invalid @enderror" name="question" placeholder="Enter the FAQ question" value="{{ old('question') }}">
@@ -81,6 +81,7 @@
                                     </div>
                                 
                                     <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Go Back</a>
                                 </form>
                                 
                             </div>

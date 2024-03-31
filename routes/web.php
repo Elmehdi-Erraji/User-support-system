@@ -61,7 +61,6 @@ Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'f
 
 //categories routes start here
 Route::resource('categories' , CategoriesController::class);
-Route::post('categories' , [CategoriesController::class,'categorySearch'])->name('categories.search');
 //categories routes ends here
 
 //users routes start here
@@ -118,8 +117,12 @@ Route::resource('agent_ticket', AgentTicketsController::class);
 Route::post('/users/search', [UsersController::class, 'search'])->name('users.search');
 Route::post('clinets_search', [UsersController::class, 'clientSearch'])->name('clients.search');
 Route::post('categories_search', [CategoriesController::class, 'search'])->name('categories.search');
-
 Route::post('department_search' , [DepartmentsController::class,'search'])->name('departments.search');
+
+
+
+Route::post('Faq_search', [AdminFaqController::class,'search'])->name('faq.search');
+
 
 
 

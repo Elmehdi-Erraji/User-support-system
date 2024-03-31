@@ -49,7 +49,7 @@
                                         @enderror
                                     </div>
                                         <button type="submit" id="submitButton" class="btn btn-primary" name="updateDepartment">Submit</button>
-                                        <a href="{{ route('department.index') }}" class="btn btn-dark">Back</a>
+                                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Go Back</a>
                                 </form>
                             </div>
                         </div>
