@@ -128,6 +128,9 @@ Route::post('ticket_search', [TickesController::class,'search'])->name('ticket.s
 Route::get('FaqHome', [FaqController::class,'index'])->name('FaqHome');
 
 
+Route::post('FaqHome_search', [FaqController::class,'search'])->name('FaqHome.search');
+
+
 
 // Route::get('FaqHome', function (){
 //     return view('dashboard.faqAll');

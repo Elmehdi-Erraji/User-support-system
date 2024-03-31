@@ -84,7 +84,7 @@ class TickesController extends Controller
             });
         }
 
-        if (!empty($priority) && $status !== 'null') {
+        if (!empty($priority) && $priority !== 'null') {
             $query->where('priority', $priority);
         }
 

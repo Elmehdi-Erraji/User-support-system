@@ -53,8 +53,8 @@
                                                                 <label for="priorityFilter" class="form-label">Priorities:</label>
                                                                 <select id="priorityFilter" class="form-select" name="priority">
                                                                     <option value="null">Any</option>
-                                                                    @foreach($priorities as  $key => $priority)
-                                                                        <option value="{{  $key }}">{{ ucfirst($priority) }}</option>
+                                                                    @foreach($priorities as $priority)
+                                                                        <option value="{{ $priority }}">{{ $priority }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -62,8 +62,8 @@
                                                                 <label for="statusFilter" class="form-label">Status:</label>
                                                                 <select id="statusFilter" class="form-select" name="status">
                                                                     <option value="null">Any</option>
-                                                                    @foreach($statuses as  $key => $status)
-                                                                        <option value="{{  $key+1  }}">{{ ucfirst($status) }}</option>
+                                                                    @foreach($statuses as   $status)
+                                                                        <option value="{{  $status  }}">{{ $status }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -347,12 +347,12 @@
                     '<span class="badge bg-secondary">Unknown</span>'}
                 </td>
                 <td>
-                    ${ticket.status === 'open' ? '<span class="badge bg-info-subtle text-info">open</span>' :
-                    ticket.status === 'in_progress' ? '<span class="badge bg-warning-subtle text-warning">in_progress</span>' :
-                    ticket.status === 'resolved' ? '<span class="badge bg-pink-subtle text-pink">resolved</span>' :
-                    ticket.status === 'closed' ? '<span class="badge bg-pink-subtle text-pink">closed</span>' :
+                    ${ticket.status === 'open' ? '<span class="badge bg-info text-white">open</span>' :
+                    ticket.status === 'in_progress' ? ' <span class="badge bg-warning text-white">in_progress</span>' :
+                    ticket.status === 'resolved' ? '<span class="badge bg-success text-white">resolved</span>' :
+                    ticket.status === 'closed' ? '<span class="badge bg-secondary text-white">closed</span>' :
                     ticket.status === 'wrong_category' ? '<span class="badge bg-secondary text-red">wrong_category</span>' :
-                    '<span class="badge bg-warning">Unknown Status</span>'}
+                    '<span class="badge bg-secondary text-white">Unknown Status</span>'}
                 </td>
                 <td>${ticket.category.name}</td>
                 <td>${ticket.user.name}</td>
