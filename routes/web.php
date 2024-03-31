@@ -37,7 +37,7 @@ Route::get('/', function () {
 // })->name('dashboard');
 
 
-Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+
 
 
 
@@ -53,82 +53,74 @@ Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 // Auth routes endss here
 
-//departments routes start here
-Route::resource('department' , DepartmentsController::class);
-Route::put('department/{id}/restore', [DepartmentsController::class , 'restore'])->name('department.restore');
-Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'forceDelete'])->name('department.forceDelete');
-//departments routes ends here
 
-//categories routes start here
-Route::resource('categories' , CategoriesController::class);
-//categories routes ends here
-
-//users routes start here
-Route::resource('users' , UsersController::class);
-Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('users.restore');
-Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
-Route::get('clinets_list', [UsersController::class, 'clientsList'])->name('clinets_list');
-Route::get('agent_show/{id}', [UsersController::class, 'agentShow'])->name('agent_show');
-//users routes ends here
-
-//Faq's routes start here
-Route::resource('Faq', AdminFaqController::class);
-//Faq's routes ends here
-
-//tickets routes start here
-Route::resource('ticket', TickesController::class);
-Route::put('/tickets/{id}/restore', [TickesController::class , 'restore'])->name('tickets.restore');
-Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDelete'])->name('tickets.force-delete');
-//tickets routes ends here
+Route::middleware(['auth'])->group(function () {
+    Route::get('FaqHome', [FaqController::class,'index'])->name('FaqHome');
+    Route::post('FaqHome_search', [FaqController::class,'search'])->name('FaqHome.search');
+    Route::resource('profile', ProfileController::class);
+    Route::put('profile/password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');   
+});
 
 
-Route::resource('profile', ProfileController::class);
-Route::put('profile/password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+ Route::middleware(['admin'])->group(function () {
+
+    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+    //users routes start here
+    Route::resource('users' , UsersController::class);
+    Route::put('users/{user}/restore', [UsersController::class, 'restore'])->name('users.restore');
+    Route::delete('users/{user}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
+    Route::get('clinets_list', [UsersController::class, 'clientsList'])->name('clinets_list');
+    Route::get('agent_show/{id}', [UsersController::class, 'agentShow'])->name('agent_show');
+    Route::post('/users/search', [UsersController::class, 'search'])->name('users.search');
+    Route::post('clinets_search', [UsersController::class, 'clientSearch'])->name('clients.search');
+    //users routes ends here
+
+    //departments routes start here
+    Route::resource('department' , DepartmentsController::class);
+    Route::put('department/{id}/restore', [DepartmentsController::class , 'restore'])->name('department.restore');
+    Route::delete('departments/{id}/force-delete',[DepartmentsController::class , 'forceDelete'])->name('department.forceDelete');
+    Route::post('department_search' , [DepartmentsController::class,'search'])->name('departments.search');
+    //departments routes ends here
+
+    //categories routes start here
+    Route::resource('categories' , CategoriesController::class);
+    Route::post('categories_search', [CategoriesController::class, 'search'])->name('categories.search');
+    //categories routes ends here
+    
+    //Faq's routes start here
+    Route::resource('Faq', AdminFaqController::class);
+    Route::post('Faq_search', [AdminFaqController::class,'search'])->name('faq.search');
+    //Faq's routes ends here
+
+    //tickets routes start here
+    Route::resource('ticket', TickesController::class);
+    Route::put('/tickets/{id}/restore', [TickesController::class , 'restore'])->name('tickets.restore');
+    Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDelete'])->name('tickets.force-delete');
+    Route::post('ticket_search', [TickesController::class,'search'])->name('ticket.search');
+    //tickets routes ends here
+ });
 
 
-
-Route::resource('client_ticket', ClientTicketsController::class);
-
-
-
-
-
-Route::get('agent_dashboard', [AgentDashboardController::class,'index']);
-Route::resource('agent_ticket', AgentTicketsController::class);
-
-
-
-
-// Route::middleware(['admin'])->group(function () {
-  
-// });
-// Route::middleware(['agent'])->group(function () {
-  
-// });
-// Route::middleware(['client'])->group(function () {
-  
-// });
-// Route::middleware(['auth'])->group(function () {
-  
-// });
+ Route::middleware(['agent'])->group(function () {
+    Route::get('agent_dashboard', [AgentDashboardController::class,'index'])->name('agent_dashboard');
+    Route::resource('agent_ticket', AgentTicketsController::class);
+ });
 
 
 
-Route::post('/users/search', [UsersController::class, 'search'])->name('users.search');
-Route::post('clinets_search', [UsersController::class, 'clientSearch'])->name('clients.search');
-Route::post('categories_search', [CategoriesController::class, 'search'])->name('categories.search');
-Route::post('department_search' , [DepartmentsController::class,'search'])->name('departments.search');
-Route::post('Faq_search', [AdminFaqController::class,'search'])->name('faq.search');
-
-
-Route::post('ticket_search', [TickesController::class,'search'])->name('ticket.search');
+ Route::middleware(['client'])->group(function () {
+    Route::resource('client_ticket', ClientTicketsController::class);
+ });
 
 
 
-Route::get('FaqHome', [FaqController::class,'index'])->name('FaqHome');
 
 
-Route::post('FaqHome_search', [FaqController::class,'search'])->name('FaqHome.search');
+
+
+
+
+
 
 
 

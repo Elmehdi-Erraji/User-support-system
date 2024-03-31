@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="container-fluid">
 
     <!-- start page title -->
@@ -129,6 +129,12 @@
         </div>
     </div>
 </div>
+@if (Session::has('success'))
+                                <script>
+                                    console.log("SweetAlert initialization script executed!");
+                                    Swal.fire("Success", "{{ Session::get('success') }}", 'success');
+                                </script>
+                            @endif
 <script>
     document.getElementById('resetFilters').addEventListener('click', function() {
     document.getElementById('categoryFilter').value = 'null';

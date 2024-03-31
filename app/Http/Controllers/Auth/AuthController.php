@@ -42,14 +42,36 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(LoginRequest  $request)
+        public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('dashboard')->with('success', 'Successfully logged in');
+            $user = Auth::user();
+
+            if ($user->status == 1) {
+                Auth::logout();
+                return redirect()->route('login')->with('message', 'Wait for the admin approval.');
+            } elseif ($user->status == 3) {
+                Auth::logout();
+                return redirect()->route('login')->with('message', 'Your account has been banned because: ' . $user->ban_reason);
+            }
+
+            $roleName = $user->roles()->first()->name; 
+            switch ($roleName) {
+                case 'admin':
+                    return redirect()->route('dashboard')->with('success', 'Welcome to the Admin Dashboard!');
+                case 'support_agent':
+                    return redirect()->route('agent_ticket.index')->with('success', 'Welcome to the Support Agent Dashboard!');
+                case 'client':
+                    return redirect()->route('FaqHome')->with('success', 'Welcome !');
+                default:
+                    Auth::logout(); 
+                    return redirect()->route('login')->with('message', 'Your role is not recognized.');
+            }
         } else {
             return redirect()->back()->with('message', 'Invalid Credentials');
         }
     }
+    
 
     public function logout(Request $request)
     {
