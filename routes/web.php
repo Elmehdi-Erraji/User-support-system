@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentsController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\NotificatoinsController;
 use App\Http\Controllers\Admin\TickesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Agent\AgentDashboardController;
@@ -121,7 +122,10 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+ Route::post('markAsRead/{id}', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
 
+ Route::post('markAllAsRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAllAsRead');
+ 
 
 
 

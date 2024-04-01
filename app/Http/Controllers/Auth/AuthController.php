@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\UserRegisterNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,14 @@ class AuthController extends Controller
         $role = Role::find(3);
 
         $user->roles()->sync([$role->id]);
+
+        $admins = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'admin'); 
+        })->get();
+        
+        foreach ($admins as $admin) {
+            $admin->notify(new UserRegisterNotification($user));
+        }
         return redirect()->route('login')->with('success', 'Successfully registered');
     }
 

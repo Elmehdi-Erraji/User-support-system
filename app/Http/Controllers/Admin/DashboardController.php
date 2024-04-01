@@ -8,6 +8,8 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardController extends Controller
 {
     public function index()
@@ -67,7 +69,10 @@ class DashboardController extends Controller
         $categoriesJson = json_encode($categoryNames);
         $ticketCountsJson = json_encode($ticketCounts);
 
+        $user = Auth::user();
+        $unreadNotifications = $user->unreadNotifications;
+        $notifications = $user->notifications;
         
-        return view('dashboard.admin.dashboard', compact('totalUsers', 'totalTickets', 'totalClients', 'totalAgents', 'ticketStatusesJson', 'ticketCreationDatesJson', 'ticketsCreatedCountJson','categoriesJson','ticketCountsJson'));
+        return view('dashboard.admin.dashboard', compact('totalUsers', 'totalTickets', 'totalClients', 'totalAgents', 'ticketStatusesJson', 'ticketCreationDatesJson', 'ticketsCreatedCountJson','categoriesJson','ticketCountsJson','notifications','unreadNotifications'));
     }
 }

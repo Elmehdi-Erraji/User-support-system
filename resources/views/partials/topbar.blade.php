@@ -1,3 +1,8 @@
+@php
+    $user = Auth::user();
+    $notifications = $user->unreadNotifications;
+@endphp
+
 <div class="navbar-custom">
     <div class="topbar container-fluid">
         <div class="d-flex align-items-center gap-1">
@@ -135,62 +140,55 @@
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <i class="ri-notification-3-line fs-22"></i>
-                    <span class="noti-icon-badge badge text-bg-pink">3</span>
+                    <span class="noti-icon-badge badge text-bg-pink">{{ Auth::user()->unreadNotifications->count() }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
                     <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="m-0 fs-16 fw-semibold"> Notification</h6>
+                                <h6 class="m-0 fs-16 fw-semibold">Notification</h6>
                             </div>
                             <div class="col-auto">
-                                <a href="javascript: void(0);" class="text-dark text-decoration-underline">
-                                    <small>Clear All</small>
-                                </a>
+                                <form action="{{ route('markAllAsRead') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="text-dark text-decoration-underline border-0 bg-transparent p-0">
+                                        <small>Clear All</small>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-
+            
                     <div style="max-height: 300px;" data-simplebar>
+                        @foreach ($notifications as $notification)
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-primary-subtle">
-                                <i class="mdi mdi-comment-account-outline text-primary"></i>
-                            </div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                <small class="noti-time">1 min ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-warning-subtle">
-                                <i class="mdi mdi-account-plus text-warning"></i>
-                            </div>
-                            <p class="notify-details">New user registered.
-                                <small class="noti-time">5 hours ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-danger-subtle">
-                                <i class="mdi mdi-heart text-danger"></i>
-                            </div>
-                            <p class="notify-details">Carlos Crouch liked
-                                <small class="noti-time">3 days ago</small>
-                            </p>
-                        </a>
+                        <form action="{{ route('markAsRead', $notification->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item notify-item">
+                                <div class="notify-icon bg-warning-subtle">
+                                    <i class="mdi mdi-account-plus text-warning"></i>
+                                </div>
+                                <p class="notify-details">{{ $notification->data['message'] }}
+                                    <small class="noti-time">{{ $notification->created_at->diffForHumans() }}</small>
+                                </p>
+                               
+                        </form>
+                    @endforeach
+                     
                     </div>
-
+            
                     <!-- All-->
-                    <a href="javascript:void(0);"
+                    <a href=""
                         class="dropdown-item text-center text-primary text-decoration-underline fw-bold notify-item border-top border-light py-2">
                         View All
                     </a>
-
+            
                 </div>
             </li>
+            
+
+
+
             <li class="d-none d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode">
                     <i class="ri-moon-line fs-22"></i>

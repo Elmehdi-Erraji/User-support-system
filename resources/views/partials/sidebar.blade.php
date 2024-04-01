@@ -1,3 +1,4 @@
+
 <div class="leftside-menu">
     <!-- Brand Logo Light -->
     <a href="#" class="logo logo-light">
@@ -141,11 +142,7 @@
                 <a href="" class="side-nav-link">
                     <i class="ri-notification-3-line"></i>
                     <span> Notifications </span>
-                    <span class="badge bg-success rounded-pill float-end">5</span>
-    
-                    {{-- @if($unreadNotificationsCount > 0)
-                        <span class="badge bg-success rounded-pill float-end">{{ $unreadNotificationsCount }}</span>
-                    @endif --}}
+                    <span class="badge bg-success rounded-pill float-end">{{ Auth::user()->unreadNotifications->count() }}</span>
                 </a>
             </li>
     
