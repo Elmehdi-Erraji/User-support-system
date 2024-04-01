@@ -137,6 +137,29 @@
                     <span> All FAQs </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="" class="side-nav-link">
+                    <i class="ri-notification-3-line"></i>
+                    <span> Notifications </span>
+                    <span class="badge bg-success rounded-pill float-end">5</span>
+    
+                    {{-- @if($unreadNotificationsCount > 0)
+                        <span class="badge bg-success rounded-pill float-end">{{ $unreadNotificationsCount }}</span>
+                    @endif --}}
+                </a>
+            </li>
+    
+            <li class="side-nav-item">
+                <a href="" class="side-nav-link">
+                    <i class="ri-message-3-line"></i>
+                    <span> Messages </span>
+                    <span class="badge bg-warning rounded-pill float-end">4</span>
+    
+                    {{-- @if($unreadMessagesCount > 0)
+                        <span class="badge bg-warning rounded-pill float-end">{{ $unreadMessagesCount }}</span>
+                    @endif --}}
+                </a>
+            </li>
         </ul>
     @endif
             
@@ -170,6 +193,30 @@
             <a href="{{ route('FaqHome') }}" class="side-nav-link">
                 <i class="ri-questionnaire-fill"></i>
                 <span> All FAQs </span>
+            </a>
+        </li>
+
+        <li class="side-nav-item">
+            <a href="" class="side-nav-link">
+                <i class="ri-notification-3-line"></i>
+                <span> Notifications </span>
+                <span class="badge bg-success rounded-pill float-end">5</span>
+
+                {{-- @if($unreadNotificationsCount > 0)
+                    <span class="badge bg-success rounded-pill float-end">{{ $unreadNotificationsCount }}</span>
+                @endif --}}
+            </a>
+        </li>
+
+        <li class="side-nav-item">
+            <a href="" class="side-nav-link">
+                <i class="ri-message-3-line"></i>
+                <span> Messages </span>
+                <span class="badge bg-warning rounded-pill float-end">4</span>
+
+                {{-- @if($unreadMessagesCount > 0)
+                    <span class="badge bg-warning rounded-pill float-end">{{ $unreadMessagesCount }}</span>
+                @endif --}}
             </a>
         </li>
     </ul>
@@ -219,9 +266,26 @@
         </a>
     </li>
     <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
-            <i class="ri-mail-line"></i>
+        <a href="" class="side-nav-link">
+            <i class="ri-notification-3-line"></i>
+            <span> Notifications </span>
+            <span class="badge bg-success rounded-pill float-end">5</span>
+
+            {{-- @if($unreadNotificationsCount > 0)
+                <span class="badge bg-success rounded-pill float-end">{{ $unreadNotificationsCount }}</span>
+            @endif --}}
+        </a>
+    </li>
+
+    <li class="side-nav-item">
+        <a href="" class="side-nav-link">
+            <i class="ri-message-3-line"></i>
             <span> Messages </span>
+            <span class="badge bg-warning rounded-pill float-end">4</span>
+
+            {{-- @if($unreadMessagesCount > 0)
+                <span class="badge bg-warning rounded-pill float-end">{{ $unreadMessagesCount }}</span>
+            @endif --}}
         </a>
     </li>
 </ul>
