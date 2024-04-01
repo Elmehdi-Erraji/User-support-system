@@ -125,9 +125,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-// Route::get('FaqHome', function (){
-//     return view('dashboard.faqAll');
-// })->name('FaqHome');
+Route::get('test', function (){
+    return view('faq');
+})->name('test');
 
 
 
