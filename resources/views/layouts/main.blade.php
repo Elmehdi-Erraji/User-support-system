@@ -19,7 +19,21 @@
 
     <!-- Icons css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+  
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+  
+      var pusher = new Pusher('02f27e2106b16ef3d097', {
+        cluster: 'eu'
+      });
+  
+      var channel = pusher.subscribe('my-channel');
+      channel.bind('my-event', function(data) {
+        alert(JSON.stringify(data));
+      });
+    </script>
 </head>
 
 

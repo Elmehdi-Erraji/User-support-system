@@ -30,5 +30,18 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'pusher' => [
+        'options' => [
+            'cluster' => 'eu',
+            'useTLS' => true,
+            'host' => 'api-eu.pusher.com',
+            'port' => 443,
+            'scheme' => 'https',
+            'curl_options' => [
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false,
+            ],
+        ],
+    ],
 
 ];

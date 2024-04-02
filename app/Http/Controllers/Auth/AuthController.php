@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegestratoin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
@@ -43,6 +44,11 @@ class AuthController extends Controller
         foreach ($admins as $admin) {
             $admin->notify(new UserRegisterNotification($user));
         }
+
+        $name = $user->name;
+        
+        event(new UserRegestratoin($name));
+
         return redirect()->route('login')->with('success', 'Successfully registered');
     }
 
