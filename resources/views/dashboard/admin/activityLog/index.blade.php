@@ -50,24 +50,16 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="mb-3">
-                                                                <label for="priorityFilter" class="form-label">Priorities:</label>
-                                                                <select id="priorityFilter" class="form-select" name="priority">
+                                                                <label for="priorityFilter" class="form-label">Activity:</label>
+                                                                <select id="logEvent" class="form-select" name="event">
                                                                     <option value="null">Any</option>
-                                                                    {{-- @foreach($priorities as $priority)
-                                                                        <option value="{{ $priority }}">{{ $priority }}</option>
-                                                                    @endforeach --}}
+                                                                   
+                                                                        <option value="deleted">Delete</option>
+                                                                        <option value="updated">Update</option>
+                                                                   
                                                                 </select>
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <label for="statusFilter" class="form-label">Status:</label>
-                                                                <select id="statusFilter" class="form-select" name="status">
-                                                                    <option value="null">Any</option>
-                                                                    {{-- @foreach($statuses as   $status)
-                                                                        <option value="{{  $status  }}">{{ $status }}</option>
-                                                                    @endforeach --}}
-                                                                </select>
-                                                            </div>
-                                                           
+                                                          
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-primary">Apply Filters</button>
@@ -108,17 +100,15 @@
                                                     <span class="badge bg-secondary">{{ $log->event }}</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $log->causer_name }}</td>
+                                            <td>{{ $log->causer->name}}</td>
                                             <td>{{ \Carbon\Carbon::parse($log->created_at)->diffForHumans() }}</td>
                                             <td>
-                                                <!-- Add actions here -->
                                                 <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#activity-log-details-modal-{{ $log->id }}">View Details</button> 
-                                                <form action="" method="POST" class="d-inline">
+                                                <form action="{{route('activity.destroy',$log->id)}}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
                                                 </form>
-                                                <!-- Add more actions as needed -->
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="activity-log-details-modal-{{ $log->id }}" tabindex="-1" role="dialog" aria-labelledby="activityLogDetailsModalTitle" aria-hidden="true">
@@ -145,7 +135,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <p><strong>Causer:</strong> {{ $log->causer_name }}</p>
+                                                                 <p><strong>Causer:</strong> {{ $log->causer->name }}</p> 
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($log->created_at)->diffForHumans() }}</p>
@@ -183,6 +173,96 @@
     </div>
 
 </div>
+<script>
+    document.getElementById('resetFilters').addEventListener('click', function() {
+    document.getElementById('logEvent').value = 'null';
+    });
+</script>
 
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const searchForm = document.getElementById('searchForm');
+      const searchQuery = document.getElementById('searchQuery');
+      const tableBody = document.getElementById('tableBody');
+      const logEventFilter = document.getElementById('logEvent');
+      const filterModalForm = document.getElementById('filterModalForm');
+
+      function fetchSearchResults() {
+          const searchValue = searchQuery.value.trim();
+          const eventValue = logEventFilter.value;
+
+          fetch('{{ route('activity.serach') }}', {
+              method: 'POST',
+              body: JSON.stringify({ 
+                  search_query: searchValue,
+                  event: eventValue 
+              }),
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-TOKEN': '{{ csrf_token() }}'
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+    tableBody.innerHTML = '';
+
+    if (data.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="5" class="text-center">No activity logs found</td>`;
+        tableBody.appendChild(row);
+    } else {
+        data.forEach(log => {
+            const createdDate = new Date(log.created_at).toLocaleString();
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${log.description.length > 25 ? log.description.substring(0, 25) + '...' : log.description}</td>
+                <td>
+                    ${log.event === 'deleted' ? '<span class="badge bg-danger text-white">Deleted</span>' :
+                    log.event === 'updated' ? '<span class="badge bg-warning text-dark">Updated</span>' :
+                    '<span class="badge bg-secondary">' + log.event + '</span>'}
+                </td>
+                <td>${log.causer_name}</td>
+                <td>${createdDate}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-success btn-view-details" data-bs-toggle="modal" data-bs-target="#activity-log-details-modal-${log.id}">View Details</button> 
+                    <form action="/activity/${log.id}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                    </form>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+})
+
+
+
+
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            searchForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                fetchSearchResults();
+            });
+
+            document.getElementById('searchButton').addEventListener('click', function() {
+                fetchSearchResults();
+            });
+
+            filterModal.addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (event.target !== document.getElementById('resetFilters')) {
+                    fetchSearchResults();
+                    $('#filterModal').modal('hide'); 
+                }
+            });
+        });
+</script> 
 @endsection
 

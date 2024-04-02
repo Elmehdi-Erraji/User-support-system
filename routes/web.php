@@ -129,7 +129,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('activity',[ActivityLogController::class, 'index'])->name('activity');
-
+Route::delete('activity_delete/{id}',[ActivityLogController::class, 'destroy'])->name('activity.destroy');
+Route::post('activity_serach',[ActivityLogController::class, 'search'])->name('activity.serach');
 
 
 

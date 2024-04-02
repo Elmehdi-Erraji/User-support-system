@@ -147,7 +147,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="" class="side-nav-link">
+                <a href="{{route('activity')}}" class="side-nav-link">
                     <i class="ri-history-line"></i>
                     <span>All Logs</span>
                 </a>
