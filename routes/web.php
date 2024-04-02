@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartmentsController;
@@ -123,9 +124,25 @@ Route::middleware(['auth'])->group(function () {
 
 
  Route::post('markAsRead/{id}', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
-
  Route::post('markAsAllRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAsAllRead');
  
+
+
+Route::get('activity',[ActivityLogController::class, 'index'])->name('activity');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -143,10 +143,13 @@
                     <i class="ri-message-3-line"></i>
                     <span> Messages </span>
                     <span class="badge bg-warning rounded-pill float-end">4</span>
-    
-                    {{-- @if($unreadMessagesCount > 0)
-                        <span class="badge bg-warning rounded-pill float-end">{{ $unreadMessagesCount }}</span>
-                    @endif --}}
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="" class="side-nav-link">
+                    <i class="ri-history-line"></i>
+                    <span>All Logs</span>
                 </a>
             </li>
         </ul>

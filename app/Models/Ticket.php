@@ -5,10 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Ticket extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes,LogsActivity;
+    protected static $logAttributes = ['status', 'assigned_to', 'priority'];
+
+    protected static $logName = 'ticket';
 
      protected $fillable = [
         'title',
@@ -41,5 +46,24 @@ class Ticket extends Model
      public function supportAgent()
     {
         return $this->belongsTo(User::class, 'support_agent_id');
+    }
+
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = auth()->user()->name;
+
+        if ($eventName === 'updated') {
+            return "Ticket '{$this->title}' was updated by {$userName}";
+        } elseif ($eventName === 'deleted') {
+            return "Ticket '{$this->title}' was deleted by {$userName}";
+        }
+
+        return "Ticket '{$this->title}' was {$eventName}";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 }

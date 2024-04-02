@@ -52,6 +52,10 @@ class TicketsController extends Controller
 
         $ticket->status = $request->status;
         $ticket->priority = $request->priority;
+
+        $originalStatus = $ticket->status;
+        $originalPriority = $ticket->priority;
+
       
         if ($request->has('motif')) {
             $ticket->motif = $request->motif;
@@ -59,6 +63,10 @@ class TicketsController extends Controller
         }
         
         $ticket->save();
+
+        if ($originalStatus !== $ticket->status || $originalPriority !== $ticket->priority) {
+            $ticket->logActivity("Ticket '{$ticket->title}' was updated")->withLogName('ticket-update');
+        }
         return redirect()->route('agent_ticket.index')->with('success','ticket updated successfully');
     }
 
@@ -66,7 +74,9 @@ class TicketsController extends Controller
     public function destroy($id)
     {
         $ticket = Ticket::findOrFail($id);
+        $ticketTitle = $ticket->title;
         $ticket->delete();
+        $ticket->logActivity("Ticket '{$ticketTitle}' was deleted")->withLogName('ticket-delete');
         return redirect()->route('agent_ticket.index')->with('success','ticket deleted successfully');
     }
 
