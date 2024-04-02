@@ -211,7 +211,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Function to format the date into a human-readable string
         function timeSince(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
             let interval = seconds / 31536000;
@@ -238,15 +237,12 @@
             return Math.floor(seconds) + " seconds ago";
         }
     
-        // Function to fetch notifications data and update UI
         function fetchNotifications() {
             fetch('/notifications')
                 .then(response => response.json())
                 .then(data => {
-                    // Update notification count
                     document.getElementById('notificationCount').textContent = data.notifications.length;
     
-                    // Update notification list
                     const notificationList = document.getElementById('notificationList');
                     notificationList.innerHTML = '';
                     data.notifications.forEach(notification => {
@@ -269,10 +265,8 @@
                 .catch(error => console.error(error));
         }
     
-        // Fetch notifications data on page load
         fetchNotifications();
     
-        // Event listener for clearing all notifications
         document.getElementById('clearAllNotifications').addEventListener('click', function() {
             fetch('/clear-notifications', {
                 method: 'POST',
@@ -281,15 +275,14 @@
                 },
             })
             .then(() => {
-                // Reload notifications after clearing
                 fetchNotifications();
             })
             .catch(error => console.error(error));
         });
     });
-    </script>
+</script>
     
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('clearAllNotifications').addEventListener('click', function() {
                 fetch('{{ route("markAsAllRead") }}', {
@@ -319,6 +312,6 @@
                 });
             });
         });
-        </script>
+</script>
 
 

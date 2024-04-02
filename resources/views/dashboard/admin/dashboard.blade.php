@@ -228,7 +228,6 @@
         </div> <!-- end col-->
     </div>
 </div>
-<script src="assets/js/pages/toastr.init.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
     var xValues = ['open', 'in_progress', 'on_hold', 'resolved', 'closed', 'wrong_category'];
