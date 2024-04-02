@@ -149,7 +149,15 @@
             </div>
         </div>
     </div> --}}
-    <div class="row">
+
+    <div class="col-md-3 col-sm-6" style="display: none">
+        <div class="text-center p-1 pb-3 p-sm-3">
+            <p>Info Example</p>
+            <button type="button" class="btn btn-info btn-sm" id="toastr-one">Click
+                me</button>
+        </div>
+    </div>
+    {{-- <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -160,13 +168,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="text-center p-1 pb-3 p-sm-3">
-                                <p>Info Example</p>
-                                <button type="button" class="btn btn-info btn-sm" id="toastr-one">Click
-                                    me</button>
-                            </div>
-                        </div> <!-- end col-->
+                        <!-- end col-->
                         <div class="col-md-3 col-sm-6">
                             <div class="text-center p-1 pb-3 p-sm-3">
                                 <p>Warning Example</p>
@@ -226,7 +228,7 @@
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
-    </div>
+    </div> --}}
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>

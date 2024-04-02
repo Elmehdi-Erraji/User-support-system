@@ -22,10 +22,15 @@ channel.bind('my-event', function(data) {
     document.getElementById('notificationCount').textContent = newCount;
 
     fetchNotifications(); // Trigger fetchNotifications function
-    alert(JSON.stringify(data));
+    simulateButtonClick();
 });
 
-
+function simulateButtonClick() {
+    var button = document.getElementById('toastr-one');
+    if (button) {
+        button.click();
+    }
+}
 function timeSince(date) {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
     let interval = seconds / 31536000;
