@@ -124,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
 
  Route::post('markAsRead/{id}', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
 
- Route::post('markAllAsRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAllAsRead');
+ Route::post('markAsAllRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAsAllRead');
  
 
 

@@ -28,13 +28,13 @@ class NotificatoinsController extends Controller
         return redirect()->back();
     }
 
-    public function markAllAsRead($id)
+    public function markAsAllRead($id)
     {
         $user = Auth::user();
         $user->unreadNotifications->each(function ($notification) {
             $notification->markAsRead();
         });
     
-        return redirect()->back();
+        return response()->json(['success' => true]);
     }
 }

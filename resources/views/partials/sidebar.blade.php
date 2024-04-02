@@ -140,14 +140,6 @@
             </li>
             <li class="side-nav-item">
                 <a href="" class="side-nav-link">
-                    <i class="ri-notification-3-line"></i>
-                    <span> Notifications </span>
-                    <span class="badge bg-success rounded-pill float-end">{{ Auth::user()->unreadNotifications->count() }}</span>
-                </a>
-            </li>
-    
-            <li class="side-nav-item">
-                <a href="" class="side-nav-link">
                     <i class="ri-message-3-line"></i>
                     <span> Messages </span>
                     <span class="badge bg-warning rounded-pill float-end">4</span>

@@ -149,7 +149,7 @@
                                 <h6 class="m-0 fs-16 fw-semibold">Notification</h6>
                             </div>
                             <div class="col-auto">
-                                <form action="{{ route('markAllAsRead') }}" method="POST">
+                                <form action="{{ route('markAsAllRead') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="text-dark text-decoration-underline border-0 bg-transparent p-0">
                                         <small>Clear All</small>
@@ -161,17 +161,18 @@
             
                     <div style="max-height: 300px;" data-simplebar>
                         @foreach ($notifications as $notification)
-                        <!-- item-->
-                        <form action="{{ route('markAsRead', $notification->id) }}" method="POST">
+                        <form action="{{ route('markAsRead',$notification->id) }}" method="POST" class="mark-as-read-form">
                             @csrf
+                            <input type="hidden" name="notification_id" value="{{ $notification->id }}">
                             <button type="submit" class="dropdown-item notify-item">
                                 <div class="notify-icon bg-warning-subtle">
                                     <i class="mdi mdi-account-plus text-warning"></i>
                                 </div>
-                                <p class="notify-details">{{ $notification->data['message'] }}
+                                <div class="notify-details">
+                                    {{ $notification->data['message'] }}
                                     <small class="noti-time">{{ $notification->created_at->diffForHumans() }}</small>
-                                </p>
-                               
+                                </div>
+                            </button>
                         </form>
                     @endforeach
                      
@@ -241,6 +242,58 @@
                     </form>
                 </div>
             </li>
+            {{-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#right-modal">Rightbar Modal</button> --}}
+
         </ul>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('markAllAsReadButton').addEventListener('click', function() {
+            fetch('{{ route("markAsAllRead") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to mark all notifications as read');
+                }
+                console.log('All notifications marked as read successfully');
+            })
+            .catch(error => {
+                console.error('Error marking all notifications as read:', error.message);
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.mark-as-read-form').forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var formData = new FormData(form);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to mark notification as read');
+                    }
+                    console.log('Notification marked as read successfully');
+                    // Optionally, you can update the UI here
+                })
+                .catch(error => {
+                    console.error('Error marking notification as read:', error.message);
+                });
+            });
+        });
+    });
+</script>

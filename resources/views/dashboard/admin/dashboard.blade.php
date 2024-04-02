@@ -133,7 +133,22 @@
         </div>
     </div>
 
-
+    {{-- <div id="right-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-right">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h4 class="mt-0">Text in a modal</h4>
+                        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 
 </div>
 
