@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-
+   
     {{-- <div id="right-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-right">
             <div class="modal-content">
@@ -149,9 +149,86 @@
             </div>
         </div>
     </div> --}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="header-title">Jquery Toast</h4>
+                    <p class="text-muted mb-0">Toasts based notifications can be used to to show
+                        important alerts or information to users.
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Info Example</p>
+                                <button type="button" class="btn btn-info btn-sm" id="toastr-one">Click
+                                    me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Warning Example</p>
+                                <button type="button" class="btn btn-warning btn-sm"
+                                    id="toastr-two">Click me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Success Example</p>
+                                <button type="button" class="btn btn-success btn-sm"
+                                    id="toastr-three">Click me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Danger Example</p>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    id="toastr-four">Click me</button>
+                            </div>
+                        </div> <!-- end col-->
+                    </div>
+                    <!-- end row-->
 
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>The text can be an array</p>
+                                <button type="button" class="btn btn-light btn-sm"
+                                    id="toastr-five">Click me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Put some HTML in the text</p>
+                                <button type="button" class="btn btn-light btn-sm" id="toastr-six">Click
+                                    me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Making them sticky</p>
+                                <button type="button" class="btn btn-light btn-sm"
+                                    id="toastr-seven">Click me</button>
+                            </div>
+                        </div> <!-- end col-->
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center p-1 pb-3 p-sm-3">
+                                <p>Fade transitions</p>
+                                <button type="button" class="btn btn-light btn-sm"
+                                    id="toastr-eight">Click me</button>
+                            </div>
+                        </div> 
+                    </div>
+                   
+
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+    </div>
 </div>
-
+<script src="assets/js/pages/toastr.init.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
     var xValues = ['open', 'in_progress', 'on_hold', 'resolved', 'closed', 'wrong_category'];

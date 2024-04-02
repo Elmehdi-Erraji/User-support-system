@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+ Route::get('/notifications', [NotificatoinsController::class, 'index'])->name('notifications.fetch');
 
 
  Route::post('markAsRead/{id}', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');

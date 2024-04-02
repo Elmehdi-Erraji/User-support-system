@@ -8,17 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificatoinsController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $user = Auth::user();
+    //     $unreadNotifications = $user->unreadNotifications;
+    //     $notifications = $user->notifications;
+
+    //     $name = $user->name;
+
+    //     return view('dashboard.admin.dashboard', compact('notifications', 'unreadNotifications','name'));
+    // }   
+
+    public function index(Request $request)
     {
-
-        $user = Auth::user();
-        $unreadNotifications = $user->unreadNotifications;
-        $notifications = $user->notifications;
-
-        $name = $user->name;
-
-        return view('dashboard.admin.dashboard', compact('notifications', 'unreadNotifications','name'));
-    }   
+        $user = $request->user();
+        $notifications = $user->unreadNotifications;
+        
+        return response()->json(['notifications' => $notifications]);
+    }
 
     public function markAsRead($id)
     {
@@ -35,6 +42,6 @@ class NotificatoinsController extends Controller
             $notification->markAsRead();
         });
     
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
 }

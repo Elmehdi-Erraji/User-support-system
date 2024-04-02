@@ -265,7 +265,7 @@
 
 </div>
 
-    <script>
+  <script>
         document.getElementById('resetFilters').addEventListener('click', function() {
         document.getElementById('priorityFilter').value = 'null';
         document.getElementById('statusFilter').value = 'null';

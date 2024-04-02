@@ -2,7 +2,7 @@
     $user = Auth::user();
     $notifications = $user->unreadNotifications;
 @endphp
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="navbar-custom">
     <div class="topbar container-fluid">
         <div class="d-flex align-items-center gap-1">
@@ -28,16 +28,6 @@
             <button class="button-toggle-menu">
                 <i class="ri-menu-line"></i>
             </button>
-
-            <!-- Horizontal Menu Toggle Button -->
-            <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
-                <div class="lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-
 
         </div>
 
@@ -140,56 +130,28 @@
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <i class="ri-notification-3-line fs-22"></i>
-                    <span class="noti-icon-badge badge text-bg-pink">{{ Auth::user()->unreadNotifications->count() }}</span>
+                    <span class="noti-icon-badge badge text-bg-pink" id="notificationCount">{{ Auth::user()->unreadNotifications->count() }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
                     <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="m-0 fs-16 fw-semibold">Notification</h6>
+                                <h6 class="m-0 fs-16 fw-semibold">Notifications</h6>
                             </div>
                             <div class="col-auto">
-                                <form action="{{ route('markAsAllRead') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="text-dark text-decoration-underline border-0 bg-transparent p-0">
-                                        <small>Clear All</small>
-                                    </button>
-                                </form>
+                                <button id="clearAllNotifications" class="text-dark text-decoration-underline border-0 bg-transparent p-0">
+                                    <small>Clear All</small>
+                                </button>
                             </div>
                         </div>
                     </div>
             
-                    <div style="max-height: 300px;" data-simplebar>
-                        @foreach ($notifications as $notification)
-                        <form action="{{ route('markAsRead',$notification->id) }}" method="POST" class="mark-as-read-form">
-                            @csrf
-                            <input type="hidden" name="notification_id" value="{{ $notification->id }}">
-                            <button type="submit" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-warning-subtle">
-                                    <i class="mdi mdi-account-plus text-warning"></i>
-                                </div>
-                                <div class="notify-details">
-                                    {{ $notification->data['message'] }}
-                                    <small class="noti-time">{{ $notification->created_at->diffForHumans() }}</small>
-                                </div>
-                            </button>
-                        </form>
-                    @endforeach
-                     
+                    <div id="notificationList" style="max-height: 300px; overflow-y: auto;">
+                        <!-- Placeholder for notification items -->
                     </div>
-            
-                    <!-- All-->
-                    <a href=""
-                        class="dropdown-item text-center text-primary text-decoration-underline fw-bold notify-item border-top border-light py-2">
-                        View All
-                    </a>
-            
                 </div>
             </li>
             
-
-
-
             <li class="d-none d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode">
                     <i class="ri-moon-line fs-22"></i>
@@ -242,58 +204,121 @@
                     </form>
                 </div>
             </li>
-            {{-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#right-modal">Rightbar Modal</button> --}}
 
         </ul>
     </div>
 </div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('markAllAsReadButton').addEventListener('click', function() {
-            fetch('{{ route("markAsAllRead") }}', {
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to format the date into a human-readable string
+        function timeSince(date) {
+            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+            let interval = seconds / 31536000;
+    
+            if (interval > 1) {
+                return Math.floor(interval) + " years ago";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + " months ago";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + " days ago";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + " hours ago";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + " minutes ago";
+            }
+            return Math.floor(seconds) + " seconds ago";
+        }
+    
+        // Function to fetch notifications data and update UI
+        function fetchNotifications() {
+            fetch('/notifications')
+                .then(response => response.json())
+                .then(data => {
+                    // Update notification count
+                    document.getElementById('notificationCount').textContent = data.notifications.length;
+    
+                    // Update notification list
+                    const notificationList = document.getElementById('notificationList');
+                    notificationList.innerHTML = '';
+                    data.notifications.forEach(notification => {
+                        const notificationItem = document.createElement('div');
+                        notificationItem.classList.add('dropdown-item', 'notify-item');
+                        notificationItem.innerHTML = `
+                        <a href="{{route('clinets_list')}}" class="notification-link">
+                            <div class="notify-icon bg-warning-subtle">
+                                <i class="mdi mdi-account-plus text-warning"></i>
+                            </div>
+                            <div class="notify-details">
+                                ${notification.data.message}
+                                <small class="text-dark noti-time">${timeSince(notification.created_at)}</small>
+                            </div>
+                        </a>
+                    `;
+                        notificationList.appendChild(notificationItem);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+    
+        // Fetch notifications data on page load
+        fetchNotifications();
+    
+        // Event listener for clearing all notifications
+        document.getElementById('clearAllNotifications').addEventListener('click', function() {
+            fetch('/clear-notifications', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 },
-                body: JSON.stringify({})
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to mark all notifications as read');
-                }
-                console.log('All notifications marked as read successfully');
+            .then(() => {
+                // Reload notifications after clearing
+                fetchNotifications();
             })
-            .catch(error => {
-                console.error('Error marking all notifications as read:', error.message);
-            });
+            .catch(error => console.error(error));
         });
     });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.mark-as-read-form').forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
-
-                var formData = new FormData(form);
-
-                fetch(this.action, {
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('clearAllNotifications').addEventListener('click', function() {
+                fetch('{{ route("markAsAllRead") }}', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json', // Expecting JSON response
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({})
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Failed to mark notification as read');
+                        throw new Error('Failed to mark all notifications as read');
                     }
-                    console.log('Notification marked as read successfully');
-                    // Optionally, you can update the UI here
+                    return response.json(); // Process the response if you return something from your controller
+                })
+                .then(data => {
+                    console.log('All notifications marked as read successfully');
+                    // Here you can also update your UI accordingly
+                    // For example, reset the notifications count and list
+                    document.querySelector('.noti-icon-badge').textContent = '0'; // Reset the notification count to 0
+                    document.getElementById('notificationList').innerHTML = ''; // Clear the notifications list
                 })
                 .catch(error => {
-                    console.error('Error marking notification as read:', error.message);
+                    console.error('Error:', error);
                 });
             });
         });
-    });
-</script>
+        </script>
+
+

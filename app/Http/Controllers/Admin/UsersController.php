@@ -119,7 +119,7 @@ class UsersController extends Controller
     {
         $clients = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'client');
-        })->withTrashed()->get();
+        })->withTrashed()->paginate(9);
 
         $statuses = ['Pending', 'Active','Banned'];
         return view('dashboard.admin.users.clients', compact('clients','statuses'));
