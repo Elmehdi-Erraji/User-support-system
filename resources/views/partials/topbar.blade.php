@@ -1,3 +1,4 @@
+
 @php
     $user = Auth::user();
     $notifications = $user->unreadNotifications;
@@ -289,7 +290,7 @@
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Accept': 'application/json', // Expecting JSON response
+                        'Accept': 'application/json', 
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({})
@@ -298,14 +299,12 @@
                     if (!response.ok) {
                         throw new Error('Failed to mark all notifications as read');
                     }
-                    return response.json(); // Process the response if you return something from your controller
+                    return response.json();
                 })
                 .then(data => {
                     console.log('All notifications marked as read successfully');
-                    // Here you can also update your UI accordingly
-                    // For example, reset the notifications count and list
-                    document.querySelector('.noti-icon-badge').textContent = '0'; // Reset the notification count to 0
-                    document.getElementById('notificationList').innerHTML = ''; // Clear the notifications list
+                    document.querySelector('.noti-icon-badge').textContent = '0'; 
+                    document.getElementById('notificationList').innerHTML = ''; 
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -313,5 +312,3 @@
             });
         });
 </script>
-
-

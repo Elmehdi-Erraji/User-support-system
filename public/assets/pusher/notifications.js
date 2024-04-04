@@ -1,29 +1,20 @@
 // Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 
-var pusher = new Pusher('8a404660e55b0371a0d7', {
-  cluster: 'eu'
-});
-
-
-
-var channel = pusher.subscribe('my-channel');
-
-
-
-// channel.bind('my-event', function(data) {
-//   alert(JSON.stringify(data));
+// var pusher = new Pusher('8a404660e55b0371a0d7', {
+//   cluster: 'eu'
 // });
 
 
-channel.bind('my-event', function(data) {
-    var currentCount = parseInt(document.getElementById('notificationCount').textContent);
-    var newCount = currentCount + 1;
-    document.getElementById('notificationCount').textContent = newCount;
 
-    fetchNotifications(); // Trigger fetchNotifications function
-    simulateButtonClick();
-});
+
+// var channel = pusher.subscribe('my-channel');
+
+Echo.channel('my-channel')
+    .listen('my-even', (e) => {
+        console.log(e);
+    });
+
 
 function simulateButtonClick() {
     var button = document.getElementById('toastr-one');
@@ -62,11 +53,12 @@ function fetchNotifications() {
         .then(data => {
             document.getElementById('notificationCount').textContent = data.notifications.length;
             const notificationList = document.getElementById('notificationList');
-            notificationList.innerHTML = ''; // Clear the existing list
+            notificationList.innerHTML = ''; 
             data.notifications.forEach(notification => {
                 const notificationItem = document.createElement('div');
                 notificationItem.classList.add('dropdown-item', 'notify-item');
                 notificationItem.innerHTML = `
+                    <form id="clearNotif">
                     <a href="{{route('clinets_list')}}" class="notification-link">
                         <div class="notify-icon bg-warning-subtle">
                             <i class="mdi mdi-account-plus text-warning"></i>
@@ -76,6 +68,7 @@ function fetchNotifications() {
                             <small class="text-dark noti-time">${timeSince(notification.created_at)}</small>
                         </div>
                     </a>
+                    </form>
                 `;
                 notificationList.appendChild(notificationItem);
             });

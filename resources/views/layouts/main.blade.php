@@ -59,10 +59,13 @@
 </footer>
 
 
-
+<script>
+    {!! Vite::content('resources/js/app.js') !!}
+</script>
 <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
 <script src="{{ asset('assets/pusher/notifications.js') }}"></script>
+<script src="{{ asset('assets/pusher/Messages.js') }}"></script>
 
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
 

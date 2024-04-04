@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -124,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
  Route::get('/notifications', [NotificatoinsController::class, 'index'])->name('notifications.fetch');
 
 
- Route::post('markAsRead/{id}', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
+ Route::post('markAsRead', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
  Route::post('markAsAllRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAsAllRead');
  
 
@@ -138,7 +139,9 @@ Route::post('activity_serach',[ActivityLogController::class, 'search'])->name('a
 
 
 
+Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
 
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 
 
 
@@ -177,3 +180,16 @@ Route::get('contact', function (){
     return view('contact');
 })->name('contact');
 
+
+
+
+
+Route::get('/test', function (){
+    // event(new App\Events\MessageSent());
+    event(new App\Events\UserRegestratoin("mehdi"));
+    dd('fired ...');
+});
+
+Route::get('/chat', function (){
+   return view('websocket');
+});

@@ -9,18 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Laravel\Sail\Console\PublishCommand;
 
-class UserRegestratoin implements ShouldBroadcast
+class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $name;
+    public $message;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($name)
+    public function __construct() 
     {
-        $this->name = $name;
+        $this->message = 'message is working well ';
     }
 
     /**
@@ -31,11 +33,12 @@ class UserRegestratoin implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('my-channel'),
+            new Channel('public-channel-1'),
         ];
     }
+
     // public function broadcastAs()
     // {
-    //     return 'my-event';
+    //     return 'message';
     // }
 }

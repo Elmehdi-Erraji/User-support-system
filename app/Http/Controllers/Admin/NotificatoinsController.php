@@ -8,17 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificatoinsController extends Controller
 {
-    // public function index()
-    // {
-    //     $user = Auth::user();
-    //     $unreadNotifications = $user->unreadNotifications;
-    //     $notifications = $user->notifications;
-
-    //     $name = $user->name;
-
-    //     return view('dashboard.admin.dashboard', compact('notifications', 'unreadNotifications','name'));
-    // }   
-
+   
     public function index(Request $request)
     {
         $user = $request->user();
@@ -27,12 +17,18 @@ class NotificatoinsController extends Controller
         return response()->json(['notifications' => $notifications]);
     }
 
-    public function markAsRead($id)
+    public function markAsRead(Request $request)
     {
         $user = Auth::user();
+        $id = $request->input('id');
         $notification = $user->unreadNotifications->find($id);
-        $notification->markAsRead();
-        return redirect()->back();
+        if ($notification) {
+            $notification->markAsRead();
+             $notification->delete();
+            return redirect()->route('clinets_list'); 
+        } else {
+            return response()->json(['error' => 'Notification not found'], 404);
+        }
     }
 
     public function markAsAllRead()
@@ -40,6 +36,7 @@ class NotificatoinsController extends Controller
         $user = Auth::user();
         $user->unreadNotifications->each(function ($notification) {
             $notification->markAsRead();
+            $notification->delete();
         });
     
         return redirect()->back();
