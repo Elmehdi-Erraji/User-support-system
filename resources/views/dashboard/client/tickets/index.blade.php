@@ -149,8 +149,7 @@
                                         </td>
                                         
                                     </tr>
-
-                                    <div class="modal fade" id="scrollable-modal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
+                                     <div class="modal fade" id="scrollable-modal-{{ $ticket->id }}" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-primary text-white">
@@ -159,72 +158,86 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p><strong>Title:</strong> {{ $ticket->title }}</p>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <p><strong>Status:</strong>
-                                                                @switch($ticket->status)
-                                                                    @case('open')
-                                                                        <span class="badge bg-info text-white">{{ ucfirst($ticket->status) }}</span>
-                                                                        @break
-                                                                    @case('in_progress')
-                                                                        <span class="badge bg-warning text-white">{{ ucfirst($ticket->status) }}</span>
-                                                                        @break
-                                                                    @case('resolved')
-                                                                        <span class="badge bg-success text-white">{{ ucfirst($ticket->status) }}</span>
-                                                                        @break
-                                                                    @case('closed')
-                                                                        <span class="badge bg-secondary text-white">{{ ucfirst($ticket->status) }}</span>
-                                                                        @break
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p><strong>Title:</strong> {{ $ticket->title }}</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <p><strong>Status:</strong>
+                                                                    @switch($ticket->status)
+                                                                        @case('open')
+                                                                            <span class="badge bg-info text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                            @break
+                                                                        @case('in_progress')
+                                                                            <span class="badge bg-warning text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                            @break
+                                                                        @case('resolved')
+                                                                            <span class="badge bg-success text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                            @break
+                                                                        @case('closed')
+                                                                            <span class="badge bg-secondary text-white">{{ ucfirst($ticket->status) }}</span>
+                                                                            @break
                                                                         @case('wrong_category')
-                                                                        <span class="badge bg-secondary text-red">{{ ucfirst($ticket->status) }}</span>
-                                                                        @break
-                                                                    @default
-                                                                        <span class="badge bg-secondary text-white">Unknown Status</span>
-                                                                @endswitch
-                                                            </p>
+                                                                            <span class="badge bg-secondary text-red">{{ ucfirst($ticket->status) }}</span>
+                                                                            @break
+                                                                        @default
+                                                                            <span class="badge bg-secondary text-white">Unknown Status</span>
+                                                                    @endswitch
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <p><strong>Priority:</strong>
+                                                                    @switch($ticket->priority)
+                                                                        @case('low')
+                                                                            <span class="badge bg-success">{{ ucfirst($ticket->priority) }}</span>
+                                                                            @break
+                                                                        @case('medium')
+                                                                            <span class="badge bg-warning">{{ ucfirst($ticket->priority) }}</span>
+                                                                            @break
+                                                                        @case('high')
+                                                                            <span class="badge bg-danger">{{ ucfirst($ticket->priority) }}</span>
+                                                                            @break
+                                                                        @default
+                                                                            <span class="badge bg-secondary">Unknown Priority</span>
+                                                                    @endswitch
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <p><strong>Priority:</strong>
-                                                                @switch($ticket->priority)
-                                                                    @case('low')
-                                                                        <span class="badge bg-success">{{ ucfirst($ticket->priority) }}</span>
-                                                                        @break
-                                                                    @case('medium')
-                                                                        <span class="badge bg-warning">{{ ucfirst($ticket->priority) }}</span>
-                                                                        @break
-                                                                    @case('high')
-                                                                        <span class="badge bg-danger">{{ ucfirst($ticket->priority) }}</span>
-                                                                        @break
-                                                                    @default
-                                                                        <span class="badge bg-secondary">Unknown Priority</span>
-                                                                @endswitch
-                                                            </p>
+                                                        <div class="row">
+                                                            @if($ticket->status == 'wrong_category')
+                                                                <div class="col-md-12">
+                                                                    <p><strong>Why is this labeled as Wrong category:</strong> {{ $ticket->motif }}</p>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-md-12">
+                                                                    <p><strong>Description:</strong> {{ $ticket->description }}</p>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <!-- Attachments Section -->
+                                                        <div class="col-md-12">
+                                                            <h5>Attachments:</h5>
+                                                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                                                                @foreach($ticket->getMedia('attachments') as $media)
+                                                                    <div class="col">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                @if (Str::startsWith($media->mime_type, 'image/'))
+                                                                                    <!-- Display image with link to full-size image -->
+                                                                                    <a href="{{ $media->getUrl() }}" target="_blank">
+                                                                                        <img src="{{ $media->getUrl() }}" class="card-img-top" alt="{{ $media->name }}">
+                                                                                    </a>
+                                                                                @else
+                                                                                    <!-- Display link to download file -->
+                                                                                    <a href="{{ $media->getUrl() }}" class="card-link" target="_blank">{{ $media->name }}</a>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
                                                         </div>
                                                     </div>
-
-
-                                                    <div class="row">
-
-                                                        @if($ticket->status == 'wrong_category')
-                                                      
-                                                            <div class="col-md-12">
-                                                                <p><strong>Why is this labels as Wrong categor:</strong> {{ $ticket->motif }}</p>
-                                                               
-                                                            </div>
-                                                      
-                                                        @else
-                                                       
-                                                            <div class="col-md-12">
-                                                                <p><strong>Description:</strong> {{ $ticket->description }}</p>
-                                                            </div>
-                                                       
-                                                        @endif
-                                                        
-                                                    </div>
-
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="{{ route('client_ticket.edit', $ticket->id) }}" class="btn btn-info">Edit</a>
@@ -233,6 +246,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     @endforeach
                                 </tbody>
                             </table>

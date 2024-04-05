@@ -37,9 +37,14 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::create($request->all());
     
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $media = $ticket->addMedia($file)->toMediaCollection('attachments');
+            }
+        }
+        
         $category = Category::find($request->category_id);
         $department = $category->department;
-    
         $agents = $department->agents;
     
         if ($agents->count() > 0) {

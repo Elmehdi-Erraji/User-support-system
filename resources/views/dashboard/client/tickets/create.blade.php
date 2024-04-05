@@ -5,7 +5,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    <style>
+        /* Style for the file items */
+        .file-item {
+            display: inline-block;
+            margin-right: 10px; /* Adjust spacing between file items */
+        }
+    
+        /* Style for images */
+        .file-item img {
+            max-width: 100px; /* Adjust maximum width of images */
+            max-height: 100px; /* Adjust maximum height of images */
+        }
+    </style>
 <body>
 
     <div class="container-fluid">
@@ -89,59 +101,24 @@
                                     
                                     {{-- <div class="mb-3">
                                         <label for="attachment" class="form-label">Attachment</label>
-                                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="attachment" name="attachment[]" multiple>
+                                        <input type="file" class="form-control @error('attachment') is-invalid @enderror" id="attachment" name="attachment[]" multiple> 
+                                        <div id="selectedFiles"></div>
                                         @error('attachment')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                    </div> --}}
+
+                                    <div class="mb-3">
+                                        <label for="attachment" class="form-label">Attachment</label>
+                                        <input type="file" class="form-control" id="attachment" name="attachment[]" multiple>
+                                        <div id="selectedFiles"></div> <!-- Container to display selected files -->
                                     </div>
-                                 --}}
+                                
                              
                                     <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
                                 </form>
                                 
-                                <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                data-upload-preview-template="#uploadPreviewTemplate">
-                                <div class="fallback">
-                                    <input name="file" type="file" multiple />
-                                </div>
-                            
-                                <div class="dz-message needsclick">
-                                    <i class="h1 text-muted ri-upload-cloud-2-line"></i>
-                                    <h3>Drop files here or click to upload.</h3>
-                                    <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-                                        <strong>not</strong> actually uploaded.)</span>
-                                </div>
-                            </form>
-                            
-                            <!-- Preview -->
-                            <div class="dropzone-previews mt-3" id="file-previews"></div>
-                            
-                            <!-- file preview template -->
-                            {{-- <div class="d-none" id="uploadPreviewTemplate">
-                                <div class="card mt-1 mb-0 shadow-none border">
-                                    <div class="p-2">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                            </div>
-                                            <div class="col ps-0">
-                                                <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                                <p class="mb-0" data-dz-size></p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <!-- Button -->
-                                                <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                    <i class="ri-close-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                             --}}
-                                      
-
-
+                              
                             </div>
                         </div>
 
@@ -151,7 +128,37 @@
         </div>
     </div>
 
-
+    <script>
+        // Function to display selected files (including images)
+        function displaySelectedFiles(input) {
+            const files = input.files;
+            const selectedFilesContainer = document.getElementById('selectedFiles');
+            selectedFilesContainer.innerHTML = ''; // Clear previous selection
+    
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileItem = document.createElement('div');
+                fileItem.classList.add('file-item'); // Add the 'file-item' class to the file item
+    
+                if (file.type.startsWith('image/')) {
+                    // If the file is an image, display the image itself
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    fileItem.appendChild(img);
+                } else {
+                    // If the file is not an image, display its name
+                    fileItem.textContent = file.name;
+                }
+    
+                selectedFilesContainer.appendChild(fileItem);
+            }
+        }
+    
+        // Event listener to trigger displaySelectedFiles function when files are selected
+        document.getElementById('attachment').addEventListener('change', function() {
+            displaySelectedFiles(this);
+        });
+    </script>
 
     <script src="{{ asset('assets/vendor/dropzone/min/dropzone.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/fileupload.init.js') }}"></script>

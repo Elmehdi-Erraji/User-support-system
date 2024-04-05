@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-
-class Ticket extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class Ticket extends Model implements HasMedia
 {
-    use HasFactory,SoftDeletes,LogsActivity;
+    use HasFactory,SoftDeletes,LogsActivity,InteractsWithMedia;
     protected static $logAttributes = ['status', 'assigned_to', 'priority'];
 
     protected static $logName = 'ticket';
