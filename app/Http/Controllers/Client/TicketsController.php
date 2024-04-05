@@ -8,7 +8,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\Builder;
 class TicketsController extends Controller
 {
     public function index()
@@ -42,31 +42,52 @@ class TicketsController extends Controller
                 $media = $ticket->addMedia($file)->toMediaCollection('attachments');
             }
         }
-        
-        $category = Category::find($request->category_id);
-        $department = $category->department;
-        $agents = $department->agents;
     
-        if ($agents->count() > 0) {
-            $agent = $agents->random();
-            $ticket->support_agent_id = $agent->id;
-        } else {
-            $availableAgents = User::whereHas('roles', function ($query) {
-                $query->where('name', 'support_agent');
-            })->get();
+        $agent = $this->assignAgentToTicket($request->category_id);
     
-            if ($availableAgents->count() > 0) {
-                $agent = $availableAgents->random();
-                $ticket->support_agent_id = $agent->id;
-            } else {
-                return redirect()->route('client_ticket.index')->with('error', 'No available agents to assign the ticket');
-            }
+        if (!$agent) {
+            return redirect()->route('client_ticket.index')->with('error', 'No available agents to assign the ticket');
         }
     
+        $ticket->support_agent_id = $agent->id;
         $ticket->save();
     
         return redirect()->route('client_ticket.index')->with('success', 'Ticket created successfully');
     }
+
+
+    private function assignAgentToTicket($categoryId)
+        {
+            $category = Category::find($categoryId);
+            $department = $category->department;
+            $agents = $department->agents()->pluck('id')->toArray(); 
+
+            $totalAgents = count($agents);
+
+            $totalTickets = Ticket::whereNotIn('status', ['closed', 'wrong_category'])->count();
+
+            $ticketCounts = [];
+            foreach ($agents as $agentId) {
+                $ticketCounts[$agentId] = Ticket::where('support_agent_id', $agentId)
+                    ->whereNotIn('status', ['closed', 'wrong_category'])
+                    ->count();
+            }
+
+            $minTicketCount = min($ticketCounts);
+
+            $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
+
+            if (count($agentsWithMinTickets) == 1) {
+                return User::find($agentsWithMinTickets[0]);
+            } else {
+                $randomAgentId = $agentsWithMinTickets[array_rand($agentsWithMinTickets)];
+                return User::find($randomAgentId);
+            }
+        }
+
+
+
+
 
     public function edit($id)
     {
