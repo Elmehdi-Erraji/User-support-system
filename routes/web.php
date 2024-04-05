@@ -195,5 +195,5 @@ Route::get('/test1', function (){
 });
 
 Route::get('/chat', function (){
-   return view('websocket');
+   return view('chat');
 });
