@@ -185,8 +185,12 @@ Route::get('contact', function (){
 
 
 Route::get('/test', function (){
-    // event(new App\Events\MessageSent());
-    event(new App\Events\UserRegestratoin("mehdi"));
+    event(new App\Events\MessageSent());
+    dd('fired ...');
+});
+
+Route::get('/test1', function (){
+    event(new App\Events\UserRegestratoin("banana"));
     dd('fired ...');
 });
 

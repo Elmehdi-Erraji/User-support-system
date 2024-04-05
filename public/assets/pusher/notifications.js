@@ -1,20 +1,33 @@
-// Enable pusher logging - don't include this in production
-// Pusher.logToConsole = true;
 
-// var pusher = new Pusher('8a404660e55b0371a0d7', {
-//   cluster: 'eu'
+
+// channel.bind('my-event', function(data) {
+//     var currentCount = parseInt(document.getElementById('notificationCount').textContent);
+//     var newCount = currentCount + 1;
+//     document.getElementById('notificationCount').textContent = newCount;
+
+//     fetchNotifications(); 
+//     simulateButtonClick();
 // });
 
+// Echo.channel('my-channel')
+//     .listen('UserRegistration', () => {
+//         let currentCount = parseInt(document.getElementById('notificationCount').textContent);
+//         let newCount = currentCount + 1;
+//         document.getElementById('notificationCount').textContent = newCount;
 
+//         fetchNotifications(); 
+//         simulateButtonClick();
+//     });
 
-
-// var channel = pusher.subscribe('my-channel');
-
-Echo.channel('my-channel')
-    .listen('my-even', (e) => {
-        console.log(e);
+    Echo.channel(`my-channel`)
+    .listen('UserRegestratoin', (e) => {
+        let currentCount = parseInt(document.getElementById('notificationCount').textContent);
+             let newCount = currentCount + 1;
+             document.getElementById('notificationCount').textContent = newCount;
+        
+            fetchNotifications(); 
+            simulateButtonClick();
     });
-
 
 function simulateButtonClick() {
     var button = document.getElementById('toastr-one');

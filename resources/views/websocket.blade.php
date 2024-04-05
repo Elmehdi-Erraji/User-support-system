@@ -19,10 +19,10 @@
     </script>
 
    <script >
-    // Echo.channel(`public-channel-1`)
-    // .listen('MessageSent', (e) => {
-    //     console.log(e);
-    // });
+    Echo.channel(`public-channel-1`)
+    .listen('MessageSent', (e) => {
+        console.log(e);
+    });
 
     Echo.channel(`my-channel`)
     .listen('UserRegestratoin', (e) => {
