@@ -3,29 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\NotificationsInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificatoinsController extends Controller
 {
-   
+    protected $notificationsRepo;
+
+    public function __construct(NotificationsInterface $notificationsRepo)
+    {
+        $this->notificationsRepo = $notificationsRepo;
+    }
+
     public function index(Request $request)
     {
         $user = $request->user();
-        $notifications = $user->unreadNotifications;
-        
+        $notifications = $this->notificationsRepo->getUnreadNotificationsForUser($user->id);
         return response()->json(['notifications' => $notifications]);
     }
 
     public function markAsRead(Request $request)
     {
-        $user = Auth::user();
-        $id = $request->input('id');
-        $notification = $user->unreadNotifications->find($id);
-        if ($notification) {
-            $notification->markAsRead();
-             $notification->delete();
-            return redirect()->route('clinets_list'); 
+        $notificationId = $request->input('id');
+        $success = $this->notificationsRepo->markAsRead($notificationId);
+        if ($success) {
+            return redirect()->route('clients_list');
         } else {
             return response()->json(['error' => 'Notification not found'], 404);
         }
@@ -33,12 +36,8 @@ class NotificatoinsController extends Controller
 
     public function markAsAllRead()
     {
-        $user = Auth::user();
-        $user->unreadNotifications->each(function ($notification) {
-            $notification->markAsRead();
-            $notification->delete();
-        });
-    
+        $user = auth()->user();
+        $this->notificationsRepo->markAllAsRead($user->id);
         return redirect()->back();
     }
 }

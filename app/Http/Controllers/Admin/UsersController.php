@@ -9,22 +9,29 @@ use App\Models\Department;
 use App\Models\Role;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Repositories\Contracts\UsersInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UsersInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-        $users = User::whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'client');
-        })->withTrashed()->get();
-
+        $users = $this->userRepository->getAllUsers();
         $roles = Role::all();
         $departments = Department::all();
-        $statuses = ['Pending', 'Active','Banned'];
-        return view('dashboard.admin.users.index',compact('users','departments','roles','statuses'));
+        $statuses = ['Pending', 'Active', 'Banned'];
+        
+        return view('dashboard.admin.users.index', compact('users', 'departments', 'roles', 'statuses'));
     }
+
     public function create()
     {
         $departments = Department::all();
@@ -34,20 +41,15 @@ class UsersController extends Controller
 
     public function store(UserStore $request)
     {
-        $data = $request->validated();
-        $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
-        $user->addMediaFromRequest('avatar')->usingName($user->name)->toMediaCollection('avatars','avatars');
-        $user->roles()->attach($request->role);
+        $this->userRepository->createUser($request->validated());
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
-
-    public function show($id) 
+    public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->userRepository->getUserById($id);
         $tickets = $user->tickets;
-        return view('dashboard.admin.users.show',compact('user','tickets'));
+        return view('dashboard.admin.users.show', compact('user', 'tickets'));
     }
 
     public function agentShow($id) 
@@ -59,73 +61,45 @@ class UsersController extends Controller
         return view('dashboard.admin.users.agentShow',compact('user','assignedTickets'));
     }
 
-
-
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->getUserById($id);
         $departments = Department::all();
         $roles = Role::all();
         return view('dashboard.admin.users.edit', compact('user', 'departments', 'roles'));
     }
 
-    public function update(UserUpdate $request, string $id)
+    public function update(UserUpdate $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->roles()->sync($request->role);
-        
-        if ($request->filled('department_id')) {
-            $user->department_id = $request->department_id;
-        } 
-
-        $user->status = $request->status;
-        if ($request->status == 3 && $request->filled('ban_reason')) {
-            $user->ban_reason = $request->input('ban_reason');
-        }
-    
-        if ($request->role != 2) {
-            $user->department_id = null; 
-        }
-    
-        $user->save();
+        $this->userRepository->updateUser($id, $request->validated());
         return redirect()->route('users.index')->with('success', 'User has been updated successfully');
-    }    
-
-    public function restore($id)
-    {
-        $user = User::withTrashed()->findOrFail($id);
-        $user->restore();
-
-        return redirect()->route('users.index')->with('success', 'User restored successfully');
-    }
+    }  
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $this->userRepository->deleteUser($id);
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
+    }
+
+    public function restore($id)
+    {
+        $this->userRepository->restoreUser($id);
+        return redirect()->route('users.index')->with('success', 'User restored successfully');
     }
 
     public function forceDelete($id)
     {
-        $user = User::withTrashed()->findOrFail($id);
-        $user->forceDelete();
-
+        $this->userRepository->forceDeleteUser($id);
         return redirect()->route('users.index')->with('success', 'User permanently deleted successfully');
     }
 
 
     public function clientsList()
     {
-        $clients = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'client');
-        })->withTrashed()->paginate(9);
-
-        $statuses = ['Pending', 'Active','Banned'];
-        return view('dashboard.admin.users.clients', compact('clients','statuses'));
+        $clients = $this->userRepository->getClients();
+        $statuses = ['Pending', 'Active', 'Banned'];
+        return view('dashboard.admin.users.clients', compact('clients', 'statuses'));
     }
-
-    
 
 
     public function search(Request $request)

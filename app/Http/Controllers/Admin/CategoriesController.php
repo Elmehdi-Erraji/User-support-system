@@ -5,89 +5,81 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Department;
+use App\Repositories\Contracts\CategoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class CategoriesController extends Controller
 {
+    protected $categoryRepo;
+
+    public function __construct(CategoryInterface $categoryRepo)
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     public function index()
     {
-        $categories = Category::orderBy('department_id')->paginate(8);
-        $departments = Department::all();
-        return view('dashboard.admin.category.index',compact('categories','departments'));
+        $categories = $this->categoryRepo->allWithPaginate(8);
+        $departments = $this->categoryRepo->getAllDepartments();
+        return view('dashboard.admin.category.index', compact('categories', 'departments'));
     }
 
     public function create()
     { 
-        $departments = Department::orderBy('name')->get();
-        return view('dashboard.admin.category.create',compact('departments'));
+        $departments = $this->categoryRepo->getAllDepartments();
+        return view('dashboard.admin.category.create', compact('departments'));
     }
 
-    public function store(request $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'department_id' => ['required','integer',Rule::exists('departments', 'id'),],
+            'department_id' => ['required', 'integer', Rule::exists('departments', 'id')],
         ]);
         
-        Category::create($request->all());
-        return redirect()->route('categories.index')->with('success','Department created successfully');
+        $this->categoryRepo->create($request->all());
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
 
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        $departments = Department::all();
-        return view('dashboard.admin.category.edit',compact('category','departments'));
+        $category = $this->categoryRepo->findById($id);
+        $departments = $this->categoryRepo->getAllDepartments();
+        return view('dashboard.admin.category.edit', compact('category', 'departments'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($request->id);
-        $category->update($request->all());
-        return redirect()->route('categories.index')->with('success','Category updated successfully');
+        $this->categoryRepo->update($id, $request->all());
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
-
 
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()->route('categories.index')->with('success','Category deleted successfully');
+        $this->categoryRepo->delete($id);
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
     } 
 
-    public function Search(Request $request)
+    public function search(Request $request)
     {
         $searchQuery = $request->input('search_query');
         $departmentId = $request->input('department');
 
-        $query = Category::query();
-
-        if (!empty($searchQuery)) {
-            $query->where(function ($q) use ($searchQuery) {
-                $q->where('name', 'like', '%' . $searchQuery . '%');
-            });
-        }
-
-       
-        if (!empty($departmentId) && $departmentId !== 'null') {
-            $query->where('department_id', $departmentId);
-        }
-
-        $categories = $query->get();
+        $categories = $this->categoryRepo->searchCategories($searchQuery, $departmentId);
 
         $transformedCategories = $categories->map(function ($category) {
             return [
                 'id' => $category->id,
                 'name' => $category->name,
-                'department' => $category->department->name,
+                'department' => optional($category->department)->name, // Using optional() to avoid potential null object errors
                 'ticketsCount' => $category->tickets->count(),
-                'faqsCount' => $category->faqs->count()
+                'faqsCount' => $category->faqs->count(),
             ];
         });
+
         return response()->json($transformedCategories);
     }
-
-    
-    
 }
+
+

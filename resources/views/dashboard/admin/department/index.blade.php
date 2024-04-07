@@ -48,7 +48,7 @@
                                         <br>
                                         <br>
                                         <div class="col-lg-6">
-                                            <a href="{{ route('categories.create') }}" class="btn btn-primary" id="addButton" style="width: 30%">Add A Category</a>
+                                            <a href="{{ route('categories.create') }}" class="btn btn-primary" id="addButton" style="width: 30%">Add A Department</a>
                                         </div>
                                     </div>
                             </div>
