@@ -225,7 +225,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
-    var xValues = ['open', 'in_progress', 'on_hold', 'resolved', 'closed', 'wrong_category'];
+    var xValues = ['closed', 'resolved', 'open', 'wrong_category', 'in_progress', 'on_hold'];
     var yValues = {!! $ticketStatusesJson !!};
     var barColors = [
       "#b91d47",
