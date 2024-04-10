@@ -38,9 +38,26 @@ class TickesController extends Controller
 
     public function store(Request $request)
     {
-        $ticket = $this->ticketRepo->create($request->all());
-        return redirect()->route('ticket.index')->with('success', 'Ticket created successfully');
+        $ticket = Ticket::create($request->all());
+    
+        if ($request->hasFile('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                $media = $ticket->addMedia($file)->toMediaCollection('attachments');
+            }
+        }
+    
+        $agent = $this->assignAgentToTicket($request->category_id);
+    
+        if (!$agent) {
+            return redirect()->route('client_ticket.index')->with('error', 'No available agents to assign the ticket');
+        }
+    
+        $ticket->support_agent_id = $agent->id;
+        $ticket->save();
+    
+        return redirect()->route('client_ticket.index')->with('success', 'Ticket created successfully');
     }
+
 
     public function edit($id)
     {

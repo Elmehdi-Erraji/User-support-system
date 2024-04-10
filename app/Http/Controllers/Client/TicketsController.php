@@ -33,13 +33,13 @@ class TicketsController extends Controller
         return view('dashboard.client.tickets.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $ticket = Ticket::create($request->all());
     
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
-                $media = $ticket->addMedia($file)->toMediaCollection('attachments');
+                $media = $ticket->addMedia($file)->toMediaCollection('attachments','attachments');
             }
         }
     

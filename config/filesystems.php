@@ -35,10 +35,10 @@ return [
             'url' => env('APP_URL').'/storage/avatars',
             'visibility' => 'public',
         ],
-        'attatchments' => [
+        'attachments' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/attatchments'),
-            'url' => env('APP_URL').'/storage/attatchments',
+            'root' => storage_path('app/public/attachments'),
+            'url' => env('APP_URL').'/storage/attachments',
             'visibility' => 'public',
         ],
         'local' => [
