@@ -1,10 +1,5 @@
-/* ===================================================================
+
     
-    Author          : Valid Theme
-    Template Name   : Appku - Software Landing Page
-    Version         : 1.0
-    
-* ================================================================= */
 
 (function($) {
     "use strict";

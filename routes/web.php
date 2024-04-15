@@ -32,7 +32,7 @@ use App\Http\Controllers\Agent\TicketsController as AgentTicketsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Route::get('dashboard', function (){

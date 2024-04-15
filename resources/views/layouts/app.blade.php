@@ -6,13 +6,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Appku - Software Landing Page">
+    <meta name="description" content="Guidely - User Support System">
 
     <!-- ========== Page Title ========== -->
-    <title>Appku - Software Landing Page</title>
+    <title>Guidely - User Support System</title>
 
     <!-- ========== Favicon Icon ========== -->
-    <link rel="shortcut icon" href="{{ asset('assets_guest/img/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets_guest/img/favicon-32x32.png') }}" type="image/x-icon">
 
     <!-- ========== Start Stylesheet ========== -->
     <link href="{{ asset('assets_guest/css/bootstrap.min.css') }}" rel="stylesheet" />

@@ -65,10 +65,8 @@
                     <div class="col-lg-8 contact-form-box">
                         <div class="form-box">
                             <h2>Let's talk?</h2>
-                            <p>
-                                It's all about the humans behind a brand and those experiencing it, br we're right there. <br> In the middle performance quick.
-                            </p>
-                            <form action="assets/mail/contact.php" method="POST" class="contact-form">
+                           
+                            <form action="#" method="POST" class="contact-form">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -94,7 +92,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group comments">
-                                            <textarea class="form-control" id="comments" name="comments" placeholder="Tell Us About Project *"></textarea>
+                                            <textarea class="form-control" id="comments" name="comments" placeholder="Write Your message please  *"></textarea>
                                         </div>
                                     </div>
                                 </div>

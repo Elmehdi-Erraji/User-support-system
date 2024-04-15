@@ -19,7 +19,7 @@
                     </div>
 
                      <div class="col-lg-6 thumb wow fadeInRight" data-wow-delay="900ms">
-                        <img src="{{asset('assets_guest/img/dashboard/18.png')}}" alt="Thumb">
+                        <img src="{{asset('assets_guest/img/dashboard/1.png')}}" alt="Thumb">
                     </div>
                     
                 </div>
@@ -41,8 +41,8 @@
                 <div class="row align-center">
                     <div class="col-lg-6">
                         <div class="thumb">
-                            <img class="wow fadeInLeft" data-wow-delay="300ms" src="{{ asset('assets_guest/img/dashboard/16.png') }}" alt="Thumb">
-                            <img class="wow fadeInUp" data-wow-delay="500ms" src="{{ asset('assets_guest/img/dashboard/11.png') }}" alt="Thumb">
+                            <img class="wow fadeInLeft" data-wow-delay="300ms" src="{{ asset('assets_guest/img/dashboard/3-a.png') }}" alt="Thumb">
+                            <img class="wow fadeInUp" data-wow-delay="500ms" src="{{ asset('assets_guest/img/dashboard/2-a.png') }}" alt="Thumb">
                         </div>
                     </div>
                     <div class="col-lg-6 info wow fadeInRight">
@@ -303,41 +303,41 @@
                         <!-- Single item -->
                         <div class="item">
                             <div class="thumb">
-                                <img src="{{ asset('assets_guest/img/dashboard/22.jpg') }}" alt="Thumb">
-                                <a href="{{ asset('assets_guest/img/dashboard/22.jpg') }}" class="item popup-gallery theme video-play-button">
+                                <img src="{{ asset('assets_guest/img/dashboard/4.png') }}" alt="Thumb">
+                                <a href="{{ asset('assets_guest/img/dashboard/4.png') }}" class="item popup-gallery theme video-play-button">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
                             <div class="content">
-                                <h4><span>01</span> App Integration</h4>
+                                <h4><span>01</span> App Intry</h4>
                             </div>
                         </div>
                         <!-- End Single item -->
                         <!-- Single item -->
                         <div class="item">
                             <div class="thumb">
-                                <img src="{{ asset('assets_guest/img/dashboard/33.jpg') }}" alt="Thumb">
-                                <a href="{{ asset('assets_guest/img/dashboard/33.jpg') }}" class="item popup-gallery theme video-play-button">
+                                <img src="{{ asset('assets_guest/img/dashboard/5.png') }}" alt="Thumb">
+                                <a href="{{ asset('assets_guest/img/dashboard/5.png') }}" class="item popup-gallery theme video-play-button">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 
                             </div>
                             <div class="content">
-                                <h4><span>02</span> App Customization</h4>
+                                <h4><span>02</span> Admin Dashboard</h4>
                             </div>
                         </div>
                         <!-- End Single item -->
                         <!-- Single item -->
                         <div class="item">
                             <div class="thumb">
-                                <img src="{{ asset('assets_guest/img/dashboard/11.jpg') }}" alt="Thumb">
-                                <a href="{{ asset('assets_guest/img/dashboard/11.jpg') }}" class="item popup-gallery theme video-play-button">
+                                <img src="{{ asset('assets_guest/img/dashboard/3.png') }}" alt="Thumb">
+                                <a href="{{ asset('assets_guest/img/dashboard/3.png') }}" class="item popup-gallery theme video-play-button">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 
                             </div>
                             <div class="content">
-                                <h4><span>03</span> App Modification</h4>
+                                <h4><span>03</span>Admin Dashboard</h4>
                             </div>
                         </div>
                         <!-- End Single item -->

@@ -17,7 +17,6 @@ If you found this repo helpful, please give it a (⭐). Thank you!
   - [Installation Steps](#installation-steps)
 - [Usage](#usage)
   - [Default Credentials](#default-credentials)
-  - [Tests](#tests)
   - [Notifications](#notifications)
 - [User Stories](#user-stories)
   - [Visitor](#visitor)

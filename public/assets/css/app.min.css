@@ -423,14 +423,8 @@ a {
     color: rgba(var(--tz-link-color-rgb), var(--tz-link-opacity, 1));
     text-decoration: none;
 }
-a:hover {
-    --tz-link-color-rgb: var(--tz-link-hover-color-rgb);
-}
-a:not([href]):not([class]),
-a:not([href]):not([class]):hover {
-    color: inherit;
-    text-decoration: none;
-}
+
+
 code,
 kbd,
 pre,
