@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-                 @if (Session::has('success'))
+                    @if (Session::has('success'))
                             <script>
                                 console.log("SweetAlert initialization script executed!");
                                 Swal.fire("Success", "{{ Session::get('success') }}", 'success');
