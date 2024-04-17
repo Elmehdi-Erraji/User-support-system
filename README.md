@@ -1,7 +1,6 @@
-# Ticket Support System
+# Guidely - Ticket Support System
 
-This project is a ticket support web application that simplifies the management of support tickets and provides a platform
-to handle frequently asked questions (FAQs) to enhance visitor and client experience.
+Guidely is a ticket support web application that simplifies the management of support tickets and provides a platform to handle frequently asked questions (FAQs) to enhance visitor and client experience.
 
 If you found this repo helpful, please give it a (⭐). Thank you!
 
@@ -184,18 +183,9 @@ cd path/to/project && php artisan websocket:serve
 
 | User Story                                       | Description                                                                                                       |
 | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| View homepage                                    | View an engaging introduction to the website                                                                      |
-| View the categories list and select a category   | View a list of categories and select a category to view its related FAQs                                          |
-| View FAQs within selected category               | View the FAQs within a selected category and read the answers to the questions                                    |
-| View related FAQs in same category               | View the related FAQs in the same category                                                                        |
-| Search website for questions                     | Search the website for questions using the search palette                                                         |
-| Trigger search palette using shortcut            | Trigger the search palette using the <kbd>CTRL + K</kbd> or <kbd>Meta + K</kbd> shortcut                          |
-| View search results for matching questions       | View the search results for matching questions in the search palette The search results will include related FAQs |
-| Login to my account                              | Access my account by providing my login credentials                                                               |
+| View homepage                                    | View an engaging introduction to the product                                                                      |
 | Create an account to become a client             | Register and create a new account with my personal details                                                        |
-| Request to reset my password using my email      | Request to reset my account password by providing my email address                                                |
-| Get notified by email with a reset password link | Receive an email notification containing a link to reset my password                                              |
-| Create a new password for my account             | Set a new password for my account using the reset password link from my email                                     |
+
 
 <a href="#table-of-contents" title="Go back to the table of contents">
 ⬆️
@@ -441,7 +431,7 @@ cd path/to/project && php artisan websocket:serve
 | View ticket conversations                             | View all the conversation of the tickets between me and the agents                                            |
 | Reply to tickets                                      | Reply to my tickets that are not closed or resolved and include file attachments                              |
 | Resolve and close tickets                             | Reply and mark my tickets as resolved or closed                                                               |
-| Filter assigned tickets list                          | Filter my tickets list by query, status, priority, category, and creation date range                          |
+| Filter assigned tickets list                          | Filter my tickets list by query, status, priority, category                                                   |
 | Get notified when a new ticket is created for me      | Receive email and notification when a new ticket is created for me                                            |
 | Get notified when agent replies to my ticket          | Receive email and notification when the agent replies to my ticket                                            |
 | Get notified when ticket status is closed or resolved | Receive email and notification when the ticket status is changed to closed or resolved by the agent or myself |
