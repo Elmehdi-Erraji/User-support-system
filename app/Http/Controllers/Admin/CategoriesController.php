@@ -56,10 +56,26 @@ class CategoriesController extends Controller
     }
 
     public function destroy($id)
-    {
-        $this->categoryRepo->delete($id);
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
-    } 
+        {
+            $category = $this->categoryRepo->findById($id);
+
+            if (!$category) {
+                return redirect()->route('categories.index')->with('error', 'Category not found');
+            }
+
+            // Check if there are any tickets associated with this category that are not closed
+            $openTicketsCount = $category->tickets()->where('status', '!=', 'closed')->count();
+
+            // If there are open tickets, prevent deletion
+            if ($openTicketsCount > 0) {
+                return redirect()->route('categories.index')->with('error', 'Cannot delete category. There are open tickets associated with it.');
+            }
+
+            // If there are no open tickets, proceed with deletion
+            $this->categoryRepo->delete($id);
+            return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        }
+
 
     public function search(Request $request)
     {

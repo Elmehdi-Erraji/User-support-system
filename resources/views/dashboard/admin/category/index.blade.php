@@ -118,12 +118,16 @@
                             </div>
                         </div>
 
-
-
                         @if (Session::has('success'))
                             <script>
                                 console.log("SweetAlert initialization script executed!");
                                 Swal.fire("Success", "{{ Session::get('success') }}", 'success');
+                            </script>
+                        @endif
+                        @if (Session::has('error'))
+                            <script>
+                                console.log("SweetAlert initialization script executed!");
+                                Swal.fire("Error", "{{ Session::get('error') }}", 'error');
                             </script>
                         @endif
                     </div>
