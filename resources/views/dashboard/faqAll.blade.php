@@ -74,12 +74,31 @@
                         
                         
                         <!-- Buttons for contacting support -->
-                        <a href="{{ route('ticket.create') }}" class="btn btn-success mt-2 me-1">
+                        @if(auth()->user()->roles()->first()->name == 'admin')
+                            <a href="#" class="btn btn-primary mt-2 me-1">
+                                <i class="ri-folder-line me-1"></i> View Tickets
+                            </a>
+                            <a href="{{route('dashboard')}}" class="btn btn-info mt-2">
+                                <i class="ri-bar-chart-line me-1"></i> View Statistics
+                            </a>
+                        @endif
+                        @if(auth()->user()->roles()->first()->name == 'support_agent')
+                        <a href="{{route('agent_ticket.index')}}" class="btn btn-primary mt-2 me-1">
+                            <i class="ri-folder-line me-1"></i> View Tickets
+                        </a>
+                        <a href="#" class="btn btn-secondary mt-2">
+                            <i class="ri-user-line me-1"></i> View Profile
+                        </a>
+                        @endif
+                        @if(auth()->user()->roles()->first()->name == 'client')
+
+                        <a href="{{ route('client_ticket.create') }}" class="btn btn-success mt-2 me-1">
                             <i class="ri-mail-line me-1"></i> Create a ticket
-                        </a>                        
+                        </a>   
                         <a href="https://twitter.com" target="_blank" class="btn btn-info mt-2">
                             <i class="ri-twitter-line me-1"></i> Leave a review on Twitter
                         </a>
+                        @endif                     
                     </div>
                 </div>
             </div>

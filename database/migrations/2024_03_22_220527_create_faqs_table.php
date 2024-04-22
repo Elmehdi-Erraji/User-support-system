@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
             $table->string('question');
-            $table->string('answer');
+            $table->text('answer');
             $table->integer('status');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('user_id');

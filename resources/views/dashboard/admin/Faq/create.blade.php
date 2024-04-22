@@ -4,7 +4,9 @@
 @section('content')
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <link href="{{ asset('assets/vendor/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet" type="text/css" />
 
 
     <!-- Start Content-->
@@ -47,7 +49,24 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                
+{{-- 
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                               
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <div class="mb-2">
+                                                            <div id="snow-editor" style="height: 300px;" name='answer'>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                
+                                        </div> <!-- end col-->
+                                    </div> --}}
                                     <div class="mb-3">
                                         <label for="answer" class="form-label">Answer</label>
                                         <textarea id="answer" class="form-control @error('answer') is-invalid @enderror" name="answer" rows="4" placeholder="Enter the FAQ answer">{{ old('answer') }}</textarea>

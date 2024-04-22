@@ -74,6 +74,7 @@
 <script src="{{ asset('assets/vendor/jquery-toast-plugin/jquery.toast.min.js') }}"></script> 
 
 
+
 </body>
 
 

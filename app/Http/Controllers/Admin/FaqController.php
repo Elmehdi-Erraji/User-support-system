@@ -36,14 +36,15 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'question' => 'required|string',
             'answer' => 'required|string',
             'status' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'user_id' => 'required|exists:users,id',
         ]);
 
-        $this->faqRepo->create($request->all());
+
+        $this->faqRepo->create($validatedData);
         return redirect()->route('Faq.index')->with('success','Faq created successfully');
     }
 

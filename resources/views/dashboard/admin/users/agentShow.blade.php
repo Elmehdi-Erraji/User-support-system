@@ -22,7 +22,11 @@
                             @endif
                             <div class="">
                                 <h4 class="mt-4 fs-17 ellipsis">{{ $user->name }}</h4>
-                                <p class="text-muted mb-0"><small>{{ $user->email }}</small></p>
+                                <p class="text-muted mb-0"><strong><a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></strong></p>
+                                <p class="text-muted mb-0"><strong><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></strong></p>
+                                @if ($user->department)
+                                    <p class="text-muted mb-0"><strong>Department: {{ $user->department->name }}</strong></p>
+                                @endif
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -31,6 +35,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <!--/ meta -->
             </div>
