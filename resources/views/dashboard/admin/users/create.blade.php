@@ -114,13 +114,7 @@
                                         </div>
                                     </div>
                                 
-                                    <div class="mb-3">
-                                        <label for="avatar" class="form-label">Profile Picture</label>
-                                        <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="avatar" name="avatar">
-                                        @error('avatar')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    
                                 
                                     <button type="submit" id="submitButton" class="btn btn-primary" name="addUser">Submit</button>
                                 </form>

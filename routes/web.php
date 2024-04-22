@@ -54,6 +54,8 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPasswor
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])->name('showResetForm');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+Route::get('/first-login', [ResetPasswordController::class, 'firstLoginShow'])->name('first.login.show');
+Route::post('/first-login', [ResetPasswordController::class, 'firstLogin'])->name('first.login');
 // Auth routes endss here
 
 

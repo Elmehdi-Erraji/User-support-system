@@ -67,33 +67,28 @@ class DepartmentsController extends Controller
     }
 
     public function destroy($id)
-{
-    $department = $this->departmentRepo->findById($id);
-    if (!$department)
     {
-        return redirect()->back()->with('error', 'Department not found');
+        $department = $this->departmentRepo->findById($id);
+        if (!$department)
+        {
+            return redirect()->back()->with('error', 'Department not found');
+        }
+
+        $openTicketsCount = 0;
+
+        foreach ($department->categories as $category)
+        {
+            $openTicketsCount += $category->tickets()->count();
+        }
+
+        if ($openTicketsCount > 0)
+        {
+            return redirect()->route('department.index')->with('error', 'Department has open tickets');
+        }
+        $this->departmentRepo->delete($id);
+
+        return redirect()->route('department.index')->with('success', 'Department deleted successfully');
     }
-
-    // Initialize the count of open tickets
-    $openTicketsCount = 0;
-
-    // Iterate through each category of the department
-    foreach ($department->categories as $category)
-    {
-        // Increment the count by the number of tickets associated with the category
-        $openTicketsCount += $category->tickets()->count();
-    }
-
-    if ($openTicketsCount > 0)
-    {
-        return redirect()->route('department.index')->with('error', 'Department has open tickets');
-    }
-
-    // If there are no open tickets, delete the department
-    $this->departmentRepo->delete($id);
-
-    return redirect()->route('department.index')->with('success', 'Department deleted successfully');
-}
 
 
     public function forceDelete($id)

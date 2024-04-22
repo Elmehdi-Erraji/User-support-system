@@ -28,6 +28,7 @@ class User extends Authenticatable implements HasMedia
         'status',
         'ban_reason',
         'department_id',
+        'first_time_login',
     ];
 
     /**

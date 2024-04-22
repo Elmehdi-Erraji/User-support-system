@@ -31,7 +31,6 @@ class UserStore extends FormRequest
             'department_id' => 'required|exists:departments,id',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|string|min:8',
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ];
     }
 

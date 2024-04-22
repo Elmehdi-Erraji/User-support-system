@@ -2,9 +2,12 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Jobs\CreateUserJob;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use App\Repositories\Contracts\UsersInterface;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UsersRepository implements UsersInterface
 {
@@ -29,12 +32,21 @@ class UsersRepository implements UsersInterface
 
     public function createUser(array $data)
     {
+        $plaintextPassword = $data['password'];
+    
+        // Hash the password
         $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
-        $user->addMediaFromRequest('avatar')->usingName($user->name)->toMediaCollection('avatars','avatars');
-        $user->roles()->attach($data['role']);
-        return $user;
+        
+        // Set first_time_login to true (1) explicitly
+        $data['first_time_login'] = 1;
+
+        // Dispatch the CreateUserJob with the provided data
+        CreateUserJob::dispatch($data, $plaintextPassword);
     }
+    
+
+    
+   
 
     public function updateUser(string $id, array $data)
     {
