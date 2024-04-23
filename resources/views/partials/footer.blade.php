@@ -103,7 +103,7 @@
                             <a href="#">Privacy</a>
                         </li>
                         <li>
-                            <a href="contact.html">Support</a>
+                            <a href="{{route('contact')}}">Support</a>
                         </li>
                     </ul>
                 </div>

@@ -39,13 +39,17 @@
               
             </ul>
         </div>
-       
+        <style>
+            .btn-hover-black:hover {
+                color: black !important;
+            }
+        </style>
         <div class="attr-right">
             <div class="attr-nav">
                 <ul>
                     <div class="button">
-                        <a class="btn circle btn-theme-effect btn-sm" href="{{route('contact')}}" style="color: black; background-color: #007bff;">Start free trial</a>
-                        <a class="btn circle btn-theme-effect btn-sm" href="{{route('login')}}" style="color: black; background-color: #28a745;"> Need help ?</a>
+                        <a class="btn circle btn-theme-effect btn-sm btn-hover-black" href="{{ route('contact') }}" style="color: rgb(255, 255, 255);">Start free trial</a>
+                        <a class="btn circle btn-theme-effect btn-sm btn-hover-black" href="{{ route('login') }}" style="color: rgb(255, 255, 255);">Need help?</a>
                     </div>
                 </ul>
             </div>

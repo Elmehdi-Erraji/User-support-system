@@ -10,7 +10,7 @@
                 <div class="col-lg-12 col-md-12">
                     <h1>Contact Us</h1>
                     <ul class="breadcrumb">
-                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="{{route('home')}}"><i class="fas fa-home"></i> Home</a></li>
                         <li>Contact</li>
                     </ul>
                 </div>
@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="info">
                                         <h5>Our Email</h5>
-                                        <a href="mailto:info@SupportSync.com">info@SupportSync.com</a> <br> <a href="mailto:support@SupportSync.com">support@SupportSync.com</a>
+                                        <a href="mailto:info@guidely.com">info@guidely.com</a> <br> <a href="mailto:support@guidely.com">support@guidely.com</a>
                                     </div>
                                 </li>
                                 <li>

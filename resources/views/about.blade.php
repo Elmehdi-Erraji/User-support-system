@@ -10,7 +10,7 @@
             <div class="col-lg-12 col-md-12">
                 <h1>About Us</h1>
                 <ul class="breadcrumb">
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="{{route('home')}}"><i class="fas fa-home"></i> Home</a></li>
                     <li>About</li>
                 </ul>
             </div>
@@ -49,8 +49,8 @@
                         </li>
                     </ul>
                     <div class="button">
-                        <a class="btn circle btn-theme-effect btn-sm" href="contact.html">Start free trial</a>
-                        <a href="services.html">See all features</a>
+                        <a class="btn circle btn-theme-effect btn-sm" href="{{route('register')}}">Start free trial</a>
+                        <a href="{{route('home')}}">See all features</a>
                     </div>
                 </div>
             </div>

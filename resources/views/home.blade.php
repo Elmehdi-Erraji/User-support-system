@@ -15,7 +15,7 @@
                         <p class="wow fadeInLeft" data-wow-delay="500ms">
                             Lasted hunted enough an up seeing in lively letter. Had judgment out opinions property the supplied.
                         </p>
-                        <a class="btn btn-md circle btn-light effect wow fadeInUp" data-wow-delay="700ms" href="#">Get Started <i class="fas fa-angle-right"></i></a>
+                        <a class="btn btn-md circle btn-light effect wow fadeInUp" data-wow-delay="700ms" href="{{route('register')}}">Get Started <i class="fas fa-angle-right"></i></a>
                     </div>
 
                      <div class="col-lg-6 thumb wow fadeInRight" data-wow-delay="900ms">
@@ -63,8 +63,7 @@
                             </li>
                         </ul>
                         <div class="button">
-                            <a class="btn circle btn-theme-effect btn-sm" href="#">Start free trial</a>
-                            <a href="#">See all features</a>
+                            <a class="btn circle btn-theme-effect btn-sm" href="{{route('register')}}" >Start free trial</a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +115,7 @@
                         <div class="item service-banner" style="background-image: url(assets_guest/img/banner/3.jpg);">
                             <h4>Our Features</h4>
                             <h2>Work smarter with powerful features</h2>
-                            <a class="btn circle btn-theme-effect btn-sm" href="#">View More</a>
+                            <a class="btn circle btn-theme-effect btn-sm" href="{{route('register')}}">View More</a>
                         </div>
                     </div>
                     <!-- End Single Item -->
@@ -127,7 +126,7 @@
                                <i class="flaticon-integration"></i>
                            </div>
                            <div class="info">
-                               <h4><a href="#">App Integration</a></h4>
+                               <h4><a href="{{route('register')}}">App Integration</a></h4>
                                <p>
                                     Passage weather as up am exposed. And natural related man subject eagerness it. concluded consisted or no gentleman.
                                </p>
@@ -381,7 +380,7 @@
                             <div class="price">
                                 <h2><sup>$</sup>0 <sub>/ Monthly</sub></h2>
                             </div>
-                            <a class="btn circle btn-theme-effect btn-sm" href="#">Purchase Plan</a>
+                            <a class="btn circle btn-theme-effect btn-sm" href="{{route('contact')}}">Purchase Plan</a>
                             <ul>
                                 <li><i class="fas fa-check"></i> Demo file</li>
                                 <li><i class="fas fa-check"></i> 10 GB Dedicated Hosting free</li>
@@ -404,7 +403,7 @@
                             <div class="price">
                                 <h2><sup>$</sup>29 <sub>/ Monthly</sub></h2>
                             </div>
-                            <a class="btn circle btn-theme-effect btn-sm" href="#">Purchase Plan</a>
+                            <a class="btn circle btn-theme-effect btn-sm" href="{{route('contact')}}">Purchase Plan</a>
                             <ul>
                                 <li><i class="fas fa-check"></i> Demo file</li>
                                 <li><i class="fas fa-check"></i> 10 GB Dedicated Hosting free</li>
@@ -427,7 +426,7 @@
                             <div class="price">
                                 <h2><sup>$</sup>59 <sub>/ Monthly</sub></h2>
                             </div>
-                            <a class="btn circle btn-theme-effect btn-sm" href="#">Purchase Plan</a>
+                            <a class="btn circle btn-theme-effect btn-sm" href="{{route('contact')}}">Purchase Plan</a>
                             <ul>
                                 <li><i class="fas fa-check"></i> Demo file</li>
                                 <li><i class="fas fa-check"></i> 10 GB Dedicated Hosting free</li>
