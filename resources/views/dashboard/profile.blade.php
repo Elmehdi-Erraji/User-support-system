@@ -211,6 +211,12 @@
         console.log("SweetAlert initialization script executed!");
         Swal.fire("Error", "{{ Session::get('error') }}", 'error');
     </script>
+
+@elseif (Session::has('warnning'))
+<script>
+    console.log("SweetAlert initialization script executed!");
+    Swal.fire("Info", "{{ Session::get('warnning') }}", 'warning');
+</script>
 @endif
     <script>
         document.addEventListener("DOMContentLoaded", function() {

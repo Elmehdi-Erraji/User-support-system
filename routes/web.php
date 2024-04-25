@@ -47,8 +47,12 @@ Route::get('/', function () {
 // Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPasswordForm'])->name('forgot-password');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -103,6 +107,18 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tickets/{id}/force-delete', [TickesController::class , 'forceDelete'])->name('tickets.force-delete');
     Route::post('ticket_search', [TickesController::class,'search'])->name('ticket.search');
     //tickets routes ends here
+
+    Route::get('/notifications', [NotificatoinsController::class, 'index'])->name('notifications.fetch');
+
+    Route::post('markAsRead', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
+    Route::post('markAsAllRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAsAllRead');
+    
+
+
+    Route::get('activity',[ActivityLogController::class, 'index'])->name('activity');
+    Route::delete('activity_delete/{id}',[ActivityLogController::class, 'destroy'])->name('activity.destroy');
+    Route::post('activity_serach',[ActivityLogController::class, 'search'])->name('activity.serach');
+
  });
 
 
@@ -124,17 +140,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 
- Route::get('/notifications', [NotificatoinsController::class, 'index'])->name('notifications.fetch');
 
 
- Route::post('markAsRead', [NotificatoinsController::class, 'markAsRead'])->name('markAsRead');
- Route::post('markAsAllRead', [NotificatoinsController::class, 'markAsAllRead'])->name('markAsAllRead');
  
-
-
-Route::get('activity',[ActivityLogController::class, 'index'])->name('activity');
-Route::delete('activity_delete/{id}',[ActivityLogController::class, 'destroy'])->name('activity.destroy');
-Route::post('activity_serach',[ActivityLogController::class, 'search'])->name('activity.serach');
 
 
 

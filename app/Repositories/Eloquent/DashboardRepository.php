@@ -35,16 +35,16 @@ class DashboardRepository implements DashboardInterface
     }
 
     public function getTicketStatusesJson()
-    {
-        $tickets = Ticket::all();
+{
+    $tickets = Ticket::all();
 
-        $ticketStatuses = $tickets->groupBy('status')
-            ->map(function ($group) {
-                return $group->count();
-            })->toArray();
+    $ticketStatuses = $tickets->groupBy('status')
+        ->map(function ($group) {
+            return $group->count();
+        })->toArray();
 
-        return json_encode(array_values($ticketStatuses));
-    }
+    return json_encode($ticketStatuses);
+}
 
     public function getTicketCreationDatesJson()
     {
