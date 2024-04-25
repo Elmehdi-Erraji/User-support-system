@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,25 +57,54 @@ class TicketsController extends Controller
     }
 
 
+    // private function assignAgentToTicket($categoryId)
+    //     {
+    //         $category = Category::findOrFail($categoryId);
+    //         $department = $category->department;
+    //         $agents = $department->agents()->pluck('id')->toArray(); 
+
+    //         $totalAgents = count($agents);
+
+    //         $totalTickets = Ticket::whereNotIn('status', ['closed', 'wrong_category'])->count();
+
+    //         $ticketCounts = [];
+    //         foreach ($agents as $agentId) {
+    //             $ticketCounts[$agentId] = Ticket::where('support_agent_id', $agentId)
+    //                 ->whereNotIn('status', ['closed', 'wrong_category'])
+    //                 ->count();
+    //         }
+
+    //         $minTicketCount = min($ticketCounts);
+
+    //         $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
+
+    //         if (count($agentsWithMinTickets) == 1) {
+    //             return User::find($agentsWithMinTickets[0]);
+    //         } else {
+    //             $randomAgentId = $agentsWithMinTickets[array_rand($agentsWithMinTickets)];
+    //             return User::find($randomAgentId);
+    //         }
+    //     }
+
+
     private function assignAgentToTicket($categoryId)
-        {
-            $category = Category::find($categoryId);
-            $department = $category->department;
-            $agents = $department->agents()->pluck('id')->toArray(); 
+    {
+        $category = Category::findOrFail($categoryId);
+        $department = $category->department;
+        $agents = $department->agents()->pluck('id')->toArray(); 
 
-            $totalAgents = count($agents);
-
-            $totalTickets = Ticket::whereNotIn('status', ['closed', 'wrong_category'])->count();
-
+        // Check if there are agents in the department
+        if (empty($agents)) {
             $ticketCounts = [];
-            foreach ($agents as $agentId) {
-                $ticketCounts[$agentId] = Ticket::where('support_agent_id', $agentId)
+            $allAgents = User::whereIn('id', Department::with('agents')->get()->pluck('agents.*.id')->flatten())->get();
+
+            foreach ($allAgents as $agent) {
+                $ticketCounts[$agent->id] = Ticket::where('support_agent_id', $agent->id)
                     ->whereNotIn('status', ['closed', 'wrong_category'])
                     ->count();
             }
 
             $minTicketCount = min($ticketCounts);
-
             $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
 
             if (count($agentsWithMinTickets) == 1) {
@@ -84,6 +114,31 @@ class TicketsController extends Controller
                 return User::find($randomAgentId);
             }
         }
+
+        // Continue with the original logic for assigning ticket to agents in the specified department
+
+        $totalAgents = count($agents);
+
+        $totalTickets = Ticket::whereNotIn('status', ['closed', 'wrong_category'])->count();
+
+        $ticketCounts = [];
+        foreach ($agents as $agentId) {
+            $ticketCounts[$agentId] = Ticket::where('support_agent_id', $agentId)
+                ->whereNotIn('status', ['closed', 'wrong_category'])
+                ->count();
+        }
+
+        $minTicketCount = min($ticketCounts);
+
+        $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
+
+        if (count($agentsWithMinTickets) == 1) {
+            return User::find($agentsWithMinTickets[0]);
+        } else {
+            $randomAgentId = $agentsWithMinTickets[array_rand($agentsWithMinTickets)];
+            return User::find($randomAgentId);
+        }
+    }
 
 
 
