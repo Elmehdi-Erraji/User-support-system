@@ -34,13 +34,19 @@ class TicketsController extends Controller
         return view('dashboard.client.tickets.create', compact('categories'));
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
-        $ticket = Ticket::create($request->all());
+        $ticketData = $request->all();
+    
+        $category = Category::findOrFail($request->category_id);
+    
+        $ticketData['department_id'] = $category->department_id;
+    
+        $ticket = Ticket::create($ticketData);
     
         if ($request->hasFile('attachment')) {
             foreach ($request->file('attachment') as $file) {
-                $media = $ticket->addMedia($file)->toMediaCollection('attachments','attachments');
+                $media = $ticket->addMedia($file)->toMediaCollection('attachments', 'attachments');
             }
         }
     
@@ -55,7 +61,7 @@ class TicketsController extends Controller
     
         return redirect()->route('client_ticket.index')->with('success', 'Ticket created successfully');
     }
-
+    
 
     // private function assignAgentToTicket($categoryId)
     //     {
@@ -91,22 +97,22 @@ class TicketsController extends Controller
     {
         $category = Category::findOrFail($categoryId);
         $department = $category->department;
-        $agents = $department->agents()->pluck('id')->toArray(); 
-
-        // Check if there are agents in the department
+        $agents = $department->agents()->where('status', '2')->pluck('id')->toArray();
+    
+        // Check if there are active agents in the department
         if (empty($agents)) {
             $ticketCounts = [];
             $allAgents = User::whereIn('id', Department::with('agents')->get()->pluck('agents.*.id')->flatten())->get();
-
+    
             foreach ($allAgents as $agent) {
                 $ticketCounts[$agent->id] = Ticket::where('support_agent_id', $agent->id)
                     ->whereNotIn('status', ['closed', 'wrong_category'])
                     ->count();
             }
-
+    
             $minTicketCount = min($ticketCounts);
             $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
-
+    
             if (count($agentsWithMinTickets) == 1) {
                 return User::find($agentsWithMinTickets[0]);
             } else {
@@ -114,24 +120,18 @@ class TicketsController extends Controller
                 return User::find($randomAgentId);
             }
         }
-
-        // Continue with the original logic for assigning ticket to agents in the specified department
-
-        $totalAgents = count($agents);
-
-        $totalTickets = Ticket::whereNotIn('status', ['closed', 'wrong_category'])->count();
-
+    
         $ticketCounts = [];
         foreach ($agents as $agentId) {
             $ticketCounts[$agentId] = Ticket::where('support_agent_id', $agentId)
                 ->whereNotIn('status', ['closed', 'wrong_category'])
                 ->count();
         }
-
+    
         $minTicketCount = min($ticketCounts);
-
+    
         $agentsWithMinTickets = array_keys($ticketCounts, $minTicketCount);
-
+    
         if (count($agentsWithMinTickets) == 1) {
             return User::find($agentsWithMinTickets[0]);
         } else {
@@ -139,6 +139,7 @@ class TicketsController extends Controller
             return User::find($randomAgentId);
         }
     }
+    
 
 
 
