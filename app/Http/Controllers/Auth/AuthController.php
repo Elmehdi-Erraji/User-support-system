@@ -30,7 +30,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone' => $request->input('phone'),
             'password' => Hash::make($request->password),
-            'status' => 1,
+            'status' => 2,
             'first_time_login'=> 0,
         ]);
         
