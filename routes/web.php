@@ -35,14 +35,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-// Route::get('dashboard', function (){
-//     return view('dashboard.admin.dashboard');
-// })->name('dashboard');
-
-
-
-
-
 
 // Auth routes start here
 Route::get('/register', [AuthController::class, 'RegistrationForm'])->name('register');
@@ -134,47 +126,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('client_ticket', ClientTicketsController::class);
  });
 
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
+//testing routes start 
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-
 Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
-
-
-
-
-
-
-
 
 
 Route::get('test', function (){
     return view('faq');
 })->name('test');
-
-
-
-
-
-
-
-
-
-
-
 
 
 Route::get('home', function (){
@@ -191,9 +151,6 @@ Route::get('contact', function (){
 })->name('contact');
 
 
-
-
-
 Route::get('/test', function (){
     event(new App\Events\MessageSent());
     dd('fired ...');
@@ -207,3 +164,5 @@ Route::get('/test1', function (){
 Route::get('/chat', function (){
    return view('websocket');
 });
+
+//testing routes end 
